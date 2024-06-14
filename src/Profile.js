@@ -8,14 +8,14 @@ export default function Profile() {
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Searchbar />
-            <div class="card">
+            <div class="card-profile">
               <img src="image.png" alt="Profile Image" />
               <h2>John Smith</h2>
               <p>Full Stack Developer</p>
               <p>Bay Area, San Francisco, CA</p>
             </div>
 
-            <div class="details">
+            <div class="details-profile">
               <table>
                 <tr>
                   <td>Full Name</td>
