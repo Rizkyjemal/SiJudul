@@ -2190,6 +2190,11 @@ textarea.form-control {
   font-size: 80%;
   color: #1cc88a;
 }
+.img-size {
+  height: 50%;
+  width: 50%;
+  /* margin-left: 40px; */
+}
 
 .valid-tooltip {
   position: absolute;
@@ -8110,7 +8115,9 @@ button.bg-dark:focus {
 .my-0 {
   margin-top: 0 !important;
 }
-
+.mrr-5 {
+  margin-right: 40px;
+}
 .mr-0,
 .mx-0 {
   margin-right: 0 !important;
