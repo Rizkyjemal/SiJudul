@@ -7,9 +7,7 @@ function App() {
   return (
     <div className="App">
       <div id="wrapper">
-        {/* sidebar */}
         <Sidebar />
-        {/* end of sidebar */}
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Searchbar />

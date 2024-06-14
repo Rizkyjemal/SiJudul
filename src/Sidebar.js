@@ -29,19 +29,19 @@ export default function Sidebar() {
         </li>
         <hr className="sidebar-divider" />
         <div className="sidebar-heading">Management</div>
-        <li className="nav-item">
+        <li className="nav-item active">
           <a className="nav-link collapsed" href="/proposal">
             <HiOutlineDocumentCheck className="mx-2" />
             Proposals
           </a>
         </li>
-        <li className="nav-item">
+        <li className="nav-item active">
           <a className="nav-link collapsed" href="/students">
             <PiStudentBold className="mx-2" />
             Student
           </a>
         </li>
-        <li className="nav-item">
+        <li className="nav-item active">
           <a className="nav-link collapsed" href="/lectures">
             <GiTeacher className="mx-2" />
             Lectures

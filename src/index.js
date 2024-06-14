@@ -11,6 +11,7 @@ import Proposal from "./Proposal";
 import Approval from "./Approval";
 import Penambahan from "./Penambahan";
 import Edit from "./Edit";
+import Profile from "./Profile";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
   {
     path: "/edit",
     element: <Edit />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
   },
 ]);
 
