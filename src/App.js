@@ -1,5 +1,8 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { PiStudentBold } from "react-icons/pi";
+import { GiTeacher } from "react-icons/gi";
+import { HiOutlineDocumentCheck } from "react-icons/hi2";
 
 function App() {
   return (
@@ -12,16 +15,19 @@ function App() {
         >
           <a
             className="sidebar-brand d-flex align-items-center justify-content-center"
-            href="index.html"
+            href="/"
           >
-            <div className="sidebar-brand-icon rotate-n-15">
-              <i className="fas fa-laugh-wink"></i>
+            <div>
+              <img
+                className="rounded-circle img-size"
+                src="assets/images/logo.jpeg"
+              />
             </div>
-            <div className="sidebar-brand-text mx-3">SiJudul</div>
+            <div className="sidebar-brand-text mrr-5"> SiJudul</div>
           </a>
           <hr className="sidebar-divider my-0"></hr>
           <li className="nav-item active">
-            <a className="nav-link" href="index.html">
+            <a className="nav-link" href="/">
               <i className="fas fa-fw fa-tachometer-alt"></i>
               <span>Dashboard</span>
             </a>
@@ -29,127 +35,26 @@ function App() {
           <hr className="sidebar-divider" />
           <div className="sidebar-heading">Management</div>
           <li className="nav-item">
-            <a
-              className="nav-link collapsed"
-              href="#"
-              data-toggle="collapse"
-              data-target="#collapseTwo"
-              aria-expanded="true"
-              aria-controls="collapseTwo"
-            >
-              <i className="fas fa-fw fa-cog"></i>
-              <span>Proposals</span>
+            <a className="nav-link collapsed" href="/proposal">
+              <HiOutlineDocumentCheck className="mx-2" />
+              Proposals
             </a>
-            <div
-              id="collapseTwo"
-              className="collapse"
-              aria-labelledby="headingTwo"
-              data-parent="#accordionSidebar"
-            ></div>
           </li>
           <li className="nav-item">
-            <a
-              className="nav-link collapsed"
-              href="#"
-              data-toggle="collapse"
-              data-target="#collapseUtilities"
-              aria-expanded="true"
-              aria-controls="collapseUtilities"
-            >
-              <i className="fas fa-fw fa-wrench"></i>
-              <span>Students</span>
+            <a className="nav-link collapsed" href="/students">
+              <PiStudentBold className="mx-2" />
+              Student
             </a>
-            <div
-              id="collapseUtilities"
-              className="collapse"
-              aria-labelledby="headingUtilities"
-              data-parent="#accordionSidebar"
-            >
-              <div className="bg-white py-2 collapse-inner rounded">
-                <h6 className="collapse-header">Custom Utilities:</h6>
-                <a className="collapse-item" href="utilities-color.html">
-                  Colors
-                </a>
-                <a className="collapse-item" href="utilities-border.html">
-                  Borders
-                </a>
-                <a className="collapse-item" href="utilities-animation.html">
-                  Animations
-                </a>
-                <a className="collapse-item" href="utilities-other.html">
-                  Other
-                </a>
-              </div>
-            </div>
           </li>
-          <hr className="sidebar-divider"></hr>
-          <div className="sidebar-heading">Addons</div>
           <li className="nav-item">
-            <a
-              className="nav-link collapsed"
-              href="#"
-              data-toggle="collapse"
-              data-target="#collapsePages"
-              aria-expanded="true"
-              aria-controls="collapsePages"
-            >
-              <i className="fas fa-fw fa-folder"></i>
-              <span>Pages</span>
-            </a>
-            <div
-              id="collapsePages"
-              className="collapse"
-              aria-labelledby="headingPages"
-              data-parent="#accordionSidebar"
-            >
-              <div className="bg-white py-2 collapse-inner rounded">
-                <h6 className="collapse-header">Login Screens:</h6>
-                <a className="collapse-item" href="login.html">
-                  Login
-                </a>
-                <a className="collapse-item" href="register.html">
-                  Register
-                </a>
-                <a className="collapse-item" href="forgot-password.html">
-                  Forgot Password
-                </a>
-                <div className="collapse-divider"></div>
-                <h6 className="collapse-header">Other Pages:</h6>
-                <a className="collapse-item" href="404.html">
-                  404 Page
-                </a>
-                <a className="collapse-item" href="blank.html">
-                  Blank Page
-                </a>
-              </div>
-            </div>
-          </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="charts.html">
-              <i className="fas fa-fw fa-chart-area"></i>
-              <span>Charts</span>
+            <a className="nav-link collapsed" href="/lectures">
+              <GiTeacher className="mx-2" />
+              Lectures
             </a>
           </li>
-
-          <li className="nav-item">
-            <a className="nav-link" href="tables.html">
-              <i className="fas fa-fw fa-table"></i>
-              <span>Tables</span>
-            </a>
-          </li>
-
           <hr className="sidebar-divider d-none d-md-block"></hr>
-
-          <div className="text-center d-none d-md-inline">
-            <button
-              className="rounded-circle border-0"
-              id="sidebarToggle"
-            ></button>
-          </div>
         </ul>
         {/* end of sidebar */}
-
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -232,7 +137,7 @@ function App() {
                       className="dropdown-item d-flex align-items-center"
                       href="#"
                     >
-                      <div className="mr-3">
+                      <div className="3">
                         <div className="icon-circle bg-primary">
                           <i className="fas fa-file-alt text-white"></i>
                         </div>
@@ -287,119 +192,6 @@ function App() {
                     </a>
                   </div>
                 </li>
-                <li className="nav-item dropdown no-arrow mx-1">
-                  <a
-                    className="nav-link dropdown-toggle"
-                    href="#"
-                    id="messagesDropdown"
-                    role="button"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i className="fas fa-envelope fa-fw"></i>
-                    <span className="badge badge-danger badge-counter">7</span>
-                  </a>
-                  <div
-                    className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="messagesDropdown"
-                  >
-                    <h6 className="dropdown-header">Message Center</h6>
-                    <a
-                      className="dropdown-item d-flex align-items-center"
-                      href="#"
-                    >
-                      <div className="dropdown-list-image mr-3">
-                        <img
-                          className="rounded-circle"
-                          src="img/undraw_profile_1.svg"
-                          alt="..."
-                        />
-                        <div className="status-indicator bg-success"></div>
-                      </div>
-                      <div className="font-weight-bold">
-                        <div className="text-truncate">
-                          Hi there! I am wondering if you can help me with a
-                          problem I've been having.
-                        </div>
-                        <div className="small text-gray-500">
-                          Emily Fowler · 58m
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      className="dropdown-item d-flex align-items-center"
-                      href="#"
-                    >
-                      <div className="dropdown-list-image mr-3">
-                        <img
-                          className="rounded-circle"
-                          src="img/undraw_profile_2.svg"
-                          alt="..."
-                        />
-                        <div className="status-indicator"></div>
-                      </div>
-                      <div>
-                        <div className="text-truncate">
-                          I have the photos that you ordered last month, how
-                          would you like them sent to you?
-                        </div>
-                        <div className="small text-gray-500">Jae Chun · 1d</div>
-                      </div>
-                    </a>
-                    <a
-                      className="dropdown-item d-flex align-items-center"
-                      href="#"
-                    >
-                      <div className="dropdown-list-image mr-3">
-                        <img
-                          className="rounded-circle"
-                          src="img/undraw_profile_3.svg"
-                          alt="..."
-                        />
-                        <div className="status-indicator bg-warning"></div>
-                      </div>
-                      <div>
-                        <div className="text-truncate">
-                          Last month's report looks great, I am very happy with
-                          the progress so far, keep up the good work!
-                        </div>
-                        <div className="small text-gray-500">
-                          Morgan Alvarez · 2d
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      className="dropdown-item d-flex align-items-center"
-                      href="#"
-                    >
-                      <div className="dropdown-list-image mr-3">
-                        <img
-                          className="rounded-circle"
-                          src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                          alt="..."
-                        />
-                        <div className="status-indicator bg-success"></div>
-                      </div>
-                      <div>
-                        <div className="text-truncate">
-                          Am I a good boy? The reason I ask is because someone
-                          told me that people say this to all dogs, even if they
-                          aren't good...
-                        </div>
-                        <div className="small text-gray-500">
-                          Chicken the Dog · 2w
-                        </div>
-                      </div>
-                    </a>
-                    <a
-                      className="dropdown-item text-center small text-gray-500"
-                      href="#"
-                    >
-                      Read More Messages
-                    </a>
-                  </div>
-                </li>
 
                 <div className="topbar-divider d-none d-sm-block"></div>
                 <li className="nav-item dropdown no-arrow">
@@ -428,14 +220,7 @@ function App() {
                       <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                       Profile
                     </a>
-                    <a className="dropdown-item" href="#">
-                      <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Settings
-                    </a>
-                    <a className="dropdown-item" href="#">
-                      <i className="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                      Activity Log
-                    </a>
+
                     <div className="dropdown-divider"></div>
                     <a
                       className="dropdown-item"
@@ -450,16 +235,9 @@ function App() {
                 </li>
               </ul>
             </nav>
-            <div className="container-fluid">
+            <div className="container-fluid centered">
               <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-                <a
-                  href="#"
-                  className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-                >
-                  <i className="fas fa-download fa-sm text-white-50"></i>{" "}
-                  Generate Report
-                </a>
               </div>
               <div className="row">
                 <div className="col-xl-3 col-md-6 mb-4">
@@ -468,10 +246,10 @@ function App() {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                            Earnings (Monthly)
+                            Proposal Requests
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            $40,000
+                            8
                           </div>
                         </div>
                         <div className="col-auto">
@@ -487,10 +265,10 @@ function App() {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Earnings (Annual)
+                            Students
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            $215,000
+                            6
                           </div>
                         </div>
                         <div className="col-auto">
@@ -506,25 +284,12 @@ function App() {
                       <div className="row no-gutters align-items-center">
                         <div className="col mr-2">
                           <div className="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Tasks
+                            Lectures
                           </div>
-                          <div className="row no-gutters align-items-center">
-                            <div className="col-auto">
-                              <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
-                                50%
-                              </div>
-                            </div>
-                            <div className="col">
-                              <div className="progress progress-sm mr-2">
-                                <div
-                                  className="progress-bar bg-info"
-                                  role="progressbar"
-                                  style={{ width: "50%" }}
-                                  aria-valuenow="50"
-                                  aria-valuemin="0"
-                                  aria-valuemax="100"
-                                ></div>
-                              </div>
+
+                          <div className="col-auto">
+                            <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                              14
                             </div>
                           </div>
                         </div>
@@ -535,25 +300,35 @@ function App() {
                     </div>
                   </div>
                 </div>
-                <div className="col-xl-3 col-md-6 mb-4">
-                  <div className="card border-left-warning shadow h-100 py-2">
-                    <div className="card-body">
-                      <div className="row no-gutters align-items-center">
-                        <div className="col mr-2">
-                          <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Pending Requests
-                          </div>
-                          <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            18
-                          </div>
-                        </div>
-                        <div className="col-auto">
-                          <i className="fas fa-comments fa-2x text-gray-300"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="proposal-section">
+                <h2 class="accepted">ACCEPTED PROPOSAL</h2>
+                <div class="proposal">
+                  <p>
+                    Rancang Bangun Aplikasi Pengajuan Proposal Skripsi di
+                    Fakultas Ilmu Komputer UPN Veteran Jakarta
+                  </p>
                 </div>
+              </div>
+              <div class="proposal-section">
+                <h2 class="pending">PENDING PROPOSAL</h2>
+                <div class="proposal">
+                  <p>
+                    Rancang Bangun Aplikasi Pengajuan Proposal Skripsi di
+                    Fakultas Ilmu Komputer UPN Veteran Jakarta
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="rejected">
+              <h2>REJECTED PROPOSAL</h2>
+              <div class="proposal">
+                <p>
+                  Rancang Bangun Aplikasi Pengajuan Proposal Skripsi di Fakultas
+                  Ilmu Komputer UPN Veteran Jakarta
+                </p>
               </div>
             </div>
           </div>

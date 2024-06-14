@@ -87,6 +87,13 @@ body {
   outline: 0 !important;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
@@ -514,7 +521,8 @@ mark,
 
 .img-fluid {
   max-width: 100%;
-  height: auto;
+  height: 200;
+  margin-left: 20%;
 }
 
 .img-thumbnail {
@@ -633,6 +641,30 @@ pre code {
   flex-wrap: wrap;
   margin-right: -0.75rem;
   margin-left: -0.75rem;
+}
+.rowr {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+.rowrr {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+.rowrr p {
+  margin: 0;
+  padding-left: 10px; /* Add padding to the left */
+  font-size: 16px;
+}
+.rounded {
+  border-radius: 50%;
 }
 
 .no-gutters {
@@ -2094,6 +2126,8 @@ textarea.form-control {
 
 .form-group {
   margin-bottom: 1rem;
+  border-radius: 50%;
+  /* border-radius: 25%; */
 }
 
 .form-text {
@@ -10229,6 +10263,21 @@ a:focus {
 #wrapper {
   display: flex;
 }
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
 
 #wrapper #content-wrapper {
   background-color: #f8f9fc;
@@ -10336,10 +10385,43 @@ a:focus {
   -webkit-animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
   animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
 }
+.container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.proposal-section {
+  width: 48%;
+}
+.proposal-section h2 {
+  text-align: center;
+  padding: 10px;
+  margin: 0;
+  color: white;
+}
+.accepted {
+  background-color: #28a745;
+}
+.pending {
+  background-color: #6c757d;
+}
+.rejected {
+  background-color: #dc3545;
+  text-align: center;
+  margin: 0 auto;
+  width: 48%;
+  padding: 10px;
+}
+.proposal {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
 .bg-gradient-primary {
-  background-color: #4e73df;
-  background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+  background-color: #ffd200;
+  background-image: linear-gradient(180deg, #ffd200 100%);
   background-size: cover;
 }
 
@@ -10783,6 +10865,84 @@ a:focus {
 
 .sidebar .nav-item.active .nav-link {
   font-weight: 700;
+}
+
+.button-plagiarism {
+  background: #f44336;
+  color: white;
+}
+.proposal-detail {
+  margin-bottom: 20px;
+}
+.proposal-detail h2 {
+  color: #ff1493;
+  margin-bottom: 10px;
+}
+.proposal-title {
+  background: #fff3cd;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.proposal-title span {
+  font-size: 18px;
+  font-weight: bold;
+}
+.proposal-title button {
+  background: #ffeb3b;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute; /* Added */
+  right: 5px;
+}
+
+.status button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.status .accept {
+  background: #4caf50;
+  color: white;
+}
+.status .reject {
+  background: #f44336;
+  color: white;
+}
+
+.submit button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #4caf50;
+  color: white;
+}
+
+.plagiarism-check {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+}
+.comment-section {
+  display: flex;
+  flex-direction: column;
+}
+.comment-section textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .sidebar .nav-item .collapse {
