@@ -3,7 +3,7 @@ import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
 import { CgDetailsMore } from "react-icons/cg";
 import { SiCodementor } from "react-icons/si";
-import { Searchbar } from "./Searchbar";
+import Searchbar from "./Searchbar";
 export default function Students() {
   return (
     <div id="wrapper">
