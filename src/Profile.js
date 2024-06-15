@@ -9,7 +9,7 @@ export default function Profile() {
           <div id="content">
             <Searchbar />
             <div class="card-profile">
-              <img src="image.png" alt="Profile Image" />
+              <img src="assets/images/logo.png" alt="Profile Image" />
               <h2>John Smith</h2>
               <p>Full Stack Developer</p>
               <p>Bay Area, San Francisco, CA</p>

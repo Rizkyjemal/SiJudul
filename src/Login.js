@@ -1,5 +1,20 @@
 export default function Login() {
   return (
+    <>
+      <div className="body-login">
+        <div class="login-container">
+          <img src="assets/images/logo.png" alt="User Icon" />
+          <h2>Login</h2>
+          <input type="text" placeholder="Username" required />
+          <input type="password" placeholder="Password" required />
+          <a href="/" class="button">
+            LOGIN
+          </a>
+          <a href="#">Forgot Password?</a>
+        </div>
+      </div>
+    </>
+    /*
     <div className="vh-100">
       <div className="container-fluid h-custom">
         <div className="row d-flex justify-content-center align-items-center h-100">
@@ -57,5 +72,6 @@ export default function Login() {
         </div>
       </div>
     </div>
+    */
   );
 }
