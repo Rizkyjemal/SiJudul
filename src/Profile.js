@@ -10,39 +10,42 @@ export default function Profile() {
             <Searchbar />
             <div class="card-profile">
               <img src="assets/images/logo.png" alt="Profile Image" />
-              <h2>John Smith</h2>
-              <p>Full Stack Developer</p>
-              <p>Bay Area, San Francisco, CA</p>
+              <h2>Dr.Widya Cholil</h2>
+              <p>Kepala Program Studi Informatika UPNVJ</p>
+              <p>Universitas Pembangunan Nasional Veteran Jakarta</p>
             </div>
 
             <div class="details-profile">
               <table>
                 <tr>
-                  <td>Full Name</td>
-                  <td>Johnatan Smith</td>
+                  <td>NIDN</td>
+                  <td>012345678</td>
                 </tr>
                 <tr>
                   <td>Email</td>
-                  <td>example@example.com</td>
+                  <td>widyacholil@gmail.com</td>
                 </tr>
                 <tr>
-                  <td>Phone</td>
-                  <td>(097) 234-5678</td>
+                  <td>Program Studi</td>
+                  <td>Informatika</td>
                 </tr>
                 <tr>
-                  <td>Mobile</td>
-                  <td>(098) 765-4321</td>
+                  <td>Kepakaran</td>
+                  <td>Data Science</td>
                 </tr>
                 <tr>
-                  <td>Address</td>
-                  <td>Bay Area, San Francisco, CA</td>
+                  <td>Kapasitas Bimbingan</td>
+                  <td>8</td>
+                </tr>
+                <tr>
+                  <td>Total Mahasiswa Bimbingan</td>
+                  <td>4</td>
                 </tr>
               </table>
               <div className="centered">
-                <button>Edit Profile</button>
-              </div>
-              <div className="centered">
-                <button>Logout</button>
+                <a href="/editprofile">
+                  <button>Edit Profile</button>
+                </a>
               </div>
             </div>
           </div>

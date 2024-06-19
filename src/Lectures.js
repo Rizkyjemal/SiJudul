@@ -1,11 +1,22 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import { getAllAdmin } from "./models/apiCall";
+import { useEffect, useState } from "react";
+
 export default function Lectures() {
+  const [count, setCount] = useState("");
+
+  // This useEffect runs once after the initial render
+  useEffect(() => {
+    console.log(getAllAdmin());
+    // This is the cleanup function, runs before the component unmounts
+    return () => {
+      console.log("Component will unmount");
+    };
+  }, []);
   return (
     <div id="wrapper">
-      {/* sidebar */}
       <Sidebar />
-      {/* end of sidebar */}
 
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
@@ -37,27 +48,30 @@ export default function Lectures() {
                       <tr>
                         <th>Nama Dosen</th>
                         <th>Posisi/Jabatan</th>
-                        <th>Nomor Induk</th>
+                        <th>Email</th>
+                        <th>NIDN</th>
                         <th>Kapasitas Bimbingan</th>
-                        <th>No Telepon</th>
+                        <th>Program Studi</th>
                       </tr>
                     </thead>
                     <tfoot>
                       <tr>
                         <th>Nama Dosen</th>
                         <th>Posisi/Jabatan</th>
-                        <th>Nomor Induk</th>
+                        <th>Email</th>
+                        <th>NIDN</th>
                         <th>Kapasitas Bimbingan</th>
-                        <th>No Telepon</th>
+                        <th>Program Studi</th>
                       </tr>
                     </tfoot>
                     <tbody>
                       <tr>
                         <td>Dr. Widya Cholil, S.Kom., M.I.T.</td>
                         <td>Dosen S1 Informatika / Kaprodi S1 Informatika</td>
+                        <td>widyacholil@gmail.com</td>
                         <td>221112080</td>
                         <td>10</td>
-                        <td>+62 895-3206-97542</td>
+                        <td>Informatika</td>
                       </tr>
                     </tbody>
                   </table>

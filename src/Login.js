@@ -10,7 +10,6 @@ export default function Login() {
           <a href="/" class="button">
             LOGIN
           </a>
-          <a href="#">Forgot Password?</a>
         </div>
       </div>
     </>

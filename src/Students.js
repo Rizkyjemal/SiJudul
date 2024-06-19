@@ -14,9 +14,7 @@ export default function Students() {
           <Searchbar />
           <div class="container-fluid">
             <h1 class="h3 mb-2 text-gray-800">Daftar Mahasiswa Bimbingan</h1>
-            <p class="mb-4">
-              Berikut daftar mahasiswa bimbingan dosen pembimbing:
-            </p>
+            <p class="mb-4">Berikut list daftar mahasiswa bimbingan:</p>
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
@@ -54,12 +52,6 @@ export default function Students() {
                         <p>DR.WIDYA CHolil</p>
                       </div>
                     </div>
-                  </div>
-
-                  <a></a>
-
-                  <div class="comment-section">
-                    <textarea placeholder="Berikan Komentar..."></textarea>
                   </div>
                 </div>
               </div>
@@ -101,12 +93,6 @@ export default function Students() {
                         <p>DR.WIDYA CHolil</p>
                       </div>
                     </div>
-                  </div>
-
-                  <a></a>
-
-                  <div class="comment-section">
-                    <textarea placeholder="Berikan Komentar..."></textarea>
                   </div>
                 </div>
               </div>

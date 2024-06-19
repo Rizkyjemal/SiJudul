@@ -58,9 +58,17 @@ export default function Lectures() {
                           Pengajuan Judul Proposal Skripsi Mahasiswa Informatika
                           UPNVJ Menggunakan Teknologi React JS
                         </td>
-                        {/* <div className="danger"> */}
                         <td className="bg-success text-white">ACCEPTED</td>
-                        {/* </div> */}
+                      </tr>
+                      <tr>
+                        <td>Rizky Jemal</td>
+                        <td>2010511055</td>
+                        <td>
+                          Pembuatan Website Management System Pada Aplikasi
+                          Pengajuan Judul Proposal Skripsi Mahasiswa Informatika
+                          UPNVJ Menggunakan Teknologi React JS
+                        </td>
+                        <td className="bg-secondary text-white">PENDING</td>
                       </tr>
                       <tr>
                         <td>Rizky Jemal</td>

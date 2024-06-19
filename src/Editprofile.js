@@ -5,10 +5,7 @@ export default function Editprofile() {
   return (
     <>
       <div id="wrapper">
-        {/* sidebar */}
         <Sidebar />
-        {/* end of sidebar */}
-
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Searchbar />
@@ -19,21 +16,17 @@ export default function Editprofile() {
                     <div class="card-body">
                       <div class="account-settings">
                         <div class="user-profile">
-                          <div class="user-avatar">
+                          <div class="user-avatar centered">
                             <img
-                              src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                              src="assets/images/logo.png"
                               alt="Maxwell Admin"
                             />
                           </div>
-                          <h5 class="user-name">Rizky Jemal</h5>
-                          <h6 class="user-email">rizkyjemal@gmail.com</h6>
-                        </div>
-                        <div class="about">
-                          <h5>About</h5>
-                          <p>
-                            I'm Yuki. Full Stack Designer I enjoy creating
-                            user-centric, delightful and human experiences.
-                          </p>
+                          <br></br>
+                          <h5 class="user-name text-center">Rizky Jemal</h5>
+                          <h6 class="user-email text-center">
+                            rizkyjemal@gmail.com
+                          </h6>
                         </div>
                       </div>
                     </div>
@@ -59,7 +52,7 @@ export default function Editprofile() {
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div class="form-group">
-                            <label for="eMail">Email</label>
+                            <label for="eMail">NIDN</label>
                             <input
                               type="email"
                               class="form-control"
@@ -70,7 +63,7 @@ export default function Editprofile() {
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div class="form-group">
-                            <label for="phone">Phone</label>
+                            <label for="phone">Email</label>
                             <input
                               type="text"
                               class="form-control"
@@ -81,7 +74,7 @@ export default function Editprofile() {
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div class="form-group">
-                            <label for="website">Website URL</label>
+                            <label for="website">Program Studi</label>
                             <input
                               type="url"
                               class="form-control"
@@ -92,12 +85,9 @@ export default function Editprofile() {
                         </div>
                       </div>
                       <div class="row gutters">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                          <h6 class="mt-3 mb-2 text-primary">Address</h6>
-                        </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div class="form-group">
-                            <label for="Street">Street</label>
+                            <label for="Street">Kapasitas Bimbingan</label>
                             <input
                               type="name"
                               class="form-control"
@@ -108,34 +98,12 @@ export default function Editprofile() {
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div class="form-group">
-                            <label for="ciTy">City</label>
+                            <label for="ciTy">Kepakaran</label>
                             <input
                               type="name"
                               class="form-control"
                               id="ciTy"
                               placeholder="Enter City"
-                            />
-                          </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div class="form-group">
-                            <label for="sTate">State</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="sTate"
-                              placeholder="Enter State"
-                            />
-                          </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div class="form-group">
-                            <label for="zIp">Zip Code</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="zIp"
-                              placeholder="Zip Code"
                             />
                           </div>
                         </div>
