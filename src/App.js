@@ -52,9 +52,9 @@ function App() {
               </div>
             </div>
 
-            <div class="dashboard">
-              <div class="tables-section">
-                <div class="table-container">
+            <div className="dashboard">
+              <div className="tables-section">
+                <div className="table-container">
                   <h3 className="accepted-title">Accepted Proposals</h3>
                   <table className="accepted">
                     <thead>
@@ -73,7 +73,7 @@ function App() {
                     </tbody>
                   </table>
                 </div>
-                <div class="table-container">
+                <div className="table-container">
                   <h3 className="rejected-title">Rejected Proposals</h3>
                   <table className="rejected">
                     <thead>
@@ -92,7 +92,7 @@ function App() {
                     </tbody>
                   </table>
                 </div>
-                <div class="table-container">
+                <div className="table-container">
                   <h3 className="pending-title">Pending Proposals</h3>
                   <table className="pending">
                     <thead>

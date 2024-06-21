@@ -18,7 +18,15 @@ export default function Lectures() {
               Halaman ini berisi list daftar pengajuan judul proposal mahasiswa
               Informatika.
             </p>
-
+            <a
+              href="#"
+              class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+            >
+              <i class="fas fa-download fa-sm text-white-50"></i> Edit Data
+              Proposal Mahasiswa
+            </a>
+            <br></br>
+            <br></br>
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">

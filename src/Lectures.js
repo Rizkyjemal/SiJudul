@@ -7,16 +7,15 @@ export default function Lectures() {
   const [count, setCount] = useState("");
   const [dosen, setDosen] = useState([]);
 
-  // This useEffect runs once after the initial render
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getAllDosen()
-      setDosen(res.result)
-    }
-    fetchData()
+      const res = await getAllDosen();
+      setDosen(res.result);
+    };
+    fetchData();
   }, []);
 
-  console.log(dosen)
+  console.log(dosen);
 
   return (
     <div id="wrapper">
@@ -33,7 +32,14 @@ export default function Lectures() {
               Halaman ini berisi list Dosen Pembimbing Proposal Skripsi yang
               tersedia untuk membimbing mahasiswa semester ini.
             </p>
-
+            <a
+              href="#"
+              class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+            >
+              <i class="fas fa-download fa-sm text-white-50"></i> Add Data Dosen
+            </a>
+            <br></br>
+            <br></br>
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">
@@ -60,14 +66,14 @@ export default function Lectures() {
                     </thead>
                     <tbody>
                       {dosen?.map((item, index) => (
-                      <tr>
-                        <td>{item?.name}</td>
-                        <td>Dosen {item?.jabatan}</td>
-                        <td>{item?.email}</td>
-                        <td>{item?.nidn}</td>
-                        <td>{item?.kapasitas}</td>
-                        <td>{item?.prodi}</td>
-                      </tr>
+                        <tr>
+                          <td>{item?.name}</td>
+                          <td>Dosen {item?.jabatan}</td>
+                          <td>{item?.email}</td>
+                          <td>{item?.nidn}</td>
+                          <td>{item?.kapasitas}</td>
+                          <td>{item?.prodi}</td>
+                        </tr>
                       ))}
                     </tbody>
                   </table>

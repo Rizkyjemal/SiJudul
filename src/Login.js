@@ -18,6 +18,11 @@ export default function Login() {
     } else {
       modal.hide();
     }
+
+    // Cleanup function to hide modal when component unmounts
+    return () => {
+      modal.hide();
+    };
   }, [loginFailed]);
 
   const handleLogin = async (e) => {
@@ -39,7 +44,6 @@ export default function Login() {
   };
 
   const closeModal = () => {
-    console.log("fsfs");
     const modalElement = document.getElementById("loginFailModal");
     const modal = new window.bootstrap.Modal(modalElement);
     modal.hide();
