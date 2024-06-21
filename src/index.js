@@ -13,6 +13,7 @@ import Penambahan from "./Penambahan";
 import Edit from "./Edit";
 import Profile from "./Profile";
 import Editprofile from "./Editprofile";
+import Tambahdosen from "./Tambahdosen";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: "/editprofile",
     element: <Editprofile />,
+  },
+  {
+    path: "tambahdosen",
+    element: <Tambahdosen />,
   },
 ]);
 

@@ -8,39 +8,41 @@ export default function Profile() {
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Searchbar />
-            <div class="card-profile">
+            <div className="card-profile">
               <img src="assets/images/logo.png" alt="Profile Image" />
               <h2>Dr.Widya Cholil</h2>
               <p>Kepala Program Studi Informatika UPNVJ</p>
               <p>Universitas Pembangunan Nasional Veteran Jakarta</p>
             </div>
 
-            <div class="details-profile">
+            <div className="details-profile">
               <table>
-                <tr>
-                  <td>NIDN</td>
-                  <td>012345678</td>
-                </tr>
-                <tr>
-                  <td>Email</td>
-                  <td>widyacholil@gmail.com</td>
-                </tr>
-                <tr>
-                  <td>Program Studi</td>
-                  <td>Informatika</td>
-                </tr>
-                <tr>
-                  <td>Kepakaran</td>
-                  <td>Data Science</td>
-                </tr>
-                <tr>
-                  <td>Kapasitas Bimbingan</td>
-                  <td>8</td>
-                </tr>
-                <tr>
-                  <td>Total Mahasiswa Bimbingan</td>
-                  <td>4</td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>NIDN</td>
+                    <td>012345678</td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td>widyacholil@gmail.com</td>
+                  </tr>
+                  <tr>
+                    <td>Program Studi</td>
+                    <td>Informatika</td>
+                  </tr>
+                  <tr>
+                    <td>Kepakaran</td>
+                    <td>Data Science</td>
+                  </tr>
+                  <tr>
+                    <td>Kapasitas Bimbingan</td>
+                    <td>8</td>
+                  </tr>
+                  <tr>
+                    <td>Total Mahasiswa Bimbingan</td>
+                    <td>4</td>
+                  </tr>
+                </tbody>
               </table>
               <div className="centered">
                 <a href="/editprofile">

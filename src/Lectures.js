@@ -24,35 +24,36 @@ export default function Lectures() {
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <Searchbar />
-          <div class="container-fluid">
-            <h1 class="h3 mb-2 text-gray-800">
+          <div className="container-fluid">
+            <h1 className="h3 mb-2 text-gray-800">
               Data Dosen Pembimbing Proposal Skripsi
             </h1>
-            <p class="mb-4">
+            <p className="mb-4">
               Halaman ini berisi list Dosen Pembimbing Proposal Skripsi yang
               tersedia untuk membimbing mahasiswa semester ini.
             </p>
             <a
-              href="#"
-              class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+              href="/tambahdosen"
+              className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
             >
-              <i class="fas fa-download fa-sm text-white-50"></i> Add Data Dosen
+              <i className="fas fa-download fa-sm text-white-50"></i> Add Data
+              Dosen
             </a>
             <br></br>
             <br></br>
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
+            <div className="card shadow mb-4">
+              <div className="card-header py-3">
+                <h6 className="m-0 font-weight-bold text-primary">
                   Data Dosen Pembimbing
                 </h6>
               </div>
-              <div class="card-body">
-                <div class="table-responsive">
+              <div className="card-body">
+                <div className="table-responsive">
                   <table
-                    class="table table-bordered"
+                    className="table table-bordered"
                     id="dataTable"
                     width="100%"
-                    cellspacing="0"
+                    cellSpacing="0"
                   >
                     <thead>
                       <tr>
@@ -66,7 +67,7 @@ export default function Lectures() {
                     </thead>
                     <tbody>
                       {dosen?.map((item, index) => (
-                        <tr>
+                        <tr key={index}>
                           <td>{item?.name}</td>
                           <td>Dosen {item?.jabatan}</td>
                           <td>{item?.email}</td>

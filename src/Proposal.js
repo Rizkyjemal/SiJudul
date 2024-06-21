@@ -1,6 +1,19 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import { getAllPengajuan } from "./models/apiCall";
+import { useEffect, useState } from "react";
 export default function Lectures() {
+  const [pengajuan, setPengajuan] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllPengajuan();
+      console.log(res);
+      setPengajuan(res.result);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div id="wrapper">
       {/* sidebar */}
@@ -10,36 +23,36 @@ export default function Lectures() {
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <Searchbar />
-          <div class="container-fluid">
-            <h1 class="h3 mb-2 text-gray-800">
+          <div className="container-fluid">
+            <h1 className="h3 mb-2 text-gray-800">
               Daftar Pengajuan Judul Proposal Mahasiswa
             </h1>
-            <p class="mb-4">
+            <p className="mb-4">
               Halaman ini berisi list daftar pengajuan judul proposal mahasiswa
               Informatika.
             </p>
             <a
               href="#"
-              class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+              className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
             >
-              <i class="fas fa-download fa-sm text-white-50"></i> Edit Data
+              <i className="fas fa-download fa-sm text-white-50"></i> Edit Data
               Proposal Mahasiswa
             </a>
             <br></br>
             <br></br>
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
+            <div className="card shadow mb-4">
+              <div className="card-header py-3">
+                <h6 className="m-0 font-weight-bold text-primary">
                   Daftar Ajuan Judul Proposal
                 </h6>
               </div>
-              <div class="card-body">
-                <div class="table-responsive">
+              <div className="card-body">
+                <div className="table-responsive">
                   <table
-                    class="table table-bordered"
+                    className="table table-bordered"
                     id="dataTable"
                     width="100%"
-                    cellspacing="0"
+                    cellSpacing="0"
                   >
                     <thead>
                       <tr>
@@ -49,45 +62,27 @@ export default function Lectures() {
                         <th>Status Pengajuan</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Nama Mahasiswa</th>
-                        <th>NIM</th>
-                        <th>Judul Proposal</th>
-                        <th>Status Pengajuan</th>
-                      </tr>
-                    </tfoot>
                     <tbody>
-                      <tr>
-                        <td>Rizky Jemal</td>
-                        <td>2010511055</td>
-                        <td>
-                          Pembuatan Website Management System Pada Aplikasi
-                          Pengajuan Judul Proposal Skripsi Mahasiswa Informatika
-                          UPNVJ Menggunakan Teknologi React JS
-                        </td>
-                        <td className="bg-success text-white">ACCEPTED</td>
-                      </tr>
-                      <tr>
-                        <td>Rizky Jemal</td>
-                        <td>2010511055</td>
-                        <td>
-                          Pembuatan Website Management System Pada Aplikasi
-                          Pengajuan Judul Proposal Skripsi Mahasiswa Informatika
-                          UPNVJ Menggunakan Teknologi React JS
-                        </td>
-                        <td className="bg-secondary text-white">PENDING</td>
-                      </tr>
-                      <tr>
-                        <td>Rizky Jemal</td>
-                        <td>2010511055</td>
-                        <td>
-                          Pembuatan Website Management System Pada Aplikasi
-                          Pengajuan Judul Proposal Skripsi Mahasiswa Informatika
-                          UPNVJ Menggunakan Teknologi React JS
-                        </td>
-                        <td className="bg-danger text-white">REJECTED</td>
-                      </tr>
+                      {pengajuan?.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item?.mahasiswa.name}</td>
+                          <td>{item?.mahasiswa.nim}</td>
+                          <td>{item?.judul}</td>
+                          <td
+                            className={
+                              item.status_acc == "Pending"
+                                ? "bg-secondary text-white"
+                                : item.status_acc == "Approved"
+                                ? "bg-success text-white"
+                                : item.status_acc == "Rejected"
+                                ? "bg-danger text-white"
+                                : ""
+                            }
+                          >
+                            {item?.status_acc}
+                          </td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

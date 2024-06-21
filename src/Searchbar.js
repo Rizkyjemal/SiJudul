@@ -102,7 +102,7 @@ export default function Searchbar() {
               </span>
               <img
                 className="img-profile rounded-circle"
-                src="assets/images/logo.png"
+                src="assets/images/profile.png"
               />
             </a>
             <div

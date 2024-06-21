@@ -2,8 +2,31 @@ import logo from "./logo.svg";
 import "./App.css";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import { getAllPengajuan } from "./models/apiCall";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [pengajuan, setPengajuan] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getAllPengajuan();
+      console.log(res);
+      setPengajuan(res.result);
+    };
+    fetchData();
+  }, []);
+
+  const acceptedProposals = pengajuan.filter(
+    (item) => item.status_acc === "Approved"
+  );
+  const pendingProposals = pengajuan.filter(
+    (item) => item.status_acc === "Pending"
+  );
+  const rejectedProposals = pengajuan.filter(
+    (item) => item.status_acc === "Rejected"
+  );
+
   return (
     <div className="App">
       <div id="wrapper">
@@ -25,7 +48,7 @@ function App() {
                             Proposal Requests
                           </div>
                           <div className="h5 mb-0 font-weight-bold text-gray-800">
-                            8
+                            {pengajuan.length}
                           </div>
                         </div>
                       </div>
@@ -59,17 +82,17 @@ function App() {
                   <table className="accepted">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Date</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Judul Proposal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Proposal Title 1</td>
-                        <td>2024-06-18</td>
-                      </tr>
+                      {acceptedProposals.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.mahasiswa.name}</td>
+                          <td>{item.judul}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -78,17 +101,17 @@ function App() {
                   <table className="rejected">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Date</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Judul Proposal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>2</td>
-                        <td>Proposal Title 2</td>
-                        <td>2024-06-17</td>
-                      </tr>
+                      {rejectedProposals.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.mahasiswa.name}</td>
+                          <td>{item.judul}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -97,17 +120,17 @@ function App() {
                   <table className="pending">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Date</th>
+                        <th>Nama Mahasiswa</th>
+                        <th>Judul Proposal</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>3</td>
-                        <td>Proposal Title 3</td>
-                        <td>2024-06-16</td>
-                      </tr>
+                      {pendingProposals.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.mahasiswa.name}</td>
+                          <td>{item.judul}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>

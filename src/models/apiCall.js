@@ -33,10 +33,30 @@ export const login = async (email, password) => {
 
 export const getAllDosen = async () => {
   try {
-    const res = await requestWithHeaders.get("/dosen/")
+    const res = await requestWithHeaders.get("/dosen/");
     // console.log(res.data)
-    return res.data
+    return res.data;
   } catch (error) {
-    return(error?.message)
+    return error?.message;
   }
-}
+};
+
+export const getAllPengajuan = async () => {
+  try {
+    const res = await requestWithHeaders.get("/pengajuan/");
+    // console.log(res.data)
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
+
+export const getAllStudents = async () => {
+  try {
+    const res = await requestWithHeaders.get("/mahasiswa/");
+    // console.log(res.data)
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
