@@ -8,7 +8,7 @@ export const request = axios.create({
   baseURL: BASE_URL,
 });
 
-export const adminrequest = axios.create({
+export const requestWithHeaders = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${TOKEN}`,

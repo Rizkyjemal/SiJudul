@@ -8,11 +8,10 @@ export default function Lectures() {
 
   // This useEffect runs once after the initial render
   useEffect(() => {
-    console.log(getAllAdmin());
-    // This is the cleanup function, runs before the component unmounts
-    return () => {
-      console.log("Component will unmount");
-    };
+    // console.log(getAllAdmin());
+    // return () => {
+    //   console.log("Component will unmount");
+    // };
   }, []);
   return (
     <div id="wrapper">
