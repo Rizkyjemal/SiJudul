@@ -1,18 +1,23 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllAdmin } from "./models/apiCall";
+import { getAllAdmin, getAllDosen } from "./models/apiCall";
 import { useEffect, useState } from "react";
 
 export default function Lectures() {
   const [count, setCount] = useState("");
+  const [dosen, setDosen] = useState([]);
 
   // This useEffect runs once after the initial render
   useEffect(() => {
-    // console.log(getAllAdmin());
-    // return () => {
-    //   console.log("Component will unmount");
-    // };
+    const fetchData = async () => {
+      const res = await getAllDosen()
+      setDosen(res.result)
+    }
+    fetchData()
   }, []);
+
+  console.log(dosen)
+
   return (
     <div id="wrapper">
       <Sidebar />
@@ -53,25 +58,17 @@ export default function Lectures() {
                         <th>Program Studi</th>
                       </tr>
                     </thead>
-                    <tfoot>
-                      <tr>
-                        <th>Nama Dosen</th>
-                        <th>Posisi/Jabatan</th>
-                        <th>Email</th>
-                        <th>NIDN</th>
-                        <th>Kapasitas Bimbingan</th>
-                        <th>Program Studi</th>
-                      </tr>
-                    </tfoot>
                     <tbody>
+                      {dosen?.map((item, index) => (
                       <tr>
-                        <td>Dr. Widya Cholil, S.Kom., M.I.T.</td>
-                        <td>Dosen S1 Informatika / Kaprodi S1 Informatika</td>
-                        <td>widyacholil@gmail.com</td>
-                        <td>221112080</td>
-                        <td>10</td>
-                        <td>Informatika</td>
+                        <td>{item?.name}</td>
+                        <td>Dosen {item?.jabatan}</td>
+                        <td>{item?.email}</td>
+                        <td>{item?.nidn}</td>
+                        <td>{item?.kapasitas}</td>
+                        <td>{item?.prodi}</td>
                       </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
