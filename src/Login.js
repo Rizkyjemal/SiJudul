@@ -75,7 +75,6 @@ export default function Login() {
           </button>
         </div>
 
-        {/* Modal for login failure */}
         <div
           className="modal fade"
           id="loginFailModal"

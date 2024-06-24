@@ -7,12 +7,22 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [pengajuan, setPengajuan] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getAllPengajuan();
-      console.log(res);
-      setPengajuan(res.result);
+      try {
+        const res = await getAllPengajuan();
+        console.log("API Response:", res);
+        if (Array.isArray(res.result)) {
+          setPengajuan(res.result);
+        } else {
+          setError("Unexpected API response format");
+        }
+      } catch (error) {
+        console.error("Error fetching pengajuan data:", error);
+        setError("Failed to fetch data");
+      }
     };
     fetchData();
   }, []);
@@ -73,6 +83,7 @@ function App() {
                   </div>
                 </div>
               </div>
+              {error && <div className="alert alert-danger">{error}</div>}
             </div>
 
             <div className="dashboard">
