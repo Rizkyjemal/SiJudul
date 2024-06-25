@@ -14,12 +14,16 @@ export default function Tambahdosen() {
     kepakaran: '',
     jabatan: '',
     password: '',
+    image: null
   });
 
   const handleChange = (e) => {
     let { name, value } = e.target;
     if (name == "kapasitas") {
       value = parseInt(value, 10)
+    }
+    if (name === "image") {
+      value = e.target.files[0];
     }
     setFormData((prevData) => ({
       ...prevData,
@@ -29,7 +33,11 @@ export default function Tambahdosen() {
 
 
   const handleSubmit = async () => {
-    await createDosen(formData)
+    const form = new FormData();
+    for (const key in formData) {
+      form.append(key, formData[key]);
+    }
+    await createDosen(form);
   };
 
   return (
@@ -182,6 +190,18 @@ export default function Tambahdosen() {
                             className="form-control"
                             id="Street"
                             placeholder="GsdXvcSHdah3"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div className="form-group">
+                          <label htmlFor="image">Upload Image</label>
+                          <input
+                            type="file"
+                            name="image"
+                            onChange={handleChange}
+                            className="form-control"
+                            id="image"
                           />
                         </div>
                       </div>
