@@ -63,7 +63,8 @@ export default function Login() {
 
         if (result !== 401) {
           setLoginFailed(false);
-          localStorage.setItem("auth", result);
+          console.log(result);
+          localStorage.setItem("auth",JSON.stringify(result));
           localStorage.setItem("token", result.token);
           // console.log(result,"ress");
 

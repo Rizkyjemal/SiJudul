@@ -92,7 +92,7 @@ export const getAllPengajuan = async () => {
   }
 };
 
-export const getAllStudents = async ({ id }) => {
+export const getAllStudentsBimbingan = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(
       `/dosen/mahasiswa-bimbingan/${id}`
@@ -127,8 +127,8 @@ export const getPengajuanById = async ({ id }) => {
 export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   try {
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
-      statusAcc,
-      rejectedNote,
+      status_acc : statusAcc,
+      rejected_note : rejectedNote,
     });
     return res.data;
   } catch (error) {
@@ -147,3 +147,12 @@ export const checkSimilarity = async ({ judul }) => {
   }
 };
 
+export const getAllStudents = async () => {
+  try {
+    const res = await request.get(`/mahasiswa/`);
+    // console.log(res.data)
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};

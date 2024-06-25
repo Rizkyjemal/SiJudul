@@ -87,17 +87,7 @@ export default function Editprofile() {
                         </div>
                       </div>
                       <div className="row gutters">
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="Street">Kapasitas Bimbingan</label>
-                            <input
-                              type="name"
-                              className="form-control"
-                              id="Street"
-                              placeholder="Enter Street"
-                            />
-                          </div>
-                        </div>
+                        
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="ciTy">Kepakaran</label>

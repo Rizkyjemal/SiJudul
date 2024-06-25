@@ -5,7 +5,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import { SiCodementor } from "react-icons/si";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
-import { getAllStudents } from "./models/apiCall";
+import { getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function Students() {
@@ -17,10 +17,18 @@ export default function Students() {
     const authObject = JSON.parse(jsonString);
     const userId = authObject.data.id;
 
+    const roles = authObject.roles;
+    const isAdmin =  roles.includes("admin");
+   
     const fetchData = async () => {
-      const res = await getAllStudents({id:userId});
-      // console.log(res,"api");
-      setMahasiswa(res.mahasiswa_list);
+      if(isAdmin){
+        const res = await getAllStudents();
+        setMahasiswa(res.result);
+      }else{
+        const res = await getAllStudentsBimbingan({id:userId});
+        setMahasiswa(res.mahasiswa_list);
+      }
+      
     };
     fetchData();
   }, []);
