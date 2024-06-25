@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllPengajuan, getPengajuanById } from "./models/apiCall";
+import { getPengajuanById } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,12 +10,12 @@ export default function Detailstudent() {
 
   useEffect(() => {
     const currentUrl = window.location.href;
-    const segments = currentUrl.split('/');
+    const segments = currentUrl.split("/");
     const mahasiswaId = segments[segments.length - 1];
 
     const fetchData = async () => {
-      const res = await getPengajuanById({id:mahasiswaId});
-      console.log(res,"api");
+      const res = await getPengajuanById({ id: mahasiswaId });
+      console.log(res, "api");
       setPengajuanList(res.result);
     };
     fetchData();
@@ -24,12 +24,10 @@ export default function Detailstudent() {
   const handleRowClick = (id) => {
     navigate(`/approval/${id}`);
   };
+
   return (
     <div id="wrapper">
-      {/* sidebar */}
       <Sidebar />
-      {/* end of sidebar */}
-
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <Searchbar />
@@ -40,7 +38,6 @@ export default function Detailstudent() {
             <p className="mb-4">
               Halaman ini berisi list history pengajuan mahasiswa bimbingan.
             </p>
-
             <div className="card shadow mb-4">
               <div className="card-header py-3">
                 <h6 className="m-0 font-weight-bold text-primary">
@@ -59,15 +56,17 @@ export default function Detailstudent() {
                       <tr>
                         <th>Judul Proposal</th>
                         <th>Status Pengajuan</th>
-                        {/* <th>Judul Proposal</th>
-                        <th>Status Pengajuan</th> */}
                       </tr>
                     </thead>
                     <tbody>
-                    {pengajuanList?.map((item, index) => (
-                      <tr key={index}  onClick={() => handleRowClick(item?.id)}>
-                        <td>{item.judul}</td>
-                        <td
+                      {pengajuanList?.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="clickable-row"
+                          onClick={() => handleRowClick(item?.id)}
+                        >
+                          <td>{item.judul}</td>
+                          <td
                             className={
                               item.status_acc === "Pending"
                                 ? "bg-secondary text-white centered"
@@ -80,8 +79,8 @@ export default function Detailstudent() {
                           >
                             {item?.status_acc}
                           </td>
-                       
-                      </tr>))}
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -98,6 +97,11 @@ export default function Detailstudent() {
           </div>
         </footer>
       </div>
+      <style jsx>{`
+        .clickable-row {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 }

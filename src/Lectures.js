@@ -1,10 +1,11 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllAdmin, getAllDosen } from "./models/apiCall";
+import { getAllDosen } from "./models/apiCall";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Lectures() {
-  const [count, setCount] = useState("");
+  const navigate = useNavigate();
   const [dosen, setDosen] = useState([]);
 
   useEffect(() => {
@@ -15,7 +16,9 @@ export default function Lectures() {
     fetchData();
   }, []);
 
-  console.log(dosen);
+  const handleRowClick = (id) => {
+    navigate(`/dosen/${id}`);
+  };
 
   return (
     <div id="wrapper">
@@ -67,7 +70,11 @@ export default function Lectures() {
                     </thead>
                     <tbody>
                       {dosen?.map((item, index) => (
-                        <tr key={index}>
+                        <tr
+                          key={index}
+                          className="clickable-row"
+                          onClick={() => handleRowClick(item?.id)}
+                        >
                           <td>{item?.name}</td>
                           <td>Dosen {item?.jabatan}</td>
                           <td>{item?.email}</td>
@@ -92,6 +99,11 @@ export default function Lectures() {
           </div>
         </footer>
       </div>
+      <style jsx>{`
+        .clickable-row {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 }

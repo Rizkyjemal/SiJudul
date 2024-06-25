@@ -8,6 +8,7 @@ export default function Lectures() {
   const navigate = useNavigate();
 
   const [pengajuan, setPengajuan] = useState([]);
+
   const handleRowClick = (id) => {
     navigate(`/approval/${id}`);
   };
@@ -77,6 +78,7 @@ export default function Lectures() {
                       {pengajuan?.map((item, index) => (
                         <tr
                           key={index}
+                          className="clickable-row"
                           onClick={() => handleRowClick(item?.id)}
                         >
                           <td>{item?.mahasiswa.name}</td>
@@ -113,6 +115,11 @@ export default function Lectures() {
           </div>
         </footer>
       </div>
+      <style jsx>{`
+        .clickable-row {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 }
