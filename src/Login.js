@@ -38,13 +38,15 @@ export default function Login() {
 
     // Validate email
     if (!validator.isEmail(email)) {
+      console.log("dosen")
       try {
         result = await loginDosen(email, password);
 
         if (result !== 401) {
           setLoginFailed(false);
-          localStorage.setItem("auth", result);
+          localStorage.setItem("auth",JSON.stringify(result));
           localStorage.setItem("token", result.token);
+          // console.log(result,"ress");
           navigate("/");
         } else {
           setLoginFailed(true);
@@ -55,6 +57,7 @@ export default function Login() {
         setErrorMessage("Invalid Email Or Password");
       }
     } else {
+
       try {
         result = await loginAdmin(email, password);
 
@@ -62,6 +65,8 @@ export default function Login() {
           setLoginFailed(false);
           localStorage.setItem("auth", result);
           localStorage.setItem("token", result.token);
+          // console.log(result,"ress");
+
           navigate("/");
         } else {
           setLoginFailed(true);

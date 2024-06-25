@@ -7,17 +7,27 @@ import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import { getAllStudents } from "./models/apiCall";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Students() {
+  const navigate = useNavigate();
   const [mahasiswa, setMahasiswa] = useState([]);
 
   useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    const userId = authObject.data.id;
+
     const fetchData = async () => {
-      // const res = await getAllStudents({id});
-      // console.log(res);
-      // setMahasiswa(res.result);
+      const res = await getAllStudents({id:userId});
+      // console.log(res,"api");
+      setMahasiswa(res.mahasiswa_list);
     };
     fetchData();
   }, []);
+
+  const handleRowClick = (id) => {
+    navigate(`/detailstudent/${id}`);
+  };
 
   return (
     <div id="wrapper">
@@ -31,11 +41,11 @@ export default function Students() {
             </h1>
             <p className="mb-4">Berikut list daftar mahasiswa bimbingan:</p>
             <div className="card shadow mb-4">
-              <div className="card-header py-3">
+              {/* <div className="card-header py-3">
                 <h6 className="m-0 font-weight-bold text-primary">
-                  Rizky Jemal Safryan - 2010511055
+                  List Mahasiswa
                 </h6>
-              </div>
+              </div> */}
               <div className="card-body">
                 <div className="table-responsive">
                   <table
@@ -54,13 +64,14 @@ export default function Students() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                    {mahasiswa?.map((item, index) => (
+                      <tr key={index}  onClick={() => handleRowClick(item?.id)}>
+                        <td>{item.name}</td>
+                        <td>{item.nim}</td>
+                        <td>{item.prodi}</td>
+                        <td>{item.angkatan}</td>
+                        <td>{item.email}</td>
+                      </tr>))}
                     </tbody>
                   </table>
                 </div>

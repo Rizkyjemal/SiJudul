@@ -11,7 +11,7 @@ export const request = axios.create({
 export const requestWithHeaders = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: `Bearer ${TOKEN}`,
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
   },
 });
 
@@ -91,7 +91,7 @@ export const getProfileDosen = async ({ id }) => {
 
 export const getPengajuanById = async ({ id }) => {
   try {
-    const res = await requestWithHeaders.get(`/pengajuan/${id}`);
+    const res = await requestWithHeaders.get(`pengajuan/mahasiswa/${id}`);
     // console.log(res.data)
     return res.data;
   } catch (error) {
@@ -121,3 +121,4 @@ export const checkSimilarity = async ({ judul }) => {
     return error?.message;
   }
 };
+

@@ -1,10 +1,29 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllPengajuan } from "./models/apiCall";
+import { getAllPengajuan, getPengajuanById } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Detailstudent() {
+  const [pengajuanList, setPengajuanList] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const segments = currentUrl.split('/');
+    const mahasiswaId = segments[segments.length - 1];
+
+    const fetchData = async () => {
+      const res = await getPengajuanById({id:mahasiswaId});
+      console.log(res,"api");
+      setPengajuanList(res.result);
+    };
+    fetchData();
+  }, []);
+
+  const handleRowClick = (id) => {
+    navigate(`/approval/${id}`);
+  };
   return (
     <div id="wrapper">
       {/* sidebar */}
@@ -38,19 +57,31 @@ export default function Detailstudent() {
                   >
                     <thead>
                       <tr>
-                        <th>Nama Mahasiswa</th>
-                        <th>NIM</th>
                         <th>Judul Proposal</th>
                         <th>Status Pengajuan</th>
+                        {/* <th>Judul Proposal</th>
+                        <th>Status Pengajuan</th> */}
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
+                    {pengajuanList?.map((item, index) => (
+                      <tr key={index}  onClick={() => handleRowClick(item?.id)}>
+                        <td>{item.judul}</td>
+                        <td
+                            className={
+                              item.status_acc === "Pending"
+                                ? "bg-secondary text-white centered"
+                                : item.status_acc === "Approved"
+                                ? "bg-success text-white centered"
+                                : item.status_acc === "Rejected"
+                                ? "bg-danger text-white centered"
+                                : ""
+                            }
+                          >
+                            {item?.status_acc}
+                          </td>
+                       
+                      </tr>))}
                     </tbody>
                   </table>
                 </div>

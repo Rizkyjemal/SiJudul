@@ -22,8 +22,8 @@ export default function Approval() {
   useEffect(() => {
     const fetchProposal = async () => {
       const res = await getPengajuanById({ id: id });
-      // console.log(res.result);
-      setProposal(res.result);
+      
+      setProposal(res.result[0]);
       // setDosen(res.result);
       console.log(res.result);
     };
@@ -60,7 +60,7 @@ export default function Approval() {
   const handlePlagiarismCheck = async () => {
     try {
       const response = await checkSimilarity({
-        judul: "Rancang Bangun Aplikasi Pengajuan Proposal Skripsi Mahasiswa",
+        judul: proposal.judul,
       });
       setPlagiarismResult(response);
       console.log("Plagiarism check result:", response);
@@ -137,7 +137,7 @@ export default function Approval() {
                     <div className="plagiarism-check">
                       Plagiarism Check :{" "}
                       {plagiarismResult
-                        ? `${plagiarismResult.message}`
+                        ? `${plagiarismResult.message} with "${plagiarismResult.similar}" (${plagiarismResult.similarity.toFixed(2)}%)`
                         : "Belum dilakukan"}
                     </div>
                     <hr />

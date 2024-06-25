@@ -31,7 +31,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/lectures" element={<Lectures />} />
           <Route path="/students" element={<Students />} />
-          <Route path="/detailstudent" element={<Detailstudent />} />
+          <Route path="/detailstudent/:id" element={<Detailstudent />} />
           <Route path="/proposal" element={<Proposal />} />
           <Route path="/approval/:id" element={<Approval />} />
           <Route path="/penambahan" element={<Penambahan />} />
