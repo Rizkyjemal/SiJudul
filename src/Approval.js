@@ -16,6 +16,7 @@ export default function Approval() {
   const [statusAcc, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
   const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
+  const [plagiarismMessage, setPlagiarismMessage] = useState(null); 
   const [proposal, setProposal] = useState();
   const navigate = useNavigate();
   const [loginFailed, setLoginFailed] = useState(false);
@@ -82,8 +83,15 @@ export default function Approval() {
     try {
       const response = await checkSimilarity({
         judul: proposal.judul,
+        id: proposal.id
       });
-      setPlagiarismResult(response);
+      // setPlagiarismResult(response);
+      console.log(response)
+      if (response?.similar) {
+        setPlagiarismMessage(`${response?.message} with "${response?.similar}" (${response?.similarity.toFixed(2)}%)`)
+      } else {
+        setPlagiarismMessage(`${response?.message}`)
+      }
       console.log("Plagiarism check result:", response);
     } catch (error) {
       console.error("Error checking plagiarism:", error);
@@ -175,8 +183,8 @@ export default function Approval() {
                     <hr />
                     <div className="plagiarism-check">
                       Plagiarism Check :{" "}
-                      {plagiarismResult ? (
-                        `${plagiarismResult.message} with "${plagiarismResult.similar}" (${plagiarismResult.similarity.toFixed(2)}%)`
+                      {plagiarismMessage ? (
+                        plagiarismMessage
                       ) : (
                         "Belum dilakukan"
                       )}

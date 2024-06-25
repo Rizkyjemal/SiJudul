@@ -145,9 +145,9 @@ export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   }
 };
 
-export const checkSimilarity = async ({ judul }) => {
+export const checkSimilarity = async ({ judul, id }) => {
   try {
-    const res = await requestWithHeaders.post("/pengajuan/similarity-test", {
+    const res = await requestWithHeaders.post(`/pengajuan/similarity-test?id=${id}`, {
       judul,
     });
     return res.data;
