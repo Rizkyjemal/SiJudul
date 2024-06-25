@@ -1,7 +1,20 @@
 import { PiStudentBold } from "react-icons/pi";
 import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
+import { useEffect, useState } from "react";
+import { getAllStudents } from "./models/apiCall";
 export default function Sidebar() {
+  let [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    
+
+    const roles = authObject.roles;
+     setIsAdmin(roles.includes("admin"));
+
+   
+  }, []);
   return (
     <>
       <ul
@@ -41,12 +54,13 @@ export default function Sidebar() {
             Student
           </a>
         </li>
-        <li className="nav-item active">
+    {isAdmin ? ( <li className="nav-item active">
           <a className="nav-link collapsed" href="/lectures">
             <GiTeacher className="mx-2" />
             Lectures
           </a>
-        </li>
+        </li>) : (<div></div>)}
+       
         <hr className="sidebar-divider d-none d-md-block"></hr>
       </ul>
     </>

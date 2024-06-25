@@ -29,7 +29,6 @@ root.render(
       <Routes>
         <Route path="/" element={<PrivateRoute />}>
           <Route path="/" element={<App />} />
-          <Route path="/lectures" element={<Lectures />} />
           <Route path="/students" element={<Students />} />
           <Route path="/detailstudent/:id" element={<Detailstudent />} />
           <Route path="/proposal" element={<Proposal />} />
@@ -39,6 +38,12 @@ root.render(
           <Route path="/profile" element={<Profile />} />
           <Route path="/editprofile" element={<Editprofile />} />
           <Route path="/tambahdosen" element={<Tambahdosen />} />
+        </Route>
+        <Route
+          path="/lectures"
+          element={<PrivateRoute roles={['admin']} />}
+        >
+          <Route path="" element={<Lectures />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Navigate to="/" />} />
