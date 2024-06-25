@@ -1,9 +1,7 @@
 import { useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
-import { CgDetailsMore } from "react-icons/cg";
-import { FaCalendarCheck } from "react-icons/fa";
-import { FaElementor } from "react-icons/fa6";
+import { FaElementor, FaCalendarCheck } from "react-icons/fa";
 import { MdOutlinePlace } from "react-icons/md";
 import { useEffect, useState } from "react";
 import {
@@ -22,13 +20,13 @@ export default function Approval() {
   useEffect(() => {
     const fetchProposal = async () => {
       const res = await getPengajuanById({ id: id });
-      
+
       setProposal(res.result[0]);
       // setDosen(res.result);
       console.log(res.result);
     };
     fetchProposal();
-  }, []);
+  }, [id]);
 
   const handleAccept = () => {
     setStatusAcc("Approved");
@@ -81,7 +79,7 @@ export default function Approval() {
             </h1>
             <p className="mb-4">
               Dosen diminta untuk memberikan persetujuan atas judul proposal
-              skripsi mahasiswa yang sudah di ajukan!
+              skripsi mahasiswa yang sudah diajukan!
             </p>
             {proposal ? (
               <div className="card shadow mb-4">
@@ -92,37 +90,41 @@ export default function Approval() {
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
-                    <div>Detail Pengajuan Judul Proposal Skripsi Mahasiswa</div>
-                    <hr />
-                    <div>Judul Proposal</div>
                     <div className="proposal-title">
                       <span>{proposal.judul}</span>
                       <button className="" onClick={handlePlagiarismCheck}>
                         Plagiarism Check
                       </button>
-                      <hr />
                     </div>
-                    <div className="rowrr-custom">
-                      <div>Abstrak:</div>
-                      <p>{proposal.rumusan_masalah}</p>
-                    </div>
-                    <div className="rowrr">
-                      <FaElementor />
-                      <p>{proposal.peminatan}</p>
-                      <p>-</p>
-                      <p>Software Engineer</p>
-                    </div>
-                    <div className="rowrr">
-                      <MdOutlinePlace />
-                      <p>{proposal.tempat_penelitian}</p>
-                    </div>
-                    <div className="rowrr">
-                      <FaCalendarCheck />
-                      <p>{proposal.mahasiswa.angkatan}</p>
-                    </div>
-                    <div className="rowrr">
-                      <FaCalendarCheck />
-                      <p>{proposal.mahasiswa.prodi}</p>
+                    <div className="combined-card">
+                      <div className="info-section">
+                        <div className="info-item">
+                          <strong>Abstrak:</strong> Lorem ipsum dolor sit amet,
+                          consectetur adipiscing elit. Donec ac elit blandit
+                          felis mattis euismod sed nec massa. Cras varius
+                          faucibus aliquet. Fusce ut metus non sem sollicitudin
+                          iaculis eget a purus. Cras ornare libero nec lectus
+                          euismod tincidunt. Praesent nulla erat, porttitor non
+                          erat id, tempus pellentesque ligula. Mauris.
+                        </div>
+
+                        <div className="info-item">
+                          <strong>Peminatan:</strong>
+                          <span>Software Engineering - Software Engineer</span>
+                        </div>
+                        <div className="info-item">
+                          <strong>Tempat Penelitian:</strong>
+                          <span>UPN Veteran Jakarta</span>
+                        </div>
+                        <div className="info-item">
+                          <strong>Angkatan:</strong>
+                          <span>2020</span>
+                        </div>
+                        <div className="info-item">
+                          <strong>Program Studi:</strong>
+                          <span>S1 Informatika</span>
+                        </div>
+                      </div>
                     </div>
                     Status Proposal:
                     <div className="status">
@@ -137,7 +139,9 @@ export default function Approval() {
                     <div className="plagiarism-check">
                       Plagiarism Check :{" "}
                       {plagiarismResult
-                        ? `${plagiarismResult.message} with "${plagiarismResult.similar}" (${plagiarismResult.similarity.toFixed(2)}%)`
+                        ? `${plagiarismResult.message} with "${
+                            plagiarismResult.similar
+                          }" (${plagiarismResult.similarity.toFixed(2)}%)`
                         : "Belum dilakukan"}
                     </div>
                     <hr />

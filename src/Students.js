@@ -8,6 +8,7 @@ import Sidebar from "./Sidebar";
 import { getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 export default function Students() {
   const navigate = useNavigate();
   const [mahasiswa, setMahasiswa] = useState([]);
@@ -18,17 +19,16 @@ export default function Students() {
     const userId = authObject.data.id;
 
     const roles = authObject.roles;
-    const isAdmin =  roles.includes("admin");
-   
+    const isAdmin = roles.includes("admin");
+
     const fetchData = async () => {
-      if(isAdmin){
+      if (isAdmin) {
         const res = await getAllStudents();
         setMahasiswa(res.result);
-      }else{
-        const res = await getAllStudentsBimbingan({id:userId});
+      } else {
+        const res = await getAllStudentsBimbingan({ id: userId });
         setMahasiswa(res.mahasiswa_list);
       }
-      
     };
     fetchData();
   }, []);
@@ -49,11 +49,6 @@ export default function Students() {
             </h1>
             <p className="mb-4">Berikut list daftar mahasiswa bimbingan:</p>
             <div className="card shadow mb-4">
-              {/* <div className="card-header py-3">
-                <h6 className="m-0 font-weight-bold text-primary">
-                  List Mahasiswa
-                </h6>
-              </div> */}
               <div className="card-body">
                 <div className="table-responsive">
                   <table
@@ -72,14 +67,19 @@ export default function Students() {
                       </tr>
                     </thead>
                     <tbody>
-                    {mahasiswa?.map((item, index) => (
-                      <tr key={index}  onClick={() => handleRowClick(item?.id)}>
-                        <td>{item.name}</td>
-                        <td>{item.nim}</td>
-                        <td>{item.prodi}</td>
-                        <td>{item.angkatan}</td>
-                        <td>{item.email}</td>
-                      </tr>))}
+                      {mahasiswa?.map((item, index) => (
+                        <tr
+                          key={index}
+                          className="clickable-row"
+                          onClick={() => handleRowClick(item?.id)}
+                        >
+                          <td>{item.name}</td>
+                          <td>{item.nim}</td>
+                          <td>{item.prodi}</td>
+                          <td>{item.angkatan}</td>
+                          <td>{item.email}</td>
+                        </tr>
+                      ))}
                     </tbody>
                   </table>
                 </div>
@@ -96,6 +96,11 @@ export default function Students() {
           </div>
         </footer>
       </div>
+      <style jsx>{`
+        .clickable-row {
+          cursor: pointer;
+        }
+      `}</style>
     </div>
   );
 }

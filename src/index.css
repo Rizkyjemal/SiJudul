@@ -10491,8 +10491,6 @@ button.bg-dark:focus {
   color: #fff !important;
 }
 
-
-
 .text-primary {
   color: #4e73df !important;
 }
@@ -11335,11 +11333,6 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-/*table,
-th,
-td {
-  border: 1px solid #ccc;
-}*/
 th,
 td {
   padding: 10px;
@@ -11387,6 +11380,15 @@ th {
   background: #f44336;
   color: white;
 }
+.status button.accept:hover {
+  background-color: #218838;
+}
+.status button.reject:hover {
+  background-color: #c82333;
+}
+.proposal-title button:hover {
+  background-color: #e0a800;
+}
 
 .submit button {
   padding: 10px 20px;
@@ -11413,6 +11415,33 @@ th {
   border: 1px solid #ddd;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+.combined-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.info-section {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  row-gap: 10px;
+  column-gap: 20px;
+}
+
+.info-item {
+  display: contents; /* Allows for direct child elements to follow grid-template-areas */
+}
+
+.info-item strong {
+  text-align: right;
+}
+
+.info-item span {
+  font-size: 16px;
 }
 
 .sidebar .nav-item .collapse {
