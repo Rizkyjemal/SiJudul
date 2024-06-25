@@ -1,6 +1,37 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import { useState } from "react";
+import { requestWithHeaders } from "./models/requestMethod";
+import { createDosen } from "./models/apiCall";
 export default function Tambahdosen() {
+
+  const [formData, setFormData] = useState({
+    name: '',
+    nidn: '',
+    email: '',
+    prodi: '',
+    kapasitas: '',
+    kepakaran: '',
+    jabatan: '',
+    password: '',
+  });
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    if (name == "kapasitas") {
+      value = parseInt(value, 10)
+    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+
+  const handleSubmit = async () => {
+    await createDosen(formData)
+  };
+
   return (
     <div id="wrapper">
       <Sidebar />
@@ -45,9 +76,12 @@ export default function Tambahdosen() {
                           <label htmlFor="fullName">Nama Lengkap</label>
                           <input
                             type="text"
+                            onChange={handleChange}
+                            value={formData.name}
+                            name="name"
                             className="form-control"
                             id="fullName"
-                            placeholder="Enter full name"
+                            placeholder="Chordan Aksa Priandoyo"
                           />
                         </div>
                       </div>
@@ -55,10 +89,13 @@ export default function Tambahdosen() {
                         <div className="form-group">
                           <label htmlFor="eMail">NIDN</label>
                           <input
-                            type="email"
+                            type="text"
+                            onChange={handleChange}
+                            value={formData.nidn}
+                            name="nidn"
                             className="form-control"
                             id="eMail"
-                            placeholder="Enter email ID"
+                            placeholder="1306078702"
                           />
                         </div>
                       </div>
@@ -67,9 +104,12 @@ export default function Tambahdosen() {
                           <label htmlFor="phone">Email</label>
                           <input
                             type="text"
+                            onChange={handleChange}
+                            value={formData.email}
+                            name="email"
                             className="form-control"
                             id="phone"
-                            placeholder="Enter phone number"
+                            placeholder="chordan345@gmail.com"
                           />
                         </div>
                       </div>
@@ -78,9 +118,12 @@ export default function Tambahdosen() {
                           <label htmlFor="website">Program Studi</label>
                           <input
                             type="url"
+                            name="prodi"
+                            onChange={handleChange}
+                            value={formData.prodi}
                             className="form-control"
                             id="website"
-                            placeholder="Website url"
+                            placeholder="S1 Informatika"
                           />
                         </div>
                       </div>
@@ -90,10 +133,13 @@ export default function Tambahdosen() {
                         <div className="form-group">
                           <label htmlFor="Street">Kapasitas Bimbingan</label>
                           <input
-                            type="name"
+                            type="number"
+                            onChange={handleChange}
+                            value={formData.kapasitas}
+                            name="kapasitas"
                             className="form-control"
                             id="Street"
-                            placeholder="Enter Street"
+                            placeholder="10"
                           />
                         </div>
                       </div>
@@ -102,9 +148,12 @@ export default function Tambahdosen() {
                           <label htmlFor="ciTy">Kepakaran</label>
                           <input
                             type="name"
+                            onChange={handleChange}
+                            value={formData.kepakaran}
+                            name="kepakaran"
                             className="form-control"
                             id="ciTy"
-                            placeholder="Enter City"
+                            placeholder="Software Engineering"
                           />
                         </div>
                       </div>
@@ -113,20 +162,26 @@ export default function Tambahdosen() {
                           <label htmlFor="Street">Jabatan</label>
                           <input
                             type="name"
+                            name="jabatan"
+                            onChange={handleChange}
+                            value={formData.jabatan}
                             className="form-control"
                             id="Street"
-                            placeholder="Enter Street"
+                            placeholder="Dosen"
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Kapasitas Bimbingan</label>
+                          <label htmlFor="Street">Password</label>
                           <input
-                            type="name"
+                            type="password"
+                            name="password"
+                            onChange={handleChange}
+                            value={formData.password}
                             className="form-control"
                             id="Street"
-                            placeholder="Enter Street"
+                            placeholder="GsdXvcSHdah3"
                           />
                         </div>
                       </div>
@@ -136,16 +191,8 @@ export default function Tambahdosen() {
                         <div className="text-right">
                           <button
                             type="button"
-                            id="submit"
                             name="submit"
-                            className="btn btn-secondary"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            type="button"
-                            id="submit"
-                            name="submit"
+                            onClick={handleSubmit}
                             className="btn btn-primary"
                           >
                             Add

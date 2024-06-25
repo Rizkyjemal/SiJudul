@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "https://projectskripsi-fvwdncsc.b4a.run";
 const TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNob3JkYW4zNDU3QGdtYWlsLmNvbSIsInVzZXJfaWQiOjksImV4cCI6MTcxOTI5NDk0MiwiUm9sZXMiOlsiYWRtaW4iLCJkb3NlbiIsIm1haGFzaXN3YSJdfQ.XJeZbFo8-3CsOlKflwat3YBPypg7eoWqgf00_KXuqDE";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNob3JkYW4zNDVAZ21haWwuY29tIiwidXNlcl9pZCI6MSwiZXhwIjoxNzE5MzgzMDg0LCJSb2xlcyI6WyJhZG1pbiIsImRvc2VuIiwibWFoYXNpc3dhIl19.-4_y-tLH8E1609q_ADI1C5fX4brH68gWgrAuuuEmLCk";
 
 export const request = axios.create({
   baseURL: BASE_URL,
@@ -12,6 +12,7 @@ export const requestWithHeaders = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
+    'Content-Type': 'application/json',
   },
 });
 
@@ -53,6 +54,30 @@ export const getAllDosen = async () => {
     // console.log(res.data)
     return res.data;
   } catch (error) {
+    return error?.message;
+  }
+};
+
+// const dosen = {
+//   "name": "testdosen2",
+//   "nidn": "1233212312",
+//   "email": "testdosen2@gmail.com",
+//   "password": "123456",
+//   "jabatan": "dosen",
+//   "kepakaran": "Software Engineer",
+//   "prodi": "Informatika",
+//   "kapasitas": 10
+// }
+
+export const createDosen = async (dosenData) => {
+  try {
+    console.log(dosenData)
+    const res = await requestWithHeaders.post("/dosen/", dosenData);
+    console.log(res.data)
+    return res.data;
+    return
+  } catch (error) {
+    console.log(error)
     return error?.message;
   }
 };
