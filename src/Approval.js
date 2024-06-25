@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import { FaElementor, FaCalendarCheck } from "react-icons/fa";
@@ -10,23 +10,38 @@ import {
   getPengajuanById,
 } from "./models/apiCall";
 
+
 export default function Approval() {
   const { id } = useParams();
   const [statusAcc, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
   const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
   const [proposal, setProposal] = useState();
+  const navigate = useNavigate();
+  const [loginFailed, setLoginFailed] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchProposal = async () => {
       const res = await getPengajuanById({ id: id });
-
+      console.log(id, "oidd");
       setProposal(res.result[0]);
-      // setDosen(res.result);
       console.log(res.result);
     };
     fetchProposal();
   }, [id]);
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    if(!loginFailed){
+      navigate('/');
+    }
+  };
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
 
   const handleAccept = () => {
     setStatusAcc("Approved");
@@ -49,6 +64,14 @@ export default function Approval() {
         statusAcc: status,
         rejectedNote: note,
       });
+      if (response.result) {
+        setLoginFailed(false);
+        setModalMessage("Berhasil Mengubah Status Pengajuan!");
+      } else {
+        setLoginFailed(true);
+        setModalMessage("Gagal Mengubah Status Pengajuan! Silakan Coba Lagi");
+      }
+      openModal();
       console.log("Response from API:", response);
     } catch (error) {
       console.error("Error updating proposal:", error);
@@ -127,31 +150,53 @@ export default function Approval() {
                       </div>
                     </div>
                     Status Proposal:
-                    <div className="status">
-                      <button className="accept" onClick={handleAccept}>
-                        Accept
-                      </button>
-                      <button className="reject" onClick={handleReject}>
-                        Reject
-                      </button>
-                    </div>
+                    {proposal.status_acc === "Pending" ? (
+                      <div className="status">
+                        <button className="accept" onClick={handleAccept}>
+                          Accept
+                        </button>
+                        <button className="reject" onClick={handleReject}>
+                          Reject
+                        </button>
+                      </div>
+                    ) : proposal.status_acc === "Approved" ? (
+                      <div className="status">
+                        <button disabled className="accept">
+                          Accepted
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="status">
+                        <button disabled className="reject">
+                          Rejected
+                        </button>
+                      </div>
+                    )}
                     <hr />
                     <div className="plagiarism-check">
                       Plagiarism Check :{" "}
-                      {plagiarismResult
-                        ? `${plagiarismResult.message} with "${
-                            plagiarismResult.similar
-                          }" (${plagiarismResult.similarity.toFixed(2)}%)`
-                        : "Belum dilakukan"}
+                      {plagiarismResult ? (
+                        `${plagiarismResult.message} with "${plagiarismResult.similar}" (${plagiarismResult.similarity.toFixed(2)}%)`
+                      ) : (
+                        "Belum dilakukan"
+                      )}
                     </div>
                     <hr />
+                    {proposal.status_acc !== "Pending" ? <div className="comment-section">
+                      <textarea
+                        value={proposal.rejected_note}
+                        disabled
+                      ></textarea>
+                    </div> 
+                    : 
                     <div className="comment-section">
                       <textarea
                         placeholder="Berikan Komentar..."
                         value={rejectedNote}
                         onChange={handleNoteChange}
                       ></textarea>
-                    </div>
+                    </div>}
+                   
                   </div>
                 </div>
               </div>
@@ -169,6 +214,43 @@ export default function Approval() {
           </div>
         </footer>
       </div>
+
+      {isModalVisible && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalApprovalLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalApprovalLabel">
+                  Pengajuan
+                </h5>
+                <button className="close" type="button" onClick={closeModal}>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">{modalMessage}</div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" type="button" onClick={closeModal}>
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      />
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </div>
   );
 }
