@@ -6,14 +6,14 @@ export default function Profile() {
   const [profile, setProfile] = useState();
 
   useEffect(() => {
-    const auth = localStorage.getItem("auth");
-    console.log(auth, "ii");
-    // const fetchData = async () => {
-    //   const res = await getProfileDosen({ id: auth.data.id });
-    //   console.log(res, "uhuyyy");
-    //   // setDosen(res.result);
-    // };
-    // fetchData();
+      const userAuth = localStorage.getItem("auth"); 
+      const authObject = JSON.parse(userAuth);
+      const fetchData = async () => {
+      const res = await getProfileDosen({ id: authObject.data.id });
+      setProfile(res.dosen);
+        
+    };
+    fetchData();
   }, []);
   return (
     <>
@@ -24,8 +24,8 @@ export default function Profile() {
             <Searchbar />
             <div className="card-profile">
               <img src="assets/images/logo.png" alt="Profile Image" />
-              <h2>Dr.Widya Cholil</h2>
-              <p>Kepala Program Studi Informatika UPNVJ</p>
+              <h2>{profile.name}</h2>
+              <p>{profile.jabatan}</p>
               <p>Universitas Pembangunan Nasional Veteran Jakarta</p>
             </div>
 
@@ -34,27 +34,27 @@ export default function Profile() {
                 <tbody>
                   <tr>
                     <td>NIDN</td>
-                    <td>012345678</td>
+                    <td>{profile.nidn}</td>
                   </tr>
                   <tr>
                     <td>Email</td>
-                    <td>widyacholil@gmail.com</td>
+                    <td>{profile.email}</td>
                   </tr>
                   <tr>
                     <td>Program Studi</td>
-                    <td>Informatika</td>
+                    <td>{profile.prodi}</td>
                   </tr>
                   <tr>
                     <td>Kepakaran</td>
-                    <td>Data Science</td>
+                    <td>{profile.kepakaran}</td>
                   </tr>
                   <tr>
                     <td>Kapasitas Bimbingan</td>
-                    <td>8</td>
+                    <td>{profile.kapasitas}</td>
                   </tr>
                   <tr>
                     <td>Total Mahasiswa Bimbingan</td>
-                    <td>4</td>
+                    <td>{profile.mahasiswa_bimbingan_id.length}</td>
                   </tr>
                 </tbody>
               </table>

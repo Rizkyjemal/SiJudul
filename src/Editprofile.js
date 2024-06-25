@@ -70,7 +70,7 @@ export default function Editprofile() {
                               type="text"
                               className="form-control"
                               id="phone"
-                              placeholder="Enter phone number"
+                              placeholder="Enter Email"
                             />
                           </div>
                         </div>
