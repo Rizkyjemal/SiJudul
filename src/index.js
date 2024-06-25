@@ -1,11 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 import Lectures from "./Lectures";
 import Students from "./Students";
+import Detailstudent from "./Detailstudent";
 import Login from "./Login";
 import Proposal from "./Proposal";
 import Approval from "./Approval";
@@ -14,62 +19,32 @@ import Edit from "./Edit";
 import Profile from "./Profile";
 import Editprofile from "./Editprofile";
 import Tambahdosen from "./Tambahdosen";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/lectures",
-    element: <Lectures />,
-  },
-  {
-    path: "/students",
-    element: <Students />,
-  },
-  {
-    path: "/proposal",
-    element: <Proposal />,
-  },
-  {
-    path: "/approval",
-    element: <Approval />,
-  },
-  {
-    path: "/penambahan",
-    element: <Penambahan />,
-  },
-  {
-    path: "/edit",
-    element: <Edit />,
-  },
-  {
-    path: "/profile",
-    element: <Profile />,
-  },
-  {
-    path: "/editprofile",
-    element: <Editprofile />,
-  },
-  {
-    path: "tambahdosen",
-    element: <Tambahdosen />,
-  },
-]);
+import PrivateRoute from "./PrivateRoute";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Router>
+      <Routes>
+        <Route path="/" element={<PrivateRoute />}>
+          <Route path="/" element={<App />} />
+          <Route path="/lectures" element={<Lectures />} />
+          <Route path="/students" element={<Students />} />
+          <Route path="/detailstudent" element={<Detailstudent />} />
+          <Route path="/proposal" element={<Proposal />} />
+          <Route path="/approval/:id" element={<Approval />} />
+          <Route path="/penambahan" element={<Penambahan />} />
+          <Route path="/edit" element={<Edit />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/editprofile" element={<Editprofile />} />
+          <Route path="/tambahdosen" element={<Tambahdosen />} />
+        </Route>
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

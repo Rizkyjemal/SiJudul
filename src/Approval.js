@@ -1,6 +1,74 @@
+import { useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
+import { CgDetailsMore } from "react-icons/cg";
+import { FaCalendarCheck } from "react-icons/fa";
+import { FaElementor } from "react-icons/fa6";
+import { MdOutlinePlace } from "react-icons/md";
+import { useEffect, useState } from "react";
+import {
+  updatePengajuan,
+  checkSimilarity,
+  getPengajuanById,
+} from "./models/apiCall";
+
 export default function Approval() {
+  const { id } = useParams();
+  const [statusAcc, setStatusAcc] = useState("");
+  const [rejectedNote, setRejectedNote] = useState("");
+  const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
+  const [proposal, setProposal] = useState();
+
+  useEffect(() => {
+    const fetchProposal = async () => {
+      const res = await getPengajuanById({ id: id });
+      // console.log(res.result);
+      setProposal(res.result);
+      // setDosen(res.result);
+      console.log(res.result);
+    };
+    fetchProposal();
+  }, []);
+
+  const handleAccept = () => {
+    setStatusAcc("Approved");
+    updateProposal("Approved", rejectedNote);
+  };
+
+  const handleReject = () => {
+    setStatusAcc("Rejected");
+    updateProposal("Rejected", rejectedNote);
+  };
+
+  const handleNoteChange = (event) => {
+    setRejectedNote(event.target.value);
+  };
+
+  const updateProposal = async (status, note) => {
+    try {
+      const response = await updatePengajuan({
+        id,
+        statusAcc: status,
+        rejectedNote: note,
+      });
+      console.log("Response from API:", response);
+    } catch (error) {
+      console.error("Error updating proposal:", error);
+    }
+  };
+
+  const handlePlagiarismCheck = async () => {
+    try {
+      const response = await checkSimilarity({
+        judul: "Rancang Bangun Aplikasi Pengajuan Proposal Skripsi Mahasiswa",
+      });
+      setPlagiarismResult(response);
+      console.log("Plagiarism check result:", response);
+    } catch (error) {
+      console.error("Error checking plagiarism:", error);
+    }
+  };
+
   return (
     <div id="wrapper">
       <Sidebar />
@@ -15,41 +83,77 @@ export default function Approval() {
               Dosen diminta untuk memberikan persetujuan atas judul proposal
               skripsi mahasiswa yang sudah di ajukan!
             </p>
-            <div className="card shadow mb-4">
-              <div className="card-header py-3">
-                <h6 className="m-0 font-weight-bold text-primary">
-                  Nama Mahasiswa
-                </h6>
-              </div>
-              <div className="card-body">
-                <div className="table-responsive">
-                  <div>Detail Pengajuan Judul Proposal Skripsi Mahasiswa</div>
-                  <hr></hr>
-                  <div>Judul Proposal</div>
-                  <div className="proposal-title">
-                    <span>
-                      Rancang Bangun Aplikasi Pengajuan Proposal Skripsi
-                      Mahasiswa
-                    </span>
-                    <button className="">Plagiarism Check</button>
-                    <hr></hr>
-                  </div>
-                  Status Proposal:
-                  <div className="status">
-                    <button className="accept">Accept</button>
-                    <button className="reject">Reject</button>
-                  </div>
-                  <hr></hr>
-                  <div className="plagiarism-check">
-                    Plagiarism Check : Hasil Plagiarism Judul 15%
-                  </div>
-                  <hr></hr>
-                  <div className="comment-section">
-                    <textarea placeholder="Berikan Komentar..."></textarea>
+            {proposal ? (
+              <div className="card shadow mb-4">
+                <div className="card-header py-3">
+                  <h6 className="m-0 font-weight-bold text-primary">
+                    {proposal.mahasiswa.name}
+                  </h6>
+                </div>
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <div>Detail Pengajuan Judul Proposal Skripsi Mahasiswa</div>
+                    <hr />
+                    <div>Judul Proposal</div>
+                    <div className="proposal-title">
+                      <span>{proposal.judul}</span>
+                      <button className="" onClick={handlePlagiarismCheck}>
+                        Plagiarism Check
+                      </button>
+                      <hr />
+                    </div>
+                    <div className="rowrr-custom">
+                      <div>Abstrak:</div>
+                      <p>{proposal.rumusan_masalah}</p>
+                    </div>
+                    <div className="rowrr">
+                      <FaElementor />
+                      <p>{proposal.peminatan}</p>
+                      <p>-</p>
+                      <p>Software Engineer</p>
+                    </div>
+                    <div className="rowrr">
+                      <MdOutlinePlace />
+                      <p>{proposal.tempat_penelitian}</p>
+                    </div>
+                    <div className="rowrr">
+                      <FaCalendarCheck />
+                      <p>{proposal.mahasiswa.angkatan}</p>
+                    </div>
+                    <div className="rowrr">
+                      <FaCalendarCheck />
+                      <p>{proposal.mahasiswa.prodi}</p>
+                    </div>
+                    Status Proposal:
+                    <div className="status">
+                      <button className="accept" onClick={handleAccept}>
+                        Accept
+                      </button>
+                      <button className="reject" onClick={handleReject}>
+                        Reject
+                      </button>
+                    </div>
+                    <hr />
+                    <div className="plagiarism-check">
+                      Plagiarism Check :{" "}
+                      {plagiarismResult
+                        ? `${plagiarismResult.message}`
+                        : "Belum dilakukan"}
+                    </div>
+                    <hr />
+                    <div className="comment-section">
+                      <textarea
+                        placeholder="Berikan Komentar..."
+                        value={rejectedNote}
+                        onChange={handleNoteChange}
+                      ></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              <p>Loading proposal data...</p>
+            )}
           </div>
         </div>
 

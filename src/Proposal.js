@@ -2,14 +2,25 @@ import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
 import { getAllPengajuan } from "./models/apiCall";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function Lectures() {
+  const navigate = useNavigate();
+
   const [pengajuan, setPengajuan] = useState([]);
+  const handleRowClick = (id) => {
+    navigate(`/approval/${id}`);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getAllPengajuan();
-      console.log(res);
-      setPengajuan(res.result);
+      const sortedData = res.result.sort((a, b) => {
+        const order = { Pending: 1, Approved: 2, Rejected: 3 };
+        return order[a.status_acc] - order[b.status_acc];
+      });
+
+      setPengajuan(sortedData);
     };
     fetchData();
   }, []);
@@ -64,17 +75,20 @@ export default function Lectures() {
                     </thead>
                     <tbody>
                       {pengajuan?.map((item, index) => (
-                        <tr key={index}>
+                        <tr
+                          key={index}
+                          onClick={() => handleRowClick(item?.id)}
+                        >
                           <td>{item?.mahasiswa.name}</td>
                           <td>{item?.mahasiswa.nim}</td>
                           <td>{item?.judul}</td>
                           <td
                             className={
-                              item.status_acc == "Pending"
+                              item.status_acc === "Pending"
                                 ? "bg-secondary text-white"
-                                : item.status_acc == "Approved"
+                                : item.status_acc === "Approved"
                                 ? "bg-success text-white"
-                                : item.status_acc == "Rejected"
+                                : item.status_acc === "Rejected"
                                 ? "bg-danger text-white"
                                 : ""
                             }

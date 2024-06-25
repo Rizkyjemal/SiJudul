@@ -773,6 +773,16 @@ pre code {
   margin: 10px 0;
   background-color: #f9f9f9;
 }
+
+.rowrr-custom {
+  display: flex;
+  align-items: start;
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  background-color: #f9f9f9;
+}
+
 .rowrr p {
   margin: 0;
   padding-left: 10px; /* Add padding to the left */

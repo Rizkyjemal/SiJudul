@@ -1,4 +1,15 @@
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+
 export default function Searchbar() {
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    document.getElementById("cancelBtn").click();
+    navigate("/login");
+  }
+
   return (
     <>
       <nav className="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -164,12 +175,13 @@ export default function Searchbar() {
                 className="btn btn-secondary"
                 type="button"
                 data-dismiss="modal"
+                id="cancelBtn"
               >
                 Cancel
               </button>
-              <a className="btn btn-primary" href="/login">
+              <button onClick={handleLogout} className="btn btn-primary">
                 Logout
-              </a>
+              </button>
             </div>
           </div>
         </div>

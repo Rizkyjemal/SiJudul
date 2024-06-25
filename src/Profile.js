@@ -1,6 +1,20 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import { useEffect, useState } from "react";
+import { getProfileDosen } from "./models/apiCall";
 export default function Profile() {
+  const [profile, setProfile] = useState();
+
+  useEffect(() => {
+    const auth = localStorage.getItem("auth");
+    console.log(auth, "ii");
+    // const fetchData = async () => {
+    //   const res = await getProfileDosen({ id: auth.data.id });
+    //   console.log(res, "uhuyyy");
+    //   // setDosen(res.result);
+    // };
+    // fetchData();
+  }, []);
   return (
     <>
       <div id="wrapper">

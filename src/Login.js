@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { login } from "./models/apiCall";
+import { login, loginAdmin, loginDosen } from "./models/apiCall";
 import { useNavigate } from "react-router-dom";
+import validator from "validator";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,27 +20,57 @@ export default function Login() {
       modal.hide();
     }
 
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      navigate("/login");
+    }
+
     // Cleanup function to hide modal when component unmounts
     return () => {
       modal.hide();
     };
-  }, [loginFailed]);
+  }, [loginFailed, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const result = await login(email, password);
-      if (result !== 401) {
-        setLoginFailed(false);
-        localStorage.setItem("token", result.token);
-        navigate("/");
-      } else {
+    var result;
+
+    // Validate email
+    if (!validator.isEmail(email)) {
+      try {
+        result = await loginDosen(email, password);
+
+        if (result !== 401) {
+          setLoginFailed(false);
+          localStorage.setItem("auth", result);
+          localStorage.setItem("token", result.token);
+          navigate("/");
+        } else {
+          setLoginFailed(true);
+          setErrorMessage("Invalid Email Or Password");
+        }
+      } catch (err) {
         setLoginFailed(true);
         setErrorMessage("Invalid Email Or Password");
       }
-    } catch (err) {
-      setLoginFailed(true);
-      setErrorMessage("Invalid Email Or Password");
+    } else {
+      try {
+        result = await loginAdmin(email, password);
+
+        if (result !== 401) {
+          setLoginFailed(false);
+          localStorage.setItem("auth", result);
+          localStorage.setItem("token", result.token);
+          navigate("/");
+        } else {
+          setLoginFailed(true);
+          setErrorMessage("Invalid Email Or Password");
+        }
+      } catch (err) {
+        setLoginFailed(true);
+        setErrorMessage("Invalid Email Or Password");
+      }
     }
   };
 

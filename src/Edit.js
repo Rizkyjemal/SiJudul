@@ -17,7 +17,7 @@ export default function Edit() {
                       <div className="user-profile">
                         <div className="user-avatar centered">
                           <img
-                            src="assets/images/logo.png"
+                            src="assets/images/profile.png"
                             alt="Maxwell Admin"
                           />
                         </div>

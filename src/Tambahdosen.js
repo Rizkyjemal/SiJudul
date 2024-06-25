@@ -36,11 +36,13 @@ export default function Tambahdosen() {
                   <div className="card-body">
                     <div className="row gutters">
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <h6 className="mb-2 text-primary">Personal Details</h6>
+                        <h6 className="mb-2 text-primary">
+                          Isi data dosen dengan benar!
+                        </h6>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="fullName">Full Name</label>
+                          <label htmlFor="fullName">Nama Lengkap</label>
                           <input
                             type="text"
                             className="form-control"
@@ -103,6 +105,28 @@ export default function Tambahdosen() {
                             className="form-control"
                             id="ciTy"
                             placeholder="Enter City"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="Street">Jabatan</label>
+                          <input
+                            type="name"
+                            className="form-control"
+                            id="Street"
+                            placeholder="Enter Street"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="Street">Kapasitas Bimbingan</label>
+                          <input
+                            type="name"
+                            className="form-control"
+                            id="Street"
+                            placeholder="Enter Street"
                           />
                         </div>
                       </div>
