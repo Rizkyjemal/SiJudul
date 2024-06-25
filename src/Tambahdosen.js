@@ -14,14 +14,14 @@ export default function Tambahdosen() {
     kepakaran: '',
     jabatan: '',
     password: '',
-    image: null
+    // image: null
   });
 
   const handleChange = (e) => {
     let { name, value } = e.target;
-    if (name == "kapasitas") {
-      value = parseInt(value, 10)
-    }
+    // if (name == "kapasitas") {
+    //   value = parseInt(value, 10)
+    // }
     if (name === "image") {
       value = e.target.files[0];
     }
