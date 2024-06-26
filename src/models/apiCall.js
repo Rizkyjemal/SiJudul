@@ -101,6 +101,16 @@ export const getAllPengajuan = async () => {
   }
 };
 
+export const getAllPengajuanByDospemId = async ({id}) => {
+  try {
+    const res = await requestWithHeaders.get(`/pengajuan/dospem/${id}`);
+    // console.log(id,"iiiiiiiiiii")
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
+
 export const getAllStudentsBimbingan = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(

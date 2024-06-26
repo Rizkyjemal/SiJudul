@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllPengajuan } from "./models/apiCall";
+import { getAllPengajuan, getAllPengajuanByDospemId } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,10 @@ export default function Lectures() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getAllPengajuan();
+      const jsonString = localStorage.getItem("auth");
+      const authObject = JSON.parse(jsonString);
+      const res = await getAllPengajuanByDospemId({id:authObject.data.id});
+      // console.log(res,"rrrrrrrrr")
       const sortedData = res.result.sort((a, b) => {
         const order = { Pending: 1, Approved: 2, Rejected: 3 };
         return order[a.status_acc] - order[b.status_acc];
@@ -43,15 +46,8 @@ export default function Lectures() {
               Halaman ini berisi list daftar pengajuan judul proposal mahasiswa
               Informatika.
             </p>
-            <a
-              href="#"
-              className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-            >
-              <i className="fas fa-download fa-sm text-white-50"></i> Edit Data
-              Proposal Mahasiswa
-            </a>
-            <br></br>
-            <br></br>
+            
+           
             <div className="card shadow mb-4">
               <div className="card-header py-3">
                 <h6 className="m-0 font-weight-bold text-primary">
