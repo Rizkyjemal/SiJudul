@@ -247,3 +247,12 @@ export const deleteDosen = async (id) => {
     return { result: false, message: error?.message }; // Ensure a failure response
   }
 };
+
+export const deleteStudent = async (id) => {
+  try {
+    const res = await requestWithHeaders.delete(`/mahasiswa/${id}`);
+    return { result: true, data: res.data }; // Ensure a successful response
+  } catch (error) {
+    return { result: false, message: error?.message }; // Ensure a failure response
+  }
+};

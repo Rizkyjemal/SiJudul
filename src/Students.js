@@ -5,7 +5,7 @@ import { CgDetailsMore } from "react-icons/cg";
 import { SiCodementor } from "react-icons/si";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
-import { getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
+import { deleteStudent, getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -51,9 +51,10 @@ export default function Students() {
     navigate(`/detailstudent/${id}`);
   };
 
-  const handleDeleteClick = (id) => {
-    // Implement delete functionality here
+  const handleDeleteClick = async (id) => {
+    await deleteStudent(id)
     console.log("Delete student with id:", id);
+    window.location.reload()
   };
 
   return (
