@@ -46,6 +46,9 @@ export default function Students() {
       setAllMahasiswa(resAll.result);
       // console.log(resAll,"asasa",res);
       // setAllMahasiswa(resAll)
+    } else {
+      const res = await getAllStudentsBimbingan({ id: userId });
+      setMahasiswa(res.mahasiswa_list);
     }
   };
 
