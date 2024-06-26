@@ -8,7 +8,6 @@ export default function Editprofile() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
-
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
@@ -36,23 +35,32 @@ export default function Editprofile() {
     setIsModalVisible(true);
   };
 
-  const handleSubmit = async (e) => {
-    // console.log(profile.name,"ihiihi");
+  const handleSubmit = async () => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
-    const response = await editProfile({id:authObject.data.id,email:profile.email,kepakaran:profile.kepakaran,name:profile.name,nidn:profile.nidn,prodi:profile.prodi});
-    // console.log(response,"berhasil updateeee")
+    const response = await editProfile({
+      id: authObject.data.id,
+      email: profile.email,
+      kepakaran: profile.kepakaran,
+      name: profile.name,
+      nidn: profile.nidn,
+      prodi: profile.prodi,
+    });
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
     } else {
       setModalMessage("Gagal Mengubah Profile! Silakan Coba Lagi");
     }
     openModal();
-  }
-  
+  };
+
+  const handleCancel = () => {
+    window.history.back();
+  };
+
   return (
     <>
-    {/* {console.log(profile,"profff")} */}
+      {/* {console.log(profile,"profff")} */}
       <div id="wrapper">
         <Sidebar />
         <div id="content-wrapper" className="d-flex flex-column">
@@ -72,10 +80,6 @@ export default function Editprofile() {
                             />
                           </div>
                           <br />
-                          {/* <h5 className="user-name text-center">Rizky Jemal</h5>
-                          <h6 className="user-email text-center">
-                            rizkyjemal@gmail.com
-                          </h6> */}
                         </div>
                       </div>
                     </div>
@@ -86,7 +90,9 @@ export default function Editprofile() {
                     <div className="card-body">
                       <div className="row gutters">
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                          <h6 className="mb-2 text-primary">Personal Details</h6>
+                          <h6 className="mb-2 text-primary">
+                            Personal Details
+                          </h6>
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
@@ -137,7 +143,9 @@ export default function Editprofile() {
                               onChange={handleInputChange}
                             >
                               <option value="Informatika">Informatika</option>
-                              <option value="Sistem Informasi">Sistem Informasi</option>
+                              <option value="Sistem Informasi">
+                                Sistem Informasi
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -152,9 +160,15 @@ export default function Editprofile() {
                               value={profile.kepakaran || ""}
                               onChange={handleInputChange}
                             >
-                              <option value="IT Security Specialist">IT Security Specialist</option>
-                              <option value="Data Scientist">Data Scientist</option>
-                              <option value="Software Engineer">Software Engineer</option>
+                              <option value="IT Security Specialist">
+                                IT Security Specialist
+                              </option>
+                              <option value="Data Scientist">
+                                Data Scientist
+                              </option>
+                              <option value="Software Engineer">
+                                Software Engineer
+                              </option>
                             </select>
                           </div>
                         </div>
@@ -167,6 +181,7 @@ export default function Editprofile() {
                               id="cancel"
                               name="cancel"
                               className="btn btn-secondary"
+                              onClick={handleCancel}
                             >
                               Cancel
                             </button>
@@ -219,7 +234,11 @@ export default function Editprofile() {
               </div>
               <div className="modal-body">{modalMessage}</div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" type="button" onClick={closeModal}>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
                   Ok
                 </button>
               </div>

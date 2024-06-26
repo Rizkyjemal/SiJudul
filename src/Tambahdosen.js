@@ -4,16 +4,15 @@ import { useState } from "react";
 import { requestWithHeaders } from "./models/requestMethod";
 import { createDosen } from "./models/apiCall";
 export default function Tambahdosen() {
-
   const [formData, setFormData] = useState({
-    name: '',
-    nidn: '',
-    email: '',
-    prodi: '',
-    kapasitas: '',
-    kepakaran: '',
-    jabatan: '',
-    password: '',
+    name: "",
+    nidn: "",
+    email: "",
+    prodi: "",
+    kapasitas: "",
+    kepakaran: "",
+    jabatan: "",
+    password: "",
     // image: null
   });
 
@@ -30,7 +29,6 @@ export default function Tambahdosen() {
       [name]: value,
     }));
   };
-
 
   const handleSubmit = async () => {
     const form = new FormData();

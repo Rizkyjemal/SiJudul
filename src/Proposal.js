@@ -91,7 +91,7 @@ export default function Lectures() {
                                 : item.status_acc === "Approved"
                                 ? "bg-success text-white centered"
                                 : item.status_acc === "Rejected"
-                                ? "bg-danger text-white"
+                                ? "bg-danger text-white centered"
                                 : ""
                             }
                           >
