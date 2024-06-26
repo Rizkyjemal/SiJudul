@@ -27,12 +27,14 @@ export default function Approval() {
     const fetchProposal = async () => {
       console.log("idddd",id)
       const res = await getPengajuanById({ id: id });
-      // console.log(id, "oidd");
+      // console.log(res, "oidd");
       setProposal(res.result);
-      console.log(res);
+      // console.log(res);
     };
     fetchProposal();
   }, []);
+
+  // console.log(proposal,"kkaskak");
 
   const closeModal = () => {
     setIsModalVisible(false);
@@ -100,6 +102,7 @@ export default function Approval() {
   };
 
   return (
+    
     <div id="wrapper">
       <Sidebar />
       <div id="content-wrapper" className="d-flex flex-column">
@@ -131,7 +134,7 @@ export default function Approval() {
                     <div className="combined-card">
                       <div className="info-section">
                         <div className="info-item">
-                          <strong>Abstrak:</strong> {proposal.rumusan_masalah}
+                          <strong>Abstrak:</strong> {proposal.abstrak === "" ? "-" : proposal.abstrak}
                         </div>
 
                         <div className="info-item">
@@ -149,6 +152,14 @@ export default function Approval() {
                         <div className="info-item">
                           <strong>Program Studi:</strong>
                           <span>{proposal.mahasiswa.prodi}</span>
+                        </div>
+                        <div className="info-item">
+                          <strong>Dosen Pembimbing 1:</strong>
+                          <span>{proposal.dospem1.name}</span>
+                        </div>
+                        <div className="info-item">
+                          <strong>Dosen Pembimbing 2:</strong>
+                          <span>{proposal.dospem2.name}</span>
                         </div>
                       </div>
                     </div>
