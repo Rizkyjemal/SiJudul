@@ -5,7 +5,11 @@ import { CgDetailsMore } from "react-icons/cg";
 import { SiCodementor } from "react-icons/si";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
-import { deleteStudent, getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
+import {
+  deleteStudent,
+  getAllStudents,
+  getAllStudentsBimbingan,
+} from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +19,8 @@ export default function Students() {
   const [allMahasiswa, setAllMahasiswa] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   let [isKaprodi, setIsKaprodi] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -52,9 +58,18 @@ export default function Students() {
   };
 
   const handleDeleteClick = async (id) => {
-    await deleteStudent(id)
-    console.log("Delete student with id:", id);
-    window.location.reload()
+    const response = await deleteStudent(id);
+    if (response.result) {
+      setModalMessage("Berhasil Menghapus Data Mahasiswa!");
+    } else {
+      setModalMessage("Gagal Menghapus Data Mahasiswa! Silakan Coba Lagi");
+    }
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    window.location.reload();
   };
 
   return (
@@ -109,6 +124,7 @@ export default function Students() {
                               </td>
                               <td>
                                 <button
+                                  className="delete-button"
                                   onClick={() => handleDeleteClick(item?.id)}
                                 >
                                   Delete Mahasiswa
@@ -168,6 +184,7 @@ export default function Students() {
                               </td>
                               <td>
                                 <button
+                                  className="delete-button"
                                   onClick={() => handleDeleteClick(item?.id)}
                                 >
                                   Delete Mahasiswa
@@ -192,9 +209,62 @@ export default function Students() {
           </div>
         </footer>
       </div>
+      {isModalVisible && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalApprovalLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalApprovalLabel">
+                  Pengajuan
+                </h5>
+                <button className="close" type="button" onClick={closeModal}>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">{modalMessage}</div>
+              <div className="modal-footer">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <style jsx>{`
         .clickable-row {
           cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+        .clickable-row:hover {
+          background-color: #f2f2f2;
+        }
+        .delete-button {
+          background-color: #ff4d4d;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+        .delete-button:hover {
+          background-color: #ff1a1a;
+        }
+        .modal.fade.show {
+          display: block;
+          background-color: rgba(0, 0, 0, 0.5);
         }
       `}</style>
     </div>
