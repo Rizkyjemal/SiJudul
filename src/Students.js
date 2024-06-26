@@ -12,26 +12,42 @@ import { useNavigate } from "react-router-dom";
 export default function Students() {
   const navigate = useNavigate();
   const [mahasiswa, setMahasiswa] = useState([]);
+  const [allMahasiswa, setAllMahasiswa] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  let [isKaprodi, setIsKaprodi] = useState(false);
+
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
     const roles = authObject.roles;
-    const isAdmin = roles.includes("admin");
-    
+
+    setIsKaprodi(roles.includes("kaprodi"));
+    setIsAdmin(roles.includes("admin"));
+
+   
+    fetchData(roles.includes("kaprodi"),roles.includes("admin"));
+  }, []);
+
+  const fetchData = async (isKaprodi,isAdmin) => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+
+    // const roles = authObject.roles;
     const userId = authObject.data.id;
 
-    const fetchData = async () => {
-      if (isAdmin) {
-        const res = await getAllStudents();
-        setMahasiswa(res.result);
-      } else {
-        const res = await getAllStudentsBimbingan({ id: userId });
-        setMahasiswa(res.mahasiswa_list);
-      }
-    };
-    fetchData();
-  }, []);
+    if (isAdmin) {
+      const res = await getAllStudents();
+      setAllMahasiswa(res.result);
+    } else if(isKaprodi){
+      const res = await getAllStudentsBimbingan({ id: userId });
+      const resAll = await getAllStudents();
+      setMahasiswa(res.mahasiswa_list);
+      setAllMahasiswa(resAll.result);
+      // console.log(resAll,"asasa",res);
+      // setAllMahasiswa(resAll)
+    }
+  };
 
   const handleRowClick = (id) => {
     navigate(`/detailstudent/${id}`);
@@ -44,47 +60,99 @@ export default function Students() {
         <div id="content">
           <Searchbar />
           <div className="container-fluid">
-            <h1 className="h3 mb-2 text-gray-800">
-              Daftar Mahasiswa Bimbingan
-            </h1>
-            <p className="mb-4">Berikut list daftar mahasiswa bimbingan:</p>
-            <div className="card shadow mb-4">
-              <div className="card-body">
-                <div className="table-responsive">
-                  <table
-                    className="table table-bordered"
-                    id="dataTable"
-                    width="100%"
-                    cellSpacing="0"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Nama Mahasiswa</th>
-                        <th>NIM</th>
-                        <th>Program Studi</th>
-                        <th>Angkatan</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {mahasiswa?.map((item, index) => (
-                        <tr
-                          key={index}
-                          className="clickable-row"
-                          onClick={() => handleRowClick(item?.id)}
-                        >
-                          <td>{item.name}</td>
-                          <td>{item.nim}</td>
-                          <td>{item.prodi}</td>
-                          <td>{item.angkatan}</td>
-                          <td>{item.email}</td>
+          {(!isAdmin || isKaprodi) && (
+            <>
+              <h1 className="h3 mb-2 text-gray-800">
+                Daftar Mahasiswa Bimbingan
+              </h1>
+              <p className="mb-4">Berikut list daftar mahasiswa bimbingan:</p>
+              <div className="card shadow mb-4">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table
+                      className="table table-bordered"
+                      id="dataTable"
+                      width="100%"
+                      cellSpacing="0"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Nama Mahasiswa</th>
+                          <th>NIM</th>
+                          <th>Program Studi</th>
+                          <th>Angkatan</th>
+                          <th>Email</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {mahasiswa?.map((item, index) => (
+                          <tr
+                            key={index}
+                            className="clickable-row"
+                            onClick={() => handleRowClick(item?.id)}
+                          >
+                            <td>{item.name}</td>
+                            <td>{item.nim}</td>
+                            <td>{item.prodi}</td>
+                            <td>{item.angkatan}</td>
+                            <td>{item.email}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
+
+          )}
+            
+          {( isAdmin || isKaprodi ) && (
+            <>
+              <h1 className="h3 mb-2 text-gray-800">
+                Daftar Semua Mahasiswa
+              </h1>
+              <p className="mb-4">Berikut list daftar semua mahasiswa:</p>
+              <div className="card shadow mb-4">
+                <div className="card-body">
+                  <div className="table-responsive">
+                    <table
+                      className="table table-bordered"
+                      id="dataTable"
+                      width="100%"
+                      cellSpacing="0"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Nama Mahasiswa</th>
+                          <th>NIM</th>
+                          <th>Program Studi</th>
+                          <th>Angkatan</th>
+                          <th>Email</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {allMahasiswa?.map((item, index) => (
+                          <tr
+                            key={index}
+                            className="clickable-row"
+                            onClick={() => handleRowClick(item?.id)}
+                          >
+                            <td>{item.name}</td>
+                            <td>{item.nim}</td>
+                            <td>{item.prodi}</td>
+                            <td>{item.angkatan}</td>
+                            <td>{item.email}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+            
           </div>
         </div>
 
