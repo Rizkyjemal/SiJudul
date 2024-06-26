@@ -133,10 +133,20 @@ export const getProfileDosen = async ({ id }) => {
   }
 };
 
-export const getPengajuanById = async ({ id }) => {
+export const getPengajuanByIdMahasiswa = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(`pengajuan/mahasiswa/${id}`);
-    // console.log(res.data)
+    // console.log(res,"dari api")
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
+
+export const getPengajuanById = async ({ id }) => {
+  try {
+    const res = await requestWithHeaders.get(`pengajuan/${id}`);
+    console.log(res,"dari api")
     return res.data;
   } catch (error) {
     return error?.message;

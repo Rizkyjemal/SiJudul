@@ -25,13 +25,14 @@ export default function Approval() {
 
   useEffect(() => {
     const fetchProposal = async () => {
+      console.log("idddd",id)
       const res = await getPengajuanById({ id: id });
-      console.log(id, "oidd");
-      setProposal(res.result[0]);
-      console.log(res.result);
+      // console.log(id, "oidd");
+      setProposal(res.result);
+      console.log(res);
     };
     fetchProposal();
-  }, [id]);
+  }, []);
 
   const closeModal = () => {
     setIsModalVisible(false);
@@ -110,7 +111,7 @@ export default function Approval() {
             </h1>
             <p className="mb-4">
               Dosen diminta untuk memberikan persetujuan atas judul proposal
-              skripsi mahasiswa yang sudah diajukan!
+              skripsi mahasiswa yang sudah di ajukan!
             </p>
             {proposal ? (
               <div className="card shadow mb-4">
@@ -130,30 +131,24 @@ export default function Approval() {
                     <div className="combined-card">
                       <div className="info-section">
                         <div className="info-item">
-                          <strong>Abstrak:</strong> Lorem ipsum dolor sit amet,
-                          consectetur adipiscing elit. Donec ac elit blandit
-                          felis mattis euismod sed nec massa. Cras varius
-                          faucibus aliquet. Fusce ut metus non sem sollicitudin
-                          iaculis eget a purus. Cras ornare libero nec lectus
-                          euismod tincidunt. Praesent nulla erat, porttitor non
-                          erat id, tempus pellentesque ligula. Mauris.
+                          <strong>Abstrak:</strong> {proposal.rumusan_masalah}
                         </div>
 
                         <div className="info-item">
                           <strong>Peminatan:</strong>
-                          <span>Software Engineering - Software Engineer</span>
+                          <span>{proposal.peminatan}</span>
                         </div>
                         <div className="info-item">
                           <strong>Tempat Penelitian:</strong>
-                          <span>UPN Veteran Jakarta</span>
+                          <span>{proposal.tempat_penelitian}</span>
                         </div>
                         <div className="info-item">
                           <strong>Angkatan:</strong>
-                          <span>2020</span>
+                          <span>{proposal.mahasiswa.angkatan}</span>
                         </div>
                         <div className="info-item">
                           <strong>Program Studi:</strong>
-                          <span>S1 Informatika</span>
+                          <span>{proposal.mahasiswa.prodi}</span>
                         </div>
                       </div>
                     </div>

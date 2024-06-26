@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getPengajuanById } from "./models/apiCall";
+import { getPengajuanById, getPengajuanByIdMahasiswa } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,7 +14,7 @@ export default function Detailstudent() {
     const mahasiswaId = segments[segments.length - 1];
 
     const fetchData = async () => {
-      const res = await getPengajuanById({ id: mahasiswaId });
+      const res = await getPengajuanByIdMahasiswa({ id: mahasiswaId });
       console.log(res, "api");
       setPengajuanList(res.result);
     };
