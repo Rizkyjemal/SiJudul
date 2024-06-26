@@ -57,21 +57,16 @@ export default function Approval() {
 
   const handleAccept = () => {
     setStatusAcc("Approved");
-    if(isKaprodi){
-      console.log("kappp")
-      updateProposalKaprodi("Approved", rejectedNote);
-    }else{
+   
       updateProposal("Approved", rejectedNote);
-    }
+    
   };
 
   const handleReject = () => {
     setStatusAcc("Rejected");
-    if(isKaprodi){
-      updateProposalKaprodi("Rejected", rejectedNote);
-    }else{
+   
       updateProposal("Rejected", rejectedNote);
-    }
+    
   };
 
   const handleNoteChange = (event) => {
