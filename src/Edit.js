@@ -1,9 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getProfileDosen } from "./models/apiCall";
+import { editProfile, getProfileDosen } from "./models/apiCall";
 
 export default function Edit() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  let [isKaprodi, setIsKaprodi] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+
   const [dosenData, setDosenData] = useState({
     fullName: "",
     nidn: "",
@@ -15,22 +29,30 @@ export default function Edit() {
   });
 
   useEffect(() => {
+
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    const roles = authObject.roles;
+    setIsKaprodi(roles.includes("kaprodi"));
+    setIsAdmin(roles.includes("admin"));
+
     const fetchData = async () => {
       const id = window.location.pathname.split("/").pop();
       const data = await getProfileDosen({ id });
+      // console.log(data,"dattt")
       setDosenData({
         fullName: data.name,
         nidn: data.nidn,
         email: data.email,
-        programStudi: data.programStudi,
-        kapasitasBimbingan: data.kapasitasBimbingan,
+        programStudi: data.prodi,
+        kapasitasBimbingan: data.kapasitas,
         kepakaran: data.kepakaran,
         image: data.image
       });
     };
 
     fetchData();
-  }, []);
+  }, [isAdmin,isKaprodi]);
 
   console.log(dosenData)
 
@@ -41,6 +63,23 @@ export default function Edit() {
       [id]: value
     }));
   };
+
+  const handleSubmit = async (e) => {
+    // console.log(profile.name,"ihiihi");
+    const id = window.location.pathname.split("/").pop();
+
+    // const jsonString = localStorage.getItem("auth");
+    // const authObject = JSON.parse(jsonString);
+    const response = await editProfile({id:id,email:dosenData.email,kepakaran:dosenData.kepakaran,name:dosenData.fullName,nidn:dosenData.nidn,prodi:dosenData.programStudi,kapasitas:parseInt(dosenData.kapasitasBimbingan)});
+    // console.log(response,"berhasil updateeee")
+    console.log(response,'kuyyyy');
+    if (response.result) {
+      setModalMessage("Berhasil Mengubah Profile!");
+    } else {
+      setModalMessage("Gagal Mengubah Profile! Silakan Coba Lagi");
+    }
+    openModal();
+  }
 
   return (
     <div id="wrapper">
@@ -76,65 +115,76 @@ export default function Edit() {
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <h6 className="mb-2 text-primary">Personal Details</h6>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="fullName">Full Name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="fullName"
-                            value={dosenData.fullName}
-                            onChange={handleChange}
-                            placeholder="Enter full name"
-                          />
+                      {isAdmin && 
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="fullName">Full Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="fullName"
+                              value={dosenData.fullName}
+                              onChange={handleChange}
+                              placeholder="Enter full name"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="nidn">NIDN</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="nidn"
-                            value={dosenData.nidn}
-                            onChange={handleChange}
-                            placeholder="Enter NIDN"
-                          />
+                      }
+                      {isAdmin && 
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="nidn">NIDN</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="nidn"
+                              value={dosenData.nidn}
+                              onChange={handleChange}
+                              placeholder="Enter NIDN"
+                            />
+                          </div>
+                        </div> 
+                      }
+
+                      {isAdmin &&
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                              type="email"
+                              className="form-control"
+                              id="email"
+                              value={dosenData.email}
+                              onChange={handleChange}
+                              placeholder="Enter email"
+                            />
+                          </div>
+                        </div> 
+                      }
+                      
+                      {isAdmin &&
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="programStudi">Program Studi</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="programStudi"
+                              value={dosenData.programStudi}
+                              onChange={handleChange}
+                              placeholder="Enter Program Studi"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="email">Email</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="email"
-                            value={dosenData.email}
-                            onChange={handleChange}
-                            placeholder="Enter email"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="programStudi">Program Studi</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="programStudi"
-                            value={dosenData.programStudi}
-                            onChange={handleChange}
-                            placeholder="Enter Program Studi"
-                          />
-                        </div>
-                      </div>
+                      }
+
                     </div>
                     <div className="row gutters">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
                           <label htmlFor="kapasitasBimbingan">Kapasitas Bimbingan</label>
                           <input
-                            type="text"
+                            type="number"
                             className="form-control"
                             id="kapasitasBimbingan"
                             value={dosenData.kapasitasBimbingan}
@@ -143,19 +193,22 @@ export default function Edit() {
                           />
                         </div>
                       </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="kepakaran">Kepakaran</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="kepakaran"
-                            value={dosenData.kepakaran}
-                            onChange={handleChange}
-                            placeholder="Enter Kepakaran"
-                          />
+                      {isAdmin &&
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="kepakaran">Kepakaran</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="kepakaran"
+                              value={dosenData.kepakaran}
+                              onChange={handleChange}
+                              placeholder="Enter Kepakaran"
+                            />
+                          </div>
                         </div>
-                      </div>
+                      }
+                      
                     </div>
                     <div className="row gutters">
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -173,6 +226,7 @@ export default function Edit() {
                             id="submit"
                             name="submit"
                             className="btn btn-primary"
+                            onClick={handleSubmit}
                           >
                             Update
                           </button>
@@ -193,6 +247,35 @@ export default function Edit() {
           </div>
         </footer>
       </div>
+      {isModalVisible && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalApprovalLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalApprovalLabel">
+                  Pengajuan
+                </h5>
+                <button className="close" type="button" onClick={closeModal}>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">{modalMessage}</div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" type="button" onClick={closeModal}>
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

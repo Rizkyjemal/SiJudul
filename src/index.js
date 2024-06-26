@@ -41,7 +41,7 @@ root.render(
         </Route>
         <Route
           path="/lectures"
-          element={<PrivateRoute roles={['admin']} />}
+          element={<PrivateRoute roles={['admin','kaprodi']} />}
         >
           <Route path="" element={<Lectures />} />
         </Route>

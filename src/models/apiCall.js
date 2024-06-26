@@ -186,10 +186,10 @@ export const getAllStudents = async () => {
   }
 };
 
-export const editProfile = async ({id,name,nidn,email,prodi,kepakaran}) => {
+export const editProfile = async ({id,name,nidn,email,prodi,kepakaran,kapasitas}) => {
   try {
     const res = await requestWithHeaders.put(`/dosen/${id}`, {
-      name,nidn,email,prodi,kepakaran
+      name,nidn,email,prodi,kepakaran,kapasitas
     });
     // console.log(res.data)
     return res.data;

@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import { getAllStudents } from "./models/apiCall";
 export default function Sidebar() {
   let [isAdmin, setIsAdmin] = useState(false);
+  let [isKaprodi, setIsKaprodi] = useState(false);
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
-    
 
     const roles = authObject.roles;
      setIsAdmin(roles.includes("admin"));
-
+     setIsKaprodi(roles.includes("kaprodi"));
    
   }, []);
   return (
@@ -55,7 +55,7 @@ export default function Sidebar() {
             Student
           </a>
         </li>
-    {isAdmin ? ( <li className="nav-item active">
+    {isAdmin || isKaprodi ? ( <li className="nav-item active">
           <a className="nav-link collapsed" href="/lectures">
             <GiTeacher className="mx-2" />
             Lectures
