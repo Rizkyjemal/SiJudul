@@ -8,6 +8,7 @@ import {
   updatePengajuan,
   checkSimilarity,
   getPengajuanById,
+  updatePengajuanKaprodi,
 } from "./models/apiCall";
 
 
@@ -22,8 +23,14 @@ export default function Approval() {
   const [loginFailed, setLoginFailed] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  let [isKaprodi, setIsKaprodi] = useState(false);
 
   useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    const roles = authObject.roles;
+    setIsKaprodi(roles.includes("kaprodi"));
+
     const fetchProposal = async () => {
       console.log("idddd",id)
       const res = await getPengajuanById({ id: id });
@@ -32,7 +39,8 @@ export default function Approval() {
       // console.log(res);
     };
     fetchProposal();
-  }, []);
+  }, [isKaprodi]);
+  
 
   // console.log(proposal,"kkaskak");
 
@@ -49,12 +57,21 @@ export default function Approval() {
 
   const handleAccept = () => {
     setStatusAcc("Approved");
-    updateProposal("Approved", rejectedNote);
+    if(isKaprodi){
+      console.log("kappp")
+      updateProposalKaprodi("Approved", rejectedNote);
+    }else{
+      updateProposal("Approved", rejectedNote);
+    }
   };
 
   const handleReject = () => {
     setStatusAcc("Rejected");
-    updateProposal("Rejected", rejectedNote);
+    if(isKaprodi){
+      updateProposalKaprodi("Rejected", rejectedNote);
+    }else{
+      updateProposal("Rejected", rejectedNote);
+    }
   };
 
   const handleNoteChange = (event) => {
@@ -64,6 +81,27 @@ export default function Approval() {
   const updateProposal = async (status, note) => {
     try {
       const response = await updatePengajuan({
+        id,
+        statusAcc: status,
+        rejectedNote: note,
+      });
+      if (response.result) {
+        setLoginFailed(false);
+        setModalMessage("Berhasil Mengubah Status Pengajuan!");
+      } else {
+        setLoginFailed(true);
+        setModalMessage("Gagal Mengubah Status Pengajuan! Silakan Coba Lagi");
+      }
+      openModal();
+      console.log("Response from API:", response);
+    } catch (error) {
+      console.error("Error updating proposal:", error);
+    }
+  };
+
+  const updateProposalKaprodi = async (status, note) => {
+    try {
+      const response = await updatePengajuanKaprodi({
         id,
         statusAcc: status,
         rejectedNote: note,

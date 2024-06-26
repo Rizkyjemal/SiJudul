@@ -158,6 +158,19 @@ export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
       status_acc : statusAcc,
       rejected_note : rejectedNote,
+      // status_acc_kaprodi : rejectedNote,
+    });
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
+
+export const updatePengajuanKaprodi = async ({ id, statusAcc, rejectedNote }) => {
+  try {
+    const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
+      rejected_note : rejectedNote,
+      status_acc_kaprodi : statusAcc,
     });
     return res.data;
   } catch (error) {
