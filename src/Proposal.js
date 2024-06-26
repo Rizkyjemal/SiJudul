@@ -8,16 +8,27 @@ export default function Lectures() {
   const navigate = useNavigate();
 
   const [pengajuan, setPengajuan] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleRowClick = (id) => {
     navigate(`/approval/${id}`);
   };
 
   useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    const roles = authObject.roles;
+
+    setIsAdmin(roles.includes("admin"));
     const fetchData = async () => {
       const jsonString = localStorage.getItem("auth");
       const authObject = JSON.parse(jsonString);
-      const res = await getAllPengajuanByDospemId({id:authObject.data.id});
+      let res
+      if (roles.includes("admin")) {
+        res = await getAllPengajuan();
+      } else {
+        res = await getAllPengajuanByDospemId({id:authObject.data.id});
+      }
       // console.log(res,"rrrrrrrrr")
       const sortedData = res.result.sort((a, b) => {
         const order = { Pending: 1, Approved: 2, Rejected: 3 };

@@ -75,7 +75,7 @@ function App() {
                               Proposals
                             </div>
                             <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              {pengajuan.length}
+                              {pengajuan?.length || 0}
                             </div>
                           </div>
                         </div>
@@ -94,7 +94,7 @@ function App() {
                               Students
                             </div>
                             <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              {mahasiswa.length}
+                              {mahasiswa?.length || 0}
                             </div>
                           </div>
                         </div>
