@@ -21,8 +21,10 @@ export default function ApprovalKaprodi() {
         return order[a.status_acc] - order[b.status_acc];
       });
 
-      console.log(sortedData,"soooo");
-      const approvedArray = sortedData.filter(item => item.status_acc === "Approved");
+      console.log(sortedData, "soooo");
+      const approvedArray = sortedData.filter(
+        (item) => item.status_acc === "Approved"
+      );
 
       setPengajuan(approvedArray);
     };
@@ -46,15 +48,7 @@ export default function ApprovalKaprodi() {
               Halaman ini berisi list daftar pengajuan judul proposal mahasiswa
               Informatika.
             </p>
-            <a
-              href="#"
-              className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-            >
-              <i className="fas fa-download fa-sm text-white-50"></i> Edit Data
-              Proposal Mahasiswa
-            </a>
-            <br></br>
-            <br></br>
+
             <div className="card shadow mb-4">
               <div className="card-header py-3">
                 <h6 className="m-0 font-weight-bold text-primary">

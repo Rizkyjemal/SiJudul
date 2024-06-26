@@ -13,7 +13,7 @@ export const requestWithHeaders = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -21,7 +21,7 @@ export const requestWithHeadersAndFiles = axios.create({
   baseURL: BASE_URL,
   headers: {
     Authorization: `Bearer ${localStorage.getItem("token")}`,
-    'Content-Type': 'multipart/form-data'
+    "Content-Type": "multipart/form-data",
   },
 });
 
@@ -80,13 +80,13 @@ export const getAllDosen = async () => {
 
 export const createDosen = async (dosenData) => {
   try {
-    console.log(dosenData)
+    console.log(dosenData);
     const res = await requestWithHeadersAndFiles.post("/dosen/", dosenData);
-    console.log(res.data)
+    console.log(res.data);
     return res.data;
     // return
   } catch (error) {
-    console.log(error?.response?.data)
+    console.log(error?.response?.data);
     return error?.message;
   }
 };
@@ -123,22 +123,20 @@ export const getAllStudentsBimbingan = async ({ id }) => {
   }
 };
 
-export const updateDosen = async ({id}) => {
+export const updateDosen = async ({ id }) => {
   try {
-    const res = await requestWithHeadersAndFiles
-  } catch (error) {
-    
-  }
-}
+    const res = await requestWithHeadersAndFiles;
+  } catch (error) {}
+};
 
 export const getProfileDosen = async ({ id }) => {
   // console.log("aaaa",id);
   try {
     const res = await requestWithHeaders.get(`/dosen/${id}`);
-    console.log(res?.data?.dosen)
+    console.log(res?.data?.dosen);
     return res?.data?.dosen;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return error?.message;
   }
 };
@@ -156,7 +154,7 @@ export const getPengajuanByIdMahasiswa = async ({ id }) => {
 export const getPengajuanById = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(`pengajuan/${id}`);
-    console.log(res,"dari api")
+    console.log(res, "dari api");
     return res.data;
   } catch (error) {
     return error?.message;
@@ -166,8 +164,8 @@ export const getPengajuanById = async ({ id }) => {
 export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   try {
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
-      status_acc : statusAcc,
-      rejected_note : rejectedNote,
+      status_acc: statusAcc,
+      rejected_note: rejectedNote,
       // status_acc_kaprodi : rejectedNote,
     });
     return res.data;
@@ -176,11 +174,15 @@ export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   }
 };
 
-export const updatePengajuanKaprodi = async ({ id, statusAcc, rejectedNote }) => {
+export const updatePengajuanKaprodi = async ({
+  id,
+  statusAcc,
+  rejectedNote,
+}) => {
   try {
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
-      rejected_note : rejectedNote,
-      status_acc_kaprodi : statusAcc,
+      rejected_note: rejectedNote,
+      status_acc_kaprodi: statusAcc,
     });
     return res.data;
   } catch (error) {
@@ -190,9 +192,12 @@ export const updatePengajuanKaprodi = async ({ id, statusAcc, rejectedNote }) =>
 
 export const checkSimilarity = async ({ judul, id }) => {
   try {
-    const res = await requestWithHeaders.post(`/pengajuan/similarity-test?id=${id}`, {
-      judul,
-    });
+    const res = await requestWithHeaders.post(
+      `/pengajuan/similarity-test?id=${id}`,
+      {
+        judul,
+      }
+    );
     return res.data;
   } catch (error) {
     return error?.message;
@@ -209,10 +214,23 @@ export const getAllStudents = async () => {
   }
 };
 
-export const editProfile = async ({id,name,nidn,email,prodi,kepakaran,kapasitas}) => {
+export const editProfile = async ({
+  id,
+  name,
+  nidn,
+  email,
+  prodi,
+  kepakaran,
+  kapasitas,
+}) => {
   try {
     const res = await requestWithHeaders.put(`/dosen/${id}`, {
-      name,nidn,email,prodi,kepakaran,kapasitas
+      name,
+      nidn,
+      email,
+      prodi,
+      kepakaran,
+      kapasitas,
     });
     // console.log(res.data)
     return res.data;
@@ -221,3 +239,11 @@ export const editProfile = async ({id,name,nidn,email,prodi,kepakaran,kapasitas}
   }
 };
 
+export const deleteDosen = async (id) => {
+  try {
+    const res = await requestWithHeaders.delete(`/dosen/${id}`);
+    return { result: true, data: res.data }; // Ensure a successful response
+  } catch (error) {
+    return { result: false, message: error?.message }; // Ensure a failure response
+  }
+};

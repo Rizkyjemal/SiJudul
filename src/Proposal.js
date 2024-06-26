@@ -23,11 +23,11 @@ export default function Lectures() {
     const fetchData = async () => {
       const jsonString = localStorage.getItem("auth");
       const authObject = JSON.parse(jsonString);
-      let res
+      let res;
       if (roles.includes("admin")) {
         res = await getAllPengajuan();
       } else {
-        res = await getAllPengajuanByDospemId({id:authObject.data.id});
+        res = await getAllPengajuanByDospemId({ id: authObject.data.id });
       }
       // console.log(res,"rrrrrrrrr")
       const sortedData = res.result.sort((a, b) => {
@@ -57,8 +57,7 @@ export default function Lectures() {
               Halaman ini berisi list daftar pengajuan judul proposal mahasiswa
               Informatika.
             </p>
-            
-           
+
             <div className="card shadow mb-4">
               <div className="card-header py-3">
                 <h6 className="m-0 font-weight-bold text-primary">

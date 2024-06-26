@@ -1,8 +1,9 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
 import { useState } from "react";
-import { requestWithHeaders } from "./models/requestMethod";
 import { createDosen } from "./models/apiCall";
+import { useNavigate } from "react-router-dom";
+
 export default function Tambahdosen() {
   const [formData, setFormData] = useState({
     name: "",
@@ -13,14 +14,14 @@ export default function Tambahdosen() {
     kepakaran: "",
     jabatan: "",
     password: "",
-    // image: null
   });
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     let { name, value } = e.target;
-    // if (name == "kapasitas") {
-    //   value = parseInt(value, 10)
-    // }
     if (name === "image") {
       value = e.target.files[0];
     }
@@ -30,18 +31,32 @@ export default function Tambahdosen() {
     }));
   };
 
+  const closeModal = () => {
+    setIsModalVisible(false);
+    navigate("/lectures");
+  };
+
+  const openModal = (message) => {
+    setModalMessage(message);
+    setIsModalVisible(true);
+  };
+
   const handleSubmit = async () => {
     const form = new FormData();
     for (const key in formData) {
       form.append(key, formData[key]);
     }
-    await createDosen(form);
+    const response = await createDosen(form);
+    if (response.result) {
+      openModal("Berhasil Menambahkan Data Dosen!");
+    } else {
+      openModal("Gagal Menambahkan Data Dosen! Silakan Coba Lagi");
+    }
   };
 
   return (
     <div id="wrapper">
       <Sidebar />
-
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <Searchbar />
@@ -58,11 +73,9 @@ export default function Tambahdosen() {
                             alt="Maxwell Admin"
                           />
                         </div>
-                        <br></br>
-                        <h5 className="user-name text-center">Rizky Jemal</h5>
-                        <h6 className="user-email text-center">
-                          rizkyjemal@gmail.com
-                        </h6>
+                        <br />
+                        <h5 className="user-name text-center">Nama Lengkap</h5>
+                        <h6 className="user-email text-center">email</h6>
                       </div>
                     </div>
                   </div>
@@ -87,7 +100,7 @@ export default function Tambahdosen() {
                             name="name"
                             className="form-control"
                             id="fullName"
-                            placeholder="Chordan Aksa Priandoyo"
+                            placeholder="..."
                           />
                         </div>
                       </div>
@@ -101,7 +114,7 @@ export default function Tambahdosen() {
                             name="nidn"
                             className="form-control"
                             id="eMail"
-                            placeholder="1306078702"
+                            placeholder="..."
                           />
                         </div>
                       </div>
@@ -115,22 +128,25 @@ export default function Tambahdosen() {
                             name="email"
                             className="form-control"
                             id="phone"
-                            placeholder="chordan345@gmail.com"
+                            placeholder="..."
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="website">Program Studi</label>
-                          <input
-                            type="url"
-                            name="prodi"
-                            onChange={handleChange}
-                            value={formData.prodi}
+                          <label htmlFor="prodi">Program Studi</label>
+                          <select
                             className="form-control"
-                            id="website"
-                            placeholder="S1 Informatika"
-                          />
+                            id="prodi"
+                            name="prodi"
+                            value={formData.prodi}
+                            onChange={handleChange}
+                          >
+                            <option value="Informatika">Informatika</option>
+                            <option value="Sistem Informasi">
+                              Sistem Informasi
+                            </option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -145,36 +161,46 @@ export default function Tambahdosen() {
                             name="kapasitas"
                             className="form-control"
                             id="Street"
-                            placeholder="10"
+                            placeholder="..."
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="ciTy">Kepakaran</label>
-                          <input
-                            type="name"
-                            onChange={handleChange}
-                            value={formData.kepakaran}
+                          <label htmlFor="kepakaran">Kepakaran</label>
+                          <select
+                            className="form-control"
+                            id="kepakaran"
                             name="kepakaran"
-                            className="form-control"
-                            id="ciTy"
-                            placeholder="Software Engineering"
-                          />
+                            value={formData.kepakaran}
+                            onChange={handleChange}
+                          >
+                            <option value="IT Security Specialist">
+                              IT Security Specialist
+                            </option>
+                            <option value="Data Scientist">
+                              Data Scientist
+                            </option>
+                            <option value="Software Engineer">
+                              Software Engineer
+                            </option>
+                          </select>
                         </div>
                       </div>
+
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Jabatan</label>
-                          <input
-                            type="name"
-                            name="jabatan"
-                            onChange={handleChange}
-                            value={formData.jabatan}
+                          <label htmlFor="jabatan">Jabatan</label>
+                          <select
                             className="form-control"
-                            id="Street"
-                            placeholder="Dosen"
-                          />
+                            id="jabatan"
+                            name="jabatan"
+                            value={formData.jabatan}
+                            onChange={handleChange}
+                          >
+                            <option value="Dosen">Dosen</option>
+                            <option value="Kaprodi">Kaprodi</option>
+                          </select>
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -191,7 +217,7 @@ export default function Tambahdosen() {
                           />
                         </div>
                       </div>
-                      <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div className="col-xl-12 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
                           <label htmlFor="image">Upload Image</label>
                           <input
@@ -233,6 +259,39 @@ export default function Tambahdosen() {
           </div>
         </footer>
       </div>
+      {isModalVisible && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalApprovalLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalApprovalLabel">
+                  Pengajuan
+                </h5>
+                <button className="close" type="button" onClick={closeModal}>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">{modalMessage}</div>
+              <div className="modal-footer">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

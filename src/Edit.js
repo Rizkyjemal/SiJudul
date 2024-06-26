@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { editProfile, getProfileDosen } from "./models/apiCall";
+import { editProfile, getProfileDosen, deleteDosen } from "./models/apiCall";
+import { useNavigate } from "react-router-dom";
 
 export default function Edit() {
   const [isAdmin, setIsAdmin] = useState(false);
-  let [isKaprodi, setIsKaprodi] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const closeModal = () => {
-    setIsModalVisible(false);
-  };
+  const [isKaprodi, setIsKaprodi] = useState(false);
 
   const openModal = () => {
     setIsModalVisible(true);
   };
-
 
   const [dosenData, setDosenData] = useState({
     fullName: "",
@@ -25,11 +19,13 @@ export default function Edit() {
     programStudi: "",
     kapasitasBimbingan: "",
     kepakaran: "",
-    image: ""
+    image: "",
   });
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
     const roles = authObject.roles;
@@ -47,39 +43,55 @@ export default function Edit() {
         programStudi: data.prodi,
         kapasitasBimbingan: data.kapasitas,
         kepakaran: data.kepakaran,
-        image: data.image
+        image: data.image,
       });
     };
 
     fetchData();
-  }, [isAdmin,isKaprodi]);
-
-  console.log(dosenData)
+  }, []);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
     setDosenData((prevState) => ({
       ...prevState,
-      [id]: value
+      [id]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
-    // console.log(profile.name,"ihiihi");
     const id = window.location.pathname.split("/").pop();
-
-    // const jsonString = localStorage.getItem("auth");
-    // const authObject = JSON.parse(jsonString);
-    const response = await editProfile({id:id,email:dosenData.email,kepakaran:dosenData.kepakaran,name:dosenData.fullName,nidn:dosenData.nidn,prodi:dosenData.programStudi,kapasitas:parseInt(dosenData.kapasitasBimbingan)});
-    // console.log(response,"berhasil updateeee")
-    console.log(response,'kuyyyy');
+    const response = await editProfile({
+      id: id,
+      email: dosenData.email,
+      kepakaran: dosenData.kepakaran,
+      name: dosenData.fullName,
+      nidn: dosenData.nidn,
+      prodi: dosenData.programStudi,
+      kapasitas: parseInt(dosenData.kapasitasBimbingan),
+    });
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
     } else {
       setModalMessage("Gagal Mengubah Profile! Silakan Coba Lagi");
     }
     openModal();
-  }
+  };
+
+  const handleDelete = async () => {
+    const id = window.location.pathname.split("/").pop();
+    const response = await deleteDosen(id);
+    if (response.result) {
+      setModalMessage("Berhasil Menghapus Data Dosen!");
+    } else {
+      setModalMessage("Gagal Menghapus Data Dosen! Silakan Coba Lagi");
+    }
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    navigate("/lectures");
+  };
 
   return (
     <div id="wrapper">
@@ -95,14 +107,15 @@ export default function Edit() {
                     <div className="account-settings">
                       <div className="user-profile">
                         <div className="user-avatar centered">
-                          <img
-                            src={dosenData.image}
-                            alt="Maxwell Admin"
-                          />
+                          <img src={dosenData.image} alt="Maxwell Admin" />
                         </div>
                         <br />
-                        <h5 className="user-name text-center">{dosenData.fullName}</h5>
-                        <h6 className="user-email text-center">{dosenData.email}</h6>
+                        <h5 className="user-name text-center">
+                          {dosenData.fullName}
+                        </h5>
+                        <h6 className="user-email text-center">
+                          {dosenData.email}
+                        </h6>
                       </div>
                     </div>
                   </div>
@@ -115,7 +128,7 @@ export default function Edit() {
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <h6 className="mb-2 text-primary">Personal Details</h6>
                       </div>
-                      {isAdmin && 
+                      {isAdmin && (
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="fullName">Full Name</label>
@@ -129,8 +142,8 @@ export default function Edit() {
                             />
                           </div>
                         </div>
-                      }
-                      {isAdmin && 
+                      )}
+                      {isAdmin && (
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="nidn">NIDN</label>
@@ -143,10 +156,10 @@ export default function Edit() {
                               placeholder="Enter NIDN"
                             />
                           </div>
-                        </div> 
-                      }
+                        </div>
+                      )}
 
-                      {isAdmin &&
+                      {isAdmin && (
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="email">Email</label>
@@ -159,10 +172,10 @@ export default function Edit() {
                               placeholder="Enter email"
                             />
                           </div>
-                        </div> 
-                      }
-                      
-                      {isAdmin &&
+                        </div>
+                      )}
+
+                      {isAdmin && (
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="programStudi">Program Studi</label>
@@ -176,13 +189,14 @@ export default function Edit() {
                             />
                           </div>
                         </div>
-                      }
-
+                      )}
                     </div>
                     <div className="row gutters">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="kapasitasBimbingan">Kapasitas Bimbingan</label>
+                          <label htmlFor="kapasitasBimbingan">
+                            Kapasitas Bimbingan
+                          </label>
                           <input
                             type="number"
                             className="form-control"
@@ -193,7 +207,7 @@ export default function Edit() {
                           />
                         </div>
                       </div>
-                      {isAdmin &&
+                      {isAdmin && (
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="kepakaran">Kepakaran</label>
@@ -207,17 +221,28 @@ export default function Edit() {
                             />
                           </div>
                         </div>
-                      }
-                      
+                      )}
                     </div>
                     <div className="row gutters">
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div className="text-right">
+                          {!isKaprodi && (
+                            <button
+                              type="button"
+                              id="delete"
+                              name="delete"
+                              className="btn btn-danger"
+                              onClick={handleDelete}
+                            >
+                              Delete Dosen
+                            </button>
+                          )}
                           <button
                             type="button"
                             id="submit"
                             name="submit"
                             className="btn btn-secondary"
+                            onClick={() => navigate(-1)}
                           >
                             Cancel
                           </button>
@@ -268,7 +293,11 @@ export default function Edit() {
               </div>
               <div className="modal-body">{modalMessage}</div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" type="button" onClick={closeModal}>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
                   Ok
                 </button>
               </div>
