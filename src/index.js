@@ -21,6 +21,8 @@ import Editprofile from "./Editprofile";
 import Tambahdosen from "./Tambahdosen";
 import PrivateRoute from "./PrivateRoute";
 import App from "./App";
+import ApprovalKaprodi from "./ApprovalKaprodi";
+import ApprovalKaprodiDetail from "./ApprovalKaprodiDetail";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -46,6 +48,8 @@ root.render(
           <Route path="" element={<Lectures />} />
         </Route>
         <Route path="/login" element={<Login />} />
+        <Route path="/approval-kaprodi" element={<ApprovalKaprodi />} />
+        <Route path="/approval-kaprodi-detail/:id" element={<ApprovalKaprodiDetail />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>

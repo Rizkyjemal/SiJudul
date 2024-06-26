@@ -7,14 +7,21 @@ import { useNavigate } from "react-router-dom";
 export default function Lectures() {
   const navigate = useNavigate();
   const [dosen, setDosen] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    const roles = authObject.roles;
+
+    setIsAdmin(roles.includes("admin"));
+
     const fetchData = async () => {
       const res = await getAllDosen();
       setDosen(res.result);
     };
     fetchData();
-  }, []);
+  }, [isAdmin]);
 
   const handleRowClick = (id) => {
     navigate(`/edit/${id}`);
@@ -35,13 +42,16 @@ export default function Lectures() {
               Halaman ini berisi list Dosen Pembimbing Proposal Skripsi yang
               tersedia untuk membimbing mahasiswa semester ini.
             </p>
-            <a
-              href="/tambahdosen"
-              className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
-            >
-              <i className="fas fa-download fa-sm text-white-50"></i> Add Data
-              Dosen
-            </a>
+            {isAdmin &&  
+              <a
+                href="/tambahdosen"
+                className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+              >
+                <i className="fas fa-download fa-sm text-white-50"></i> Add Data
+                Dosen
+              </a>
+              }
+           
             <br></br>
             <br></br>
             <div className="card shadow mb-4">

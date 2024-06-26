@@ -61,6 +61,13 @@ export default function Sidebar() {
             Lectures
           </a>
         </li>) : (<div></div>)}
+
+        { isKaprodi ? ( <li className="nav-item active">
+          <a className="nav-link collapsed" href="/approval-kaprodi">
+            <GiTeacher className="mx-2" />
+            Approval Kaprodi
+          </a>
+        </li>) : (<div></div>)}
        
         <hr className="sidebar-divider d-none d-md-block"></hr>
       </ul>
