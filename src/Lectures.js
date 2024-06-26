@@ -17,7 +17,7 @@ export default function Lectures() {
   }, []);
 
   const handleRowClick = (id) => {
-    navigate(`/dosen/${id}`);
+    navigate(`/edit/${id}`);
   };
 
   return (

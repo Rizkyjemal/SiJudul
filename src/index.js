@@ -34,7 +34,7 @@ root.render(
           <Route path="/proposal" element={<Proposal />} />
           <Route path="/approval/:id" element={<Approval />} />
           <Route path="/penambahan" element={<Penambahan />} />
-          <Route path="/edit" element={<Edit />} />
+          <Route path="/edit/:id" element={<Edit />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/editprofile" element={<Editprofile />} />
           <Route path="/tambahdosen" element={<Tambahdosen />} />

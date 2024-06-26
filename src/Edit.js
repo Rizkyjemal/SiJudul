@@ -1,10 +1,50 @@
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import { getProfileDosen } from "./models/apiCall";
+
 export default function Edit() {
+  const [dosenData, setDosenData] = useState({
+    fullName: "",
+    nidn: "",
+    email: "",
+    programStudi: "",
+    kapasitasBimbingan: "",
+    kepakaran: "",
+    image: ""
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const id = window.location.pathname.split("/").pop();
+      const data = await getProfileDosen({ id });
+      setDosenData({
+        fullName: data.name,
+        nidn: data.nidn,
+        email: data.email,
+        programStudi: data.programStudi,
+        kapasitasBimbingan: data.kapasitasBimbingan,
+        kepakaran: data.kepakaran,
+        image: data.image
+      });
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(dosenData)
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setDosenData((prevState) => ({
+      ...prevState,
+      [id]: value
+    }));
+  };
+
   return (
     <div id="wrapper">
       <Sidebar />
-
       <div id="content-wrapper" className="d-flex flex-column">
         <div id="content">
           <Searchbar />
@@ -17,15 +57,13 @@ export default function Edit() {
                       <div className="user-profile">
                         <div className="user-avatar centered">
                           <img
-                            src="assets/images/profile.png"
+                            src={dosenData.image}
                             alt="Maxwell Admin"
                           />
                         </div>
-                        <br></br>
-                        <h5 className="user-name text-center">Rizky Jemal</h5>
-                        <h6 className="user-email text-center">
-                          rizkyjemal@gmail.com
-                        </h6>
+                        <br />
+                        <h5 className="user-name text-center">{dosenData.fullName}</h5>
+                        <h6 className="user-email text-center">{dosenData.email}</h6>
                       </div>
                     </div>
                   </div>
@@ -45,40 +83,48 @@ export default function Edit() {
                             type="text"
                             className="form-control"
                             id="fullName"
+                            value={dosenData.fullName}
+                            onChange={handleChange}
                             placeholder="Enter full name"
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="eMail">NIDN</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            id="eMail"
-                            placeholder="Enter email ID"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="phone">Email</label>
+                          <label htmlFor="nidn">NIDN</label>
                           <input
                             type="text"
                             className="form-control"
-                            id="phone"
-                            placeholder="Enter phone number"
+                            id="nidn"
+                            value={dosenData.nidn}
+                            onChange={handleChange}
+                            placeholder="Enter NIDN"
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="website">Program Studi</label>
+                          <label htmlFor="email">Email</label>
                           <input
-                            type="url"
+                            type="email"
                             className="form-control"
-                            id="website"
-                            placeholder="Website url"
+                            id="email"
+                            value={dosenData.email}
+                            onChange={handleChange}
+                            placeholder="Enter email"
+                          />
+                        </div>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="programStudi">Program Studi</label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="programStudi"
+                            value={dosenData.programStudi}
+                            onChange={handleChange}
+                            placeholder="Enter Program Studi"
                           />
                         </div>
                       </div>
@@ -86,23 +132,27 @@ export default function Edit() {
                     <div className="row gutters">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Kapasitas Bimbingan</label>
+                          <label htmlFor="kapasitasBimbingan">Kapasitas Bimbingan</label>
                           <input
-                            type="name"
+                            type="text"
                             className="form-control"
-                            id="Street"
-                            placeholder="Enter Street"
+                            id="kapasitasBimbingan"
+                            value={dosenData.kapasitasBimbingan}
+                            onChange={handleChange}
+                            placeholder="Enter Kapasitas Bimbingan"
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="ciTy">Kepakaran</label>
+                          <label htmlFor="kepakaran">Kepakaran</label>
                           <input
-                            type="name"
+                            type="text"
                             className="form-control"
-                            id="ciTy"
-                            placeholder="Enter City"
+                            id="kepakaran"
+                            value={dosenData.kepakaran}
+                            onChange={handleChange}
+                            placeholder="Enter Kepakaran"
                           />
                         </div>
                       </div>
@@ -135,7 +185,6 @@ export default function Edit() {
             </div>
           </div>
         </div>
-
         <footer className="sticky-footer bg-white">
           <div className="container my-auto">
             <div className="copyright text-center my-auto">
