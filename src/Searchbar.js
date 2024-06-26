@@ -113,7 +113,7 @@ export default function Searchbar() {
               </span>
               <img
                 className="img-profile rounded-circle"
-                src="assets/images/profile.png"
+                src={`${process.env.PUBLIC_URL}/assets/images/profile.png`}
               />
             </a>
             <div

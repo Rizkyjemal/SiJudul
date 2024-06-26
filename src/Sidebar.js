@@ -27,8 +27,9 @@ export default function Sidebar() {
         >
           <div>
             <img
+              alt="logo"
               className="rounded-circle img-size"
-              src="assets/images/logo.jpeg"
+              src={`${process.env.PUBLIC_URL}/assets/images/logo.jpeg`}
             />
           </div>
           <div className="sidebar-brand-text mrr-5"> SiJudul</div>
