@@ -2,18 +2,34 @@ import logo from "./logo.svg";
 import "./App.css";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllPengajuan } from "./models/apiCall";
+import { getAllPengajuan, getAllPengajuanByDospemId, getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
 import { useEffect, useState } from "react";
 
 function App() {
   const [pengajuan, setPengajuan] = useState([]);
+  const [mahasiswa, setMahasiswa] = useState([]);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+    const roles = authObject.roles;
+    setIsAdmin(roles.includes("admin"));
+
     const fetchData = async () => {
       try {
-        const res = await getAllPengajuan();
+        let res 
+        let resMahasiswa
+        if (roles.includes("admin")) {
+          res = await getAllPengajuan();
+          resMahasiswa = await getAllStudents();
+        } else {
+          res = await getAllPengajuanByDospemId({id:authObject.data.id});
+          resMahasiswa = await getAllStudentsBimbingan({id:authObject.data.id});
+        }
         console.log("API Response:", res);
+        setMahasiswa(resMahasiswa.mahasiswa_list)
         if (Array.isArray(res.result)) {
           setPengajuan(res.result);
         } else {
@@ -78,7 +94,7 @@ function App() {
                               Students
                             </div>
                             <div className="h5 mb-0 font-weight-bold text-gray-800">
-                              6
+                              {mahasiswa.length}
                             </div>
                           </div>
                         </div>
