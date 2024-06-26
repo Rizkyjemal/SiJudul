@@ -122,6 +122,7 @@ export const updateDosen = async ({id}) => {
 }
 
 export const getProfileDosen = async ({ id }) => {
+  // console.log("aaaa",id);
   try {
     const res = await requestWithHeaders.get(`/dosen/${id}`);
     console.log(res?.data?.dosen)
@@ -174,3 +175,16 @@ export const getAllStudents = async () => {
     return error?.message;
   }
 };
+
+export const editProfile = async ({id,name,nidn,email,prodi,kepakaran}) => {
+  try {
+    const res = await requestWithHeaders.put(`/dosen/${id}`, {
+      name,nidn,email,prodi,kepakaran
+    });
+    // console.log(res.data)
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
+

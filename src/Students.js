@@ -16,10 +16,10 @@ export default function Students() {
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
-    const userId = authObject.data.id;
-
     const roles = authObject.roles;
     const isAdmin = roles.includes("admin");
+    
+    const userId = authObject.data.id;
 
     const fetchData = async () => {
       if (isAdmin) {
