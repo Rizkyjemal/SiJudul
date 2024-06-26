@@ -86,7 +86,7 @@ export const createDosen = async (dosenData) => {
     return res.data;
     // return
   } catch (error) {
-    console.log(error?.response?.data);
+    console.log(error);
     return error?.message;
   }
 };

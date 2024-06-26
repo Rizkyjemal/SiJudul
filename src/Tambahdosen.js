@@ -9,13 +9,14 @@ export default function Tambahdosen() {
     name: "",
     nidn: "",
     email: "",
-    prodi: "",
+    prodi: "Informatika",
     kapasitas: "",
-    kepakaran: "",
-    jabatan: "",
+    kepakaran: "IT Security Specialist",
+    jabatan: "Dosen",
     password: "",
   });
-
+  
+  console.log(formData)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const navigate = useNavigate();
