@@ -42,7 +42,7 @@ export default function Lectures() {
               Halaman ini berisi list Dosen Pembimbing Proposal Skripsi yang
               tersedia untuk membimbing mahasiswa semester ini.
             </p>
-            {isAdmin &&  
+            {isAdmin && (
               <a
                 href="/tambahdosen"
                 className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
@@ -50,8 +50,8 @@ export default function Lectures() {
                 <i className="fas fa-download fa-sm text-white-50"></i> Add Data
                 Dosen
               </a>
-              }
-           
+            )}
+
             <br></br>
             <br></br>
             <div className="card shadow mb-4">
@@ -86,7 +86,7 @@ export default function Lectures() {
                           onClick={() => handleRowClick(item?.id)}
                         >
                           <td>{item?.name}</td>
-                          <td>Dosen {item?.jabatan}</td>
+                          <td> {item?.jabatan}</td>
                           <td>{item?.email}</td>
                           <td>{item?.nidn}</td>
                           <td>{item?.kapasitas}</td>

@@ -11,13 +11,12 @@ import {
   updatePengajuanKaprodi,
 } from "./models/apiCall";
 
-
 export default function ApprovalKaprodiDetail() {
   const { id } = useParams();
   const [statusAcc, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
   const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
-  const [plagiarismMessage, setPlagiarismMessage] = useState(null); 
+  const [plagiarismMessage, setPlagiarismMessage] = useState(null);
   const [proposal, setProposal] = useState();
   const navigate = useNavigate();
   const [loginFailed, setLoginFailed] = useState(false);
@@ -32,22 +31,21 @@ export default function ApprovalKaprodiDetail() {
     setIsKaprodi(roles.includes("kaprodi"));
 
     const fetchProposal = async () => {
-      console.log("idddd",id)
+      console.log("idddd", id);
       const res = await getPengajuanById({ id: id });
-      // console.log(res, "oidd");
+      // console.log(res.result, "oidd");
       setProposal(res.result);
       // console.log(res);
     };
     fetchProposal();
   }, [isKaprodi]);
-  
 
   // console.log(proposal,"kkaskak");
 
   const closeModal = () => {
     setIsModalVisible(false);
-    if(!loginFailed){
-      navigate('/');
+    if (!loginFailed) {
+      navigate("/");
     }
   };
 
@@ -57,19 +55,19 @@ export default function ApprovalKaprodiDetail() {
 
   const handleAccept = () => {
     setStatusAcc("Approved");
-    if(isKaprodi){
-      console.log("kappp")
+    if (isKaprodi) {
+      console.log("kappp");
       updateProposalKaprodi("Approved", rejectedNote);
-    }else{
+    } else {
       updateProposal("Approved", rejectedNote);
     }
   };
 
   const handleReject = () => {
     setStatusAcc("Rejected");
-    if(isKaprodi){
+    if (isKaprodi) {
       updateProposalKaprodi("Rejected", rejectedNote);
-    }else{
+    } else {
       updateProposal("Rejected", rejectedNote);
     }
   };
@@ -124,14 +122,18 @@ export default function ApprovalKaprodiDetail() {
     try {
       const response = await checkSimilarity({
         judul: proposal.judul,
-        id: proposal.id
+        id: proposal.id,
       });
       // setPlagiarismResult(response);
-      console.log(response)
+      console.log(response);
       if (response?.similar) {
-        setPlagiarismMessage(`${response?.message} with "${response?.similar}" (${response?.similarity.toFixed(2)}%)`)
+        setPlagiarismMessage(
+          `${response?.message} with "${
+            response?.similar
+          }" (${response?.similarity.toFixed(2)}%)`
+        );
       } else {
-        setPlagiarismMessage(`${response?.message}`)
+        setPlagiarismMessage(`${response?.message}`);
       }
       console.log("Plagiarism check result:", response);
     } catch (error) {
@@ -140,7 +142,6 @@ export default function ApprovalKaprodiDetail() {
   };
 
   return (
-    
     <div id="wrapper">
       <Sidebar />
       <div id="content-wrapper" className="d-flex flex-column">
@@ -172,7 +173,8 @@ export default function ApprovalKaprodiDetail() {
                     <div className="combined-card">
                       <div className="info-section">
                         <div className="info-item">
-                          <strong>Abstrak:</strong> {proposal.abstrak === "" ? "-" : proposal.abstrak}
+                          <strong>Abstrak:</strong>{" "}
+                          {proposal.abstrak === "" ? "-" : proposal.abstrak}
                         </div>
 
                         <div className="info-item">
@@ -227,28 +229,27 @@ export default function ApprovalKaprodiDetail() {
                     <hr />
                     <div className="plagiarism-check">
                       Plagiarism Check :{" "}
-                      {plagiarismMessage ? (
-                        plagiarismMessage
-                      ) : (
-                        "Belum dilakukan"
-                      )}
+                      {plagiarismMessage
+                        ? plagiarismMessage
+                        : "Belum dilakukan"}
                     </div>
-                    <hr />
-                    {proposal.status_acc_kaprodi !== "Pending" ? <div className="comment-section">
-                      <textarea
-                        value={proposal.rejected_note}
-                        disabled
-                      ></textarea>
-                    </div> 
-                    : 
-                    <div className="comment-section">
-                      <textarea
-                        placeholder="Berikan Komentar..."
-                        value={rejectedNote}
-                        onChange={handleNoteChange}
-                      ></textarea>
-                    </div>}
-                   
+                    {proposal.status_acc_kaprodi !== "Pending" ? (
+                      <div className="comment-section">
+                        <textarea
+                          value={proposal.rejected_note}
+                          disabled
+                        ></textarea>
+                      </div>
+                    ) : (
+                      <div className="comment-section">
+                        <textarea
+                          placeholder="Berikan Komentar..."
+                          value={proposal.rejected_note}
+                          onChange={handleNoteChange}
+                          disabled
+                        ></textarea>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -288,7 +289,11 @@ export default function ApprovalKaprodiDetail() {
               </div>
               <div className="modal-body">{modalMessage}</div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" type="button" onClick={closeModal}>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
                   Ok
                 </button>
               </div>

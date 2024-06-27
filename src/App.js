@@ -2,7 +2,12 @@ import logo from "./logo.svg";
 import "./App.css";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllPengajuan, getAllPengajuanByDospemId, getAllStudents, getAllStudentsBimbingan } from "./models/apiCall";
+import {
+  getAllPengajuan,
+  getAllPengajuanByDospemId,
+  getAllStudents,
+  getAllStudentsBimbingan,
+} from "./models/apiCall";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -19,17 +24,19 @@ function App() {
 
     const fetchData = async () => {
       try {
-        let res 
-        let resMahasiswa
+        let res;
+        let resMahasiswa;
         if (roles.includes("admin")) {
           res = await getAllPengajuan();
           resMahasiswa = await getAllStudents();
         } else {
-          res = await getAllPengajuanByDospemId({id:authObject.data.id});
-          resMahasiswa = await getAllStudentsBimbingan({id:authObject.data.id});
+          res = await getAllPengajuanByDospemId({ id: authObject.data.id });
+          resMahasiswa = await getAllStudentsBimbingan({
+            id: authObject.data.id,
+          });
         }
         console.log("API Response:", res);
-        setMahasiswa(resMahasiswa.mahasiswa_list)
+        setMahasiswa(resMahasiswa.mahasiswa_list);
         if (Array.isArray(res.result)) {
           setPengajuan(res.result);
         } else {
@@ -115,6 +122,7 @@ function App() {
                       <tr>
                         <th>Nama Mahasiswa</th>
                         <th>Judul Proposal</th>
+                        <th>NIM</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -122,6 +130,7 @@ function App() {
                         <tr key={index}>
                           <td>{item.mahasiswa.name}</td>
                           <td>{item.judul}</td>
+                          <td>{item.mahasiswa.nim}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -134,6 +143,7 @@ function App() {
                       <tr>
                         <th>Nama Mahasiswa</th>
                         <th>Judul Proposal</th>
+                        <th>NIM</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -141,6 +151,7 @@ function App() {
                         <tr key={index}>
                           <td>{item.mahasiswa.name}</td>
                           <td>{item.judul}</td>
+                          <td>{item.mahasiswa.nim}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -153,6 +164,7 @@ function App() {
                       <tr>
                         <th>Nama Mahasiswa</th>
                         <th>Judul Proposal</th>
+                        <th>NIM</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -160,6 +172,7 @@ function App() {
                         <tr key={index}>
                           <td>{item.mahasiswa.name}</td>
                           <td>{item.judul}</td>
+                          <td>{item.mahasiswa.nim}</td>
                         </tr>
                       ))}
                     </tbody>

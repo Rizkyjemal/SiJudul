@@ -15,8 +15,8 @@ export default function Tambahdosen() {
     jabatan: "Dosen",
     password: "",
   });
-  
-  console.log(formData)
+
+  console.log(formData);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const navigate = useNavigate();
