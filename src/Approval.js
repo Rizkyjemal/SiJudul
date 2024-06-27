@@ -9,7 +9,8 @@ import {
   checkSimilarity,
   getPengajuanById,
   updatePengajuanKaprodi,
-  getAllDosen, // Import function to fetch all advisors
+  getAllDosen,
+  updateMahasiswaBimbinganDosen, // Import function to fetch all advisors
 } from "./models/apiCall";
 
 export default function Approval() {
@@ -22,6 +23,7 @@ export default function Approval() {
   const [dosenList, setDosenList] = useState([]); // State to hold list of advisors
   const [selectedDospem1, setSelectedDospem1] = useState("");
   const [selectedDospem2, setSelectedDospem2] = useState("");
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
   const navigate = useNavigate();
   const [loginFailed, setLoginFailed] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -39,6 +41,8 @@ export default function Approval() {
     const fetchProposal = async () => {
       const res = await getPengajuanById({ id: id });
       setProposal(res.result);
+      setSelectedDospem1(res.result.dospem1_id);
+      setSelectedDospem2(res.result.dospem2_id);
       console.log(res.result);
     };
     const fetchDosenList = async () => {
@@ -73,6 +77,15 @@ export default function Approval() {
   const handleNoteChange = (event) => {
     setRejectedNote(event.target.value);
   };
+
+  const handleDospemUpdate = async (e) => {
+    setLoadingUpdate(true)
+    console.log(selectedDospem1)
+    console.log(selectedDospem2)
+    await updateMahasiswaBimbinganDosen({dospem1_id: parseInt(selectedDospem1), dospem2_id: parseInt(selectedDospem2)}, id)
+    setLoadingUpdate(false)
+    window.location.reload()
+  }
 
   const updateProposal = async (status, note) => {
     try {
@@ -140,7 +153,6 @@ export default function Approval() {
   };
 
   const handleDospem1Change = (event) => {
-    // console.log(event.target.value);
     setSelectedDospem1(event.target.value);
   };
 
@@ -239,7 +251,8 @@ export default function Approval() {
                     {isAdmin && (
                       <button
                         className="btn btn-primary"
-                        onClick={handleAccept}
+                        onClick={handleDospemUpdate}
+                        disabled={loadingUpdate}
                       >
                         Update Dosen Pembimbing
                       </button>
