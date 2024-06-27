@@ -135,23 +135,65 @@ export default function Tambahdosen() {
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="prodi">Program Studi</label>
-                          <select
-                            className="form-control"
-                            id="prodi"
-                            name="prodi"
-                            value={formData.prodi}
+                          <label htmlFor="jabatan">Tanggal Lahir</label>
+                          <input
+                            type="text"
                             onChange={handleChange}
-                          >
-                            <option value="Informatika">Informatika</option>
-                            <option value="Sistem Informasi">
-                              Sistem Informasi
-                            </option>
-                          </select>
+                            value={formData.tanggal_lahir}
+                            name="kapasitas"
+                            className="form-control"
+                            id="Street"
+                            placeholder="YYYY-MM-DD"
+                          />
                         </div>
                       </div>
                     </div>
                     <div className="row gutters">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="Street">Gelar</label>
+                          <input
+                            type="text"
+                            onChange={handleChange}
+                            value={formData.gelar}
+                            name="kapasitas"
+                            className="form-control"
+                            id="Street"
+                            placeholder="..."
+                          />
+                        </div>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="Street">Jenjang Akademik</label>
+                          <input
+                            type="text"
+                            onChange={handleChange}
+                            value={formData.jenjang_akademik}
+                            name="kapasitas"
+                            className="form-control"
+                            id="Street"
+                            placeholder="..."
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row gutters">
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="jabatan">Jabatan</label>
+                          <select
+                            className="form-control"
+                            id="jabatan"
+                            name="jabatan"
+                            value={formData.jabatan}
+                            onChange={handleChange}
+                          >
+                            <option value="Dosen">Dosen</option>
+                            <option value="Kaprodi">Kaprodi</option>
+                          </select>
+                        </div>
+                      </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
                           <label htmlFor="Street">Kapasitas Bimbingan</label>
@@ -164,6 +206,28 @@ export default function Tambahdosen() {
                             id="Street"
                             placeholder="..."
                           />
+                        </div>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="prodi">Program Studi</label>
+                          <select
+                            className="form-control"
+                            id="prodi"
+                            name="prodi"
+                            value={formData.prodi}
+                            onChange={handleChange}
+                          >
+                            <option value="Informatika">
+                              Sarjana Informatika
+                            </option>
+                            <option value="Sistem Informasi">
+                              Sarjana Sistem Informasi
+                            </option>
+                            <option value="Informatika">
+                              Diploma Sistem Informasi
+                            </option>
+                          </select>
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -185,22 +249,6 @@ export default function Tambahdosen() {
                             <option value="Software Engineer">
                               Software Engineer
                             </option>
-                          </select>
-                        </div>
-                      </div>
-
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="jabatan">Jabatan</label>
-                          <select
-                            className="form-control"
-                            id="jabatan"
-                            name="jabatan"
-                            value={formData.jabatan}
-                            onChange={handleChange}
-                          >
-                            <option value="Dosen">Dosen</option>
-                            <option value="Kaprodi">Kaprodi</option>
                           </select>
                         </div>
                       </div>

@@ -101,7 +101,7 @@ export const getAllPengajuan = async () => {
   }
 };
 
-export const getAllPengajuanByDospemId = async ({id}) => {
+export const getAllPengajuanByDospemId = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(`/pengajuan/dospem/${id}`);
     // console.log(id,"iiiiiiiiiii")
@@ -251,6 +251,15 @@ export const deleteDosen = async (id) => {
 export const deleteStudent = async (id) => {
   try {
     const res = await requestWithHeaders.delete(`/mahasiswa/${id}`);
+    return { result: true, data: res.data }; // Ensure a successful response
+  } catch (error) {
+    return { result: false, message: error?.message }; // Ensure a failure response
+  }
+};
+
+export const deleteProposal = async (id) => {
+  try {
+    const res = await requestWithHeaders.delete(`/pengajuan/${id}`);
     return { result: true, data: res.data }; // Ensure a successful response
   } catch (error) {
     return { result: false, message: error?.message }; // Ensure a failure response

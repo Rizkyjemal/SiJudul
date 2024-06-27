@@ -207,7 +207,7 @@ export default function ApprovalKaprodiDetail() {
                     {proposal.status_acc_kaprodi === "Pending" ? (
                       <div className="status">
                         <button className="accept" onClick={handleAccept}>
-                          Accept
+                          Approve
                         </button>
                         <button className="reject" onClick={handleReject}>
                           Reject
@@ -216,7 +216,7 @@ export default function ApprovalKaprodiDetail() {
                     ) : proposal.status_acc_kaprodi === "Approved" ? (
                       <div className="status">
                         <button disabled className="accept">
-                          Accepted
+                          Approved
                         </button>
                       </div>
                     ) : (

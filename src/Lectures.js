@@ -76,6 +76,7 @@ export default function Lectures() {
                         <th>NIDN</th>
                         <th>Kapasitas Bimbingan</th>
                         <th>Program Studi</th>
+                        <th>Kepakaran</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -91,6 +92,7 @@ export default function Lectures() {
                           <td>{item?.nidn}</td>
                           <td>{item?.kapasitas}</td>
                           <td>{item?.prodi}</td>
+                          <td>{item?.kepakaran}</td>
                         </tr>
                       ))}
                     </tbody>

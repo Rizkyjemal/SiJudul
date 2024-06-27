@@ -9,45 +9,49 @@ import {
   checkSimilarity,
   getPengajuanById,
   updatePengajuanKaprodi,
+  getAllDosen, // Import function to fetch all advisors
 } from "./models/apiCall";
-
 
 export default function Approval() {
   const { id } = useParams();
   const [statusAcc, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
   const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
-  const [plagiarismMessage, setPlagiarismMessage] = useState(null); 
+  const [plagiarismMessage, setPlagiarismMessage] = useState(null);
   const [proposal, setProposal] = useState();
+  const [dosenList, setDosenList] = useState([]); // State to hold list of advisors
+  const [selectedDospem1, setSelectedDospem1] = useState("");
+  const [selectedDospem2, setSelectedDospem2] = useState("");
   const navigate = useNavigate();
   const [loginFailed, setLoginFailed] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  let [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
   let [isKaprodi, setIsKaprodi] = useState(false);
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
     const roles = authObject.roles;
+    setIsAdmin(roles.includes("admin"));
     setIsKaprodi(roles.includes("kaprodi"));
 
     const fetchProposal = async () => {
-      console.log("idddd",id)
       const res = await getPengajuanById({ id: id });
-      // console.log(res, "oidd");
       setProposal(res.result);
-      // console.log(res);
+    };
+    const fetchDosenList = async () => {
+      const res = await getAllDosen();
+      setDosenList(res.result);
     };
     fetchProposal();
-  }, [isKaprodi]);
-  
-
-  // console.log(proposal,"kkaskak");
+    fetchDosenList();
+  }, [id]);
 
   const closeModal = () => {
     setIsModalVisible(false);
-    if(!loginFailed){
-      navigate('/');
+    if (!loginFailed) {
+      navigate("/");
     }
   };
 
@@ -57,16 +61,12 @@ export default function Approval() {
 
   const handleAccept = () => {
     setStatusAcc("Approved");
-   
-      updateProposal("Approved", rejectedNote);
-    
+    updateProposal("Approved", rejectedNote);
   };
 
   const handleReject = () => {
     setStatusAcc("Rejected");
-   
-      updateProposal("Rejected", rejectedNote);
-    
+    updateProposal("Rejected", rejectedNote);
   };
 
   const handleNoteChange = (event) => {
@@ -79,6 +79,8 @@ export default function Approval() {
         id,
         statusAcc: status,
         rejectedNote: note,
+        dospem1_id: selectedDospem1,
+        dospem2_id: selectedDospem2,
       });
       if (response.result) {
         setLoginFailed(false);
@@ -119,14 +121,16 @@ export default function Approval() {
     try {
       const response = await checkSimilarity({
         judul: proposal.judul,
-        id: proposal.id
+        id: proposal.id,
       });
-      // setPlagiarismResult(response);
-      console.log(response)
       if (response?.similar) {
-        setPlagiarismMessage(`${response?.message} with "${response?.similar}" (${response?.similarity.toFixed(2)}%)`)
+        setPlagiarismMessage(
+          `${response?.message} with "${
+            response?.similar
+          }" (${response?.similarity.toFixed(2)}%)`
+        );
       } else {
-        setPlagiarismMessage(`${response?.message}`)
+        setPlagiarismMessage(`${response?.message}`);
       }
       console.log("Plagiarism check result:", response);
     } catch (error) {
@@ -134,8 +138,15 @@ export default function Approval() {
     }
   };
 
+  const handleDospem1Change = (event) => {
+    setSelectedDospem1(event.target.value);
+  };
+
+  const handleDospem2Change = (event) => {
+    setSelectedDospem2(event.target.value);
+  };
+
   return (
-    
     <div id="wrapper">
       <Sidebar />
       <div id="content-wrapper" className="d-flex flex-column">
@@ -167,7 +178,8 @@ export default function Approval() {
                     <div className="combined-card">
                       <div className="info-section">
                         <div className="info-item">
-                          <strong>Abstrak:</strong> {proposal.abstrak === "" ? "-" : proposal.abstrak}
+                          <strong>Abstrak:</strong>{" "}
+                          {proposal.abstrak === "" ? "-" : proposal.abstrak}
                         </div>
 
                         <div className="info-item">
@@ -188,14 +200,44 @@ export default function Approval() {
                         </div>
                         <div className="info-item">
                           <strong>Dosen Pembimbing 1:</strong>
-                          <span>{proposal.dospem1.name}</span>
+                          {isAdmin ? (
+                            <select
+                              value={selectedDospem1}
+                              onChange={handleDospem1Change}
+                            >
+                              {dosenList.map((dosen) => (
+                                <option key={dosen.id} value={dosen.id}>
+                                  {dosen.name}
+                                </option>
+                              ))}
+                            </select>
+                          ) : (
+                            <span>{proposal.dospem1.name}</span>
+                          )}
                         </div>
                         <div className="info-item">
                           <strong>Dosen Pembimbing 2:</strong>
-                          <span>{proposal.dospem2.name}</span>
+                          {isAdmin ? (
+                            <select
+                              value={selectedDospem2}
+                              onChange={handleDospem2Change}
+                            >
+                              {dosenList.map((dosen) => (
+                                <option key={dosen.id} value={dosen.id}>
+                                  {dosen.name}
+                                </option>
+                              ))}
+                            </select>
+                          ) : (
+                            <span>{proposal.dospem2.name}</span>
+                          )}
                         </div>
                       </div>
                     </div>
+                    <button className="btn btn-primary" onClick={handleAccept}>
+                      Update Dosen Pembimbing
+                    </button>
+                    <hr />
                     Status Proposal:
                     {proposal.status_acc === "Pending" ? (
                       <div className="status">
@@ -222,28 +264,27 @@ export default function Approval() {
                     <hr />
                     <div className="plagiarism-check">
                       Plagiarism Check :{" "}
-                      {plagiarismMessage ? (
-                        plagiarismMessage
-                      ) : (
-                        "Belum dilakukan"
-                      )}
+                      {plagiarismMessage
+                        ? plagiarismMessage
+                        : "Belum dilakukan"}
                     </div>
                     <hr />
-                    {proposal.status_acc !== "Pending" ? <div className="comment-section">
-                      <textarea
-                        value={proposal.rejected_note}
-                        disabled
-                      ></textarea>
-                    </div> 
-                    : 
-                    <div className="comment-section">
-                      <textarea
-                        placeholder="Berikan Komentar..."
-                        value={rejectedNote}
-                        onChange={handleNoteChange}
-                      ></textarea>
-                    </div>}
-                   
+                    {proposal.status_acc !== "Pending" ? (
+                      <div className="comment-section">
+                        <textarea
+                          value={proposal.rejected_note}
+                          disabled
+                        ></textarea>
+                      </div>
+                    ) : (
+                      <div className="comment-section">
+                        <textarea
+                          placeholder="Berikan Komentar..."
+                          value={rejectedNote}
+                          onChange={handleNoteChange}
+                        ></textarea>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -283,7 +324,11 @@ export default function Approval() {
               </div>
               <div className="modal-body">{modalMessage}</div>
               <div className="modal-footer">
-                <button className="btn btn-secondary" type="button" onClick={closeModal}>
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
                   Ok
                 </button>
               </div>

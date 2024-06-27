@@ -55,6 +55,8 @@ export default function Detailstudent() {
                     <thead>
                       <tr>
                         <th>Judul Proposal</th>
+                        <th>Dosen Pembimbing 1</th>
+                        <th>Dosen Pembimbing 2</th>
                         <th>Status Pengajuan</th>
                       </tr>
                     </thead>
@@ -66,6 +68,8 @@ export default function Detailstudent() {
                           onClick={() => handleRowClick(item?.id)}
                         >
                           <td>{item.judul}</td>
+                          <td>{item.dospem1.name}</td>
+                          <td>{item.dospem2.name}</td>
                           <td
                             className={
                               item.status_acc === "Pending"

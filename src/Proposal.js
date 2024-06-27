@@ -1,6 +1,10 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
-import { getAllPengajuan, getAllPengajuanByDospemId } from "./models/apiCall";
+import {
+  getAllPengajuan,
+  getAllPengajuanByDospemId,
+  deleteProposal,
+} from "./models/apiCall"; // Import deleteProposal
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,9 +13,27 @@ export default function Lectures() {
 
   const [pengajuan, setPengajuan] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const handleRowClick = (id) => {
     navigate(`/approval/${id}`);
+  };
+
+  const handleDeleteClick = async (id) => {
+    const response = await deleteProposal(id);
+    if (response.result) {
+      setModalMessage("Berhasil Menghapus Proposal!");
+      setPengajuan(pengajuan.filter((item) => item.id !== id));
+    } else {
+      setModalMessage("Gagal Menghapus Proposal! Silakan Coba Lagi");
+    }
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -78,6 +100,7 @@ export default function Lectures() {
                         <th>NIM</th>
                         <th>Judul Proposal</th>
                         <th>Status Pengajuan</th>
+                        {isAdmin && <th>Action</th>}
                       </tr>
                     </thead>
                     <tbody>
@@ -103,6 +126,19 @@ export default function Lectures() {
                           >
                             {item?.status_acc}
                           </td>
+                          {isAdmin && (
+                            <td>
+                              <button
+                                className="delete-button"
+                                onClick={(e) => {
+                                  e.stopPropagation(); // Prevents triggering row click event
+                                  handleDeleteClick(item?.id);
+                                }}
+                              >
+                                Delete Proposal
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -121,9 +157,55 @@ export default function Lectures() {
           </div>
         </footer>
       </div>
+      {isModalVisible && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalApprovalLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalApprovalLabel">
+                  Pengajuan
+                </h5>
+                <button className="close" type="button" onClick={closeModal}>
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">{modalMessage}</div>
+              <div className="modal-footer">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  onClick={closeModal}
+                >
+                  Ok
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <style jsx>{`
-        .clickable-row {
+        .delete-button {
+          background-color: #ff4d4d;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          border-radius: 5px;
           cursor: pointer;
+          transition: background-color 0.2s ease;
+        }
+        .delete-button:hover {
+          background-color: #ff1a1a;
+        }
+        .modal.fade.show {
+          display: block;
+          background-color: rgba(0, 0, 0, 0.5);
         }
       `}</style>
     </div>
