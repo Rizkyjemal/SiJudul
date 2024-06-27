@@ -218,13 +218,13 @@ export default function Tambahdosen() {
                             value={formData.prodi}
                             onChange={handleChange}
                           >
-                            <option value="Informatika">
+                            <option value="Sarjana Informatika">
                               Sarjana Informatika
                             </option>
-                            <option value="Sistem Informasi">
+                            <option value="Sarjana Sistem Informasi">
                               Sarjana Sistem Informasi
                             </option>
-                            <option value="Informatika">
+                            <option value="Diploma Sistem Informasi">
                               Diploma Sistem Informasi
                             </option>
                           </select>

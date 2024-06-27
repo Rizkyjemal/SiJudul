@@ -163,11 +163,12 @@ export const getPengajuanById = async ({ id }) => {
 
 export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   try {
-    const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
+    const body = {
       status_acc: statusAcc,
       rejected_note: rejectedNote,
-      // status_acc_kaprodi : rejectedNote,
-    });
+    };
+
+    const res = await requestWithHeaders.put(`/pengajuan/${id}`, body);
     return res.data;
   } catch (error) {
     return error?.message;
@@ -178,12 +179,24 @@ export const updatePengajuanKaprodi = async ({
   id,
   statusAcc,
   rejectedNote,
+  dospem1Id,
+  dospem2Id,
 }) => {
   try {
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
       rejected_note: rejectedNote,
       status_acc_kaprodi: statusAcc,
+      dospem1_id: dospem1Id,
+      dospem2_id: dospem2Id,
     });
+
+    // Hanya tambahkan dospem1_id dan dospem2_id jika mereka diberikan
+    if (dospem1Id !== undefined) {
+      body.dospem1_id = dospem1Id;
+    }
+    if (dospem2Id !== undefined) {
+      body.dospem2_id = dospem2Id;
+    }
     return res.data;
   } catch (error) {
     return error?.message;

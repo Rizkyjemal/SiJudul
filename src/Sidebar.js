@@ -11,9 +11,8 @@ export default function Sidebar() {
     const authObject = JSON.parse(jsonString);
 
     const roles = authObject.roles;
-     setIsAdmin(roles.includes("admin"));
-     setIsKaprodi(roles.includes("kaprodi"));
-   
+    setIsAdmin(roles.includes("admin"));
+    setIsKaprodi(roles.includes("kaprodi"));
   }, []);
   return (
     <>
@@ -46,29 +45,37 @@ export default function Sidebar() {
         <li className="nav-item active">
           <a className="nav-link collapsed" href="/proposal">
             <HiOutlineDocumentCheck className="mx-2" />
-            Proposals
+            Proposal
           </a>
         </li>
         <li className="nav-item active">
           <a className="nav-link collapsed" href="/students">
             <PiStudentBold className="mx-2" />
-            Student
+            Mahasiswa
           </a>
         </li>
-    {isAdmin || isKaprodi ? ( <li className="nav-item active">
-          <a className="nav-link collapsed" href="/lectures">
-            <GiTeacher className="mx-2" />
-            Lectures
-          </a>
-        </li>) : (<div></div>)}
+        {isAdmin || isKaprodi ? (
+          <li className="nav-item active">
+            <a className="nav-link collapsed" href="/lectures">
+              <GiTeacher className="mx-2" />
+              Dosen Pembimbing
+            </a>
+          </li>
+        ) : (
+          <div></div>
+        )}
 
-        { isKaprodi ? ( <li className="nav-item active">
-          <a className="nav-link collapsed" href="/approval-kaprodi">
-            <GiTeacher className="mx-2" />
-            Approval Kaprodi
-          </a>
-        </li>) : (<div></div>)}
-       
+        {isKaprodi ? (
+          <li className="nav-item active">
+            <a className="nav-link collapsed" href="/approval-kaprodi">
+              <GiTeacher className="mx-2" />
+              Approval Kaprodi
+            </a>
+          </li>
+        ) : (
+          <div></div>
+        )}
+
         <hr className="sidebar-divider d-none d-md-block"></hr>
       </ul>
     </>

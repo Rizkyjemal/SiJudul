@@ -39,6 +39,7 @@ export default function Approval() {
     const fetchProposal = async () => {
       const res = await getPengajuanById({ id: id });
       setProposal(res.result);
+      console.log(res.result);
     };
     const fetchDosenList = async () => {
       const res = await getAllDosen();
@@ -139,6 +140,7 @@ export default function Approval() {
   };
 
   const handleDospem1Change = (event) => {
+    // console.log(event.target.value);
     setSelectedDospem1(event.target.value);
   };
 
@@ -234,9 +236,14 @@ export default function Approval() {
                         </div>
                       </div>
                     </div>
-                    <button className="btn btn-primary" onClick={handleAccept}>
-                      Update Dosen Pembimbing
-                    </button>
+                    {isAdmin && (
+                      <button
+                        className="btn btn-primary"
+                        onClick={handleAccept}
+                      >
+                        Update Dosen Pembimbing
+                      </button>
+                    )}
                     <hr />
                     Status Proposal:
                     {proposal.status_acc === "Pending" ? (
