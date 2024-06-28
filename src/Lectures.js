@@ -8,6 +8,7 @@ export default function Lectures() {
   const navigate = useNavigate();
   const [dosen, setDosen] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const moment = require("moment")
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -15,6 +16,7 @@ export default function Lectures() {
     const roles = authObject.roles;
 
     setIsAdmin(roles.includes("admin"));
+    console.log()
 
     const fetchData = async () => {
       const res = await getAllDosen();
@@ -102,7 +104,7 @@ export default function Lectures() {
                           <td>{item?.mahasiswa_bimbingan_id?.length}</td>
                           <td>{item?.gelar}</td>
                           <td>{item?.jenjangAkademik}</td>
-                          <td>{item?.tanggal_lahir}</td>
+                          <td>{moment(item?.tanggal_lahir).toDate().toDateString()}</td>
                         </tr>
                       ))}
                     </tbody>
