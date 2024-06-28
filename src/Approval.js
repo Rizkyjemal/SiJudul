@@ -79,13 +79,25 @@ export default function Approval() {
   };
 
   const handleDospemUpdate = async (e) => {
-    setLoadingUpdate(true)
-    console.log(selectedDospem1)
-    console.log(selectedDospem2)
-    await updateMahasiswaBimbinganDosen({dospem1_id: parseInt(selectedDospem1), dospem2_id: parseInt(selectedDospem2)}, id)
-    setLoadingUpdate(false)
-    window.location.reload()
-  }
+    setLoadingUpdate(true);
+    try {
+      await updateMahasiswaBimbinganDosen(
+        {
+          dospem1_id: parseInt(selectedDospem1),
+          dospem2_id: parseInt(selectedDospem2),
+        },
+        id
+      );
+      setLoadingUpdate(false);
+      setModalMessage("Berhasil mengupdate dosen pembimbing!");
+      setLoginFailed(false);
+    } catch (error) {
+      setLoadingUpdate(false);
+      setModalMessage("Gagal mengupdate dosen pembimbing. Silakan coba lagi.");
+      setLoginFailed(true);
+    }
+    openModal();
+  };
 
   const updateProposal = async (status, note) => {
     try {

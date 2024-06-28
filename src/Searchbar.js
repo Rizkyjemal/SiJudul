@@ -19,7 +19,7 @@ export default function Searchbar() {
         >
           <i className="fa fa-bars"></i>
         </button>
-        <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+        {/* <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
           <div className="input-group">
             <input
               type="text"
@@ -34,7 +34,7 @@ export default function Searchbar() {
               </button>
             </div>
           </div>
-        </form>
+        </form> */}
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown no-arrow d-sm-none">
             <a
@@ -70,7 +70,7 @@ export default function Searchbar() {
               </form>
             </div>
           </li>
-          <li className="nav-item dropdown no-arrow mx-1">
+          {/* <li className="nav-item dropdown no-arrow mx-1">
             <a
               className="nav-link dropdown-toggle"
               href="#"
@@ -95,7 +95,7 @@ export default function Searchbar() {
                 Show All Alerts
               </a>
             </div>
-          </li>
+          </li> */}
 
           <div className="topbar-divider d-none d-sm-block"></div>
           <li className="nav-item dropdown no-arrow">

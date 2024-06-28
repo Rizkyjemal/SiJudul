@@ -9,7 +9,7 @@ export default function Tambahdosen() {
     name: "",
     nidn: "",
     email: "",
-    prodi: "Informatika",
+    prodi: "Sarjana Informatika",
     kapasitas: "",
     kepakaran: "IT Security Specialist",
     jabatan: "Dosen",
@@ -243,8 +243,8 @@ export default function Tambahdosen() {
                             <option value="IT Security Specialist">
                               IT Security Specialist
                             </option>
-                            <option value="Data Scientist">
-                              Data Scientist
+                            <option value="Network Engineer">
+                              Network Engineer
                             </option>
                             <option value="Software Engineer">
                               Software Engineer

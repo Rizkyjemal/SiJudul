@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const BASE_URL = "https://projectskripsi-fvwdncsc.b4a.run";
-const BASE_URL = "http://localhost:8000"; 
+const BASE_URL = "https://projectskripsi-fvwdncsc.b4a.run";
+//const BASE_URL = "http://localhost:8000";
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNob3JkYW4zNDVAZ21haWwuY29tIiwidXNlcl9pZCI6MSwiZXhwIjoxNzE5MzgzMDg0LCJSb2xlcyI6WyJhZG1pbiIsImRvc2VuIiwibWFoYXNpc3dhIl19.-4_y-tLH8E1609q_ADI1C5fX4brH68gWgrAuuuEmLCk";
 
@@ -60,7 +60,7 @@ export const loginDosen = async (nidn, password) => {
 export const getAllDosen = async () => {
   try {
     const res = await requestWithHeaders.get("/dosen/");
-    console.log(res.data)
+    console.log(res.data);
     return res.data;
   } catch (error) {
     return error?.message;
@@ -116,7 +116,7 @@ export const getAllStudentsBimbingan = async ({ id }) => {
     const res = await requestWithHeaders.get(
       `/dosen/mahasiswa-bimbingan/${id}`
     );
-    // console.log(res.data)
+    console.log("dddddd", res.data);
     return res.data;
   } catch (error) {
     return error?.message;
@@ -207,14 +207,14 @@ export const updateMahasiswaBimbinganDosen = async (updatedData, id) => {
   try {
     // console.log({...updatedData})
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
-      ...updatedData
-    }) 
-    return res.data
+      ...updatedData,
+    });
+    return res.data;
   } catch (error) {
-    console.log(error)
-    return error?.message
+    console.log(error);
+    return error?.message;
   }
-}
+};
 
 export const checkSimilarity = async ({ judul, id }) => {
   try {
