@@ -18,7 +18,7 @@ export default function Students() {
   const [mahasiswa, setMahasiswa] = useState([]);
   const [allMahasiswa, setAllMahasiswa] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  let [isKaprodi, setIsKaprodi] = useState(false);
+  const [isKaprodi, setIsKaprodi] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
@@ -101,7 +101,7 @@ export default function Students() {
                             <th>Program Studi</th>
                             <th>Angkatan</th>
                             <th>Email</th>
-                            <th>Action</th>
+                            {isAdmin && <th>Action</th>}
                           </tr>
                         </thead>
                         <tbody>
@@ -122,14 +122,16 @@ export default function Students() {
                               <td onClick={() => handleRowClick(item?.id)}>
                                 {item.email}
                               </td>
-                              <td>
-                                <button
-                                  className="delete-button"
-                                  onClick={() => handleDeleteClick(item?.id)}
-                                >
-                                  Delete Mahasiswa
-                                </button>
-                              </td>
+                              {isAdmin && (
+                                <td>
+                                  <button
+                                    className="delete-button"
+                                    onClick={() => handleDeleteClick(item?.id)}
+                                  >
+                                    Delete Mahasiswa
+                                  </button>
+                                </td>
+                              )}
                             </tr>
                           ))}
                         </tbody>
@@ -161,7 +163,7 @@ export default function Students() {
                             <th>Program Studi</th>
                             <th>Angkatan</th>
                             <th>Email</th>
-                            <th>Action</th>
+                            {isAdmin && <th>Action</th>}
                           </tr>
                         </thead>
                         <tbody>
@@ -182,14 +184,16 @@ export default function Students() {
                               <td onClick={() => handleRowClick(item?.id)}>
                                 {item.email}
                               </td>
-                              <td>
-                                <button
-                                  className="delete-button"
-                                  onClick={() => handleDeleteClick(item?.id)}
-                                >
-                                  Delete Mahasiswa
-                                </button>
-                              </td>
+                              {isAdmin && (
+                                <td>
+                                  <button
+                                    className="delete-button"
+                                    onClick={() => handleDeleteClick(item?.id)}
+                                  >
+                                    Delete Mahasiswa
+                                  </button>
+                                </td>
+                              )}
                             </tr>
                           ))}
                         </tbody>

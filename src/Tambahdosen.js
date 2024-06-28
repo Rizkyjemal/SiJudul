@@ -156,7 +156,7 @@ export default function Tambahdosen() {
                             type="text"
                             onChange={handleChange}
                             value={formData.gelar}
-                            name="kapasitas"
+                            name="gelar"
                             className="form-control"
                             id="Street"
                             placeholder="..."
@@ -170,7 +170,7 @@ export default function Tambahdosen() {
                             type="text"
                             onChange={handleChange}
                             value={formData.jenjang_akademik}
-                            name="kapasitas"
+                            name="jenjang akademik"
                             className="form-control"
                             id="Street"
                             placeholder="..."
@@ -250,6 +250,19 @@ export default function Tambahdosen() {
                               Software Engineer
                             </option>
                           </select>
+                        </div>
+                      </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="Street">Nomor Telepon</label>
+                          <input
+                            onChange={handleChange}
+                            value={formData.no_telp}
+                            name="no_telp"
+                            className="form-control"
+                            id="Street"
+                            placeholder="..."
+                          />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">

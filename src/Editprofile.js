@@ -3,8 +3,17 @@ import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import { editProfile, getProfileDosen } from "./models/apiCall";
 
-export default function Editprofile() {
-  const [profile, setProfile] = useState({});
+export default function EditProfile() {
+  const [profile, setProfile] = useState({
+    name: "",
+    nidn: "",
+    email: "",
+    prodi: "",
+    tanggal_lahir: "",
+    gelar: "",
+    jenjang_akademik: "",
+    kepakaran: "",
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
@@ -20,7 +29,6 @@ export default function Editprofile() {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
-    // console.log(id,value)
     setProfile((prevProfile) => ({
       ...prevProfile,
       [id]: value,
@@ -45,6 +53,9 @@ export default function Editprofile() {
       name: profile.name,
       nidn: profile.nidn,
       prodi: profile.prodi,
+      tanggal_lahir: profile.tanggal_lahir,
+      gelar: profile.gelar,
+      jenjang_akademik: profile.jenjang_akademik,
     });
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
@@ -60,7 +71,6 @@ export default function Editprofile() {
 
   return (
     <>
-      {/* {console.log(profile,"profff")} */}
       <div id="wrapper">
         <Sidebar />
         <div id="content-wrapper" className="d-flex flex-column">
@@ -96,7 +106,7 @@ export default function Editprofile() {
                         </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
-                            <label htmlFor="fullName">Nama Lengkap</label>
+                            <label htmlFor="name">Nama Lengkap</label>
                             <input
                               type="text"
                               className="form-control"
@@ -149,8 +159,47 @@ export default function Editprofile() {
                             </select>
                           </div>
                         </div>
-                      </div>
-                      <div className="row gutters">
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
+                            <input
+                              type="date"
+                              className="form-control"
+                              id="tanggal_lahir"
+                              placeholder="YYYY-MM-DD"
+                              value={profile.tanggal_lahir || ""}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="gelar">Gelar</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="gelar"
+                              placeholder=""
+                              value={profile.gelar || ""}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="jenjang_akademik">
+                              Jenjang Akademik
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="jenjang_akademik"
+                              placeholder="..."
+                              value={profile.jenjang_akademik || ""}
+                              onChange={handleInputChange}
+                            />
+                          </div>
+                        </div>
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="kepakaran">Kepakaran</label>

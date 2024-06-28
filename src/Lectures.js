@@ -71,12 +71,16 @@ export default function Lectures() {
                     <thead>
                       <tr>
                         <th>Nama Dosen</th>
-                        <th>Posisi/Jabatan</th>
                         <th>Email</th>
                         <th>NIDN</th>
-                        <th>Kapasitas Bimbingan</th>
+                        <th>Posisi/Jabatan</th>
                         <th>Program Studi</th>
                         <th>Kepakaran</th>
+                        <th>Kapasitas Bimbingan</th>
+                        <th>Total Mahasiswa Bimbingan</th>
+                        <th>Gelar</th>
+                        <th>Jenjang Akademik</th>
+                        <th>Tanggal Lahir</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -89,12 +93,16 @@ export default function Lectures() {
                           <td>
                             <strong>{item?.name}</strong>
                           </td>
-                          <td> {item?.jabatan}</td>
                           <td>{item?.email}</td>
                           <td>{item?.nidn}</td>
-                          <td>{item?.kapasitas}</td>
+                          <td>{item?.jabatan}</td>
                           <td>{item?.prodi}</td>
                           <td>{item?.kepakaran}</td>
+                          <td>{item?.kapasitas}</td>
+                          <td>{item?.mahasiswa_bimbingan_id?.length}</td>
+                          <td>{item?.gelar}</td>
+                          <td>{item?.jenjangAkademik}</td>
+                          <td>{item?.tanggal_lahir}</td>
                         </tr>
                       ))}
                     </tbody>
