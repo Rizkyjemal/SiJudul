@@ -86,7 +86,9 @@ export default function Lectures() {
                           className="clickable-row"
                           onClick={() => handleRowClick(item?.id)}
                         >
-                          <td>{item?.name}</td>
+                          <td>
+                            <strong>{item?.name}</strong>
+                          </td>
                           <td> {item?.jabatan}</td>
                           <td>{item?.email}</td>
                           <td>{item?.nidn}</td>
