@@ -6,6 +6,8 @@ import { getProfileDosen } from "./models/apiCall";
 export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [tanggalLahir, setTanggalLahir] = useState();
+  const moment = require('moment');
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -14,6 +16,8 @@ export default function Profile() {
     setIsAdmin(roles.includes("admin"));
     const fetchData = async () => {
       const res = await getProfileDosen({ id: authObject.data.id });
+      console.log(moment(res.tanggal_lahir).toDate().toDateString())
+      setTanggalLahir(moment(res.tanggal_lahir).toDate().toDateString())
       setProfile(res);
     };
     fetchData();
@@ -73,7 +77,7 @@ export default function Profile() {
                         </tr>
                         <tr>
                           <td>Tanggal Lahir</td>
-                          <td>{profile.tanggal_lahir}</td>
+                          <td>{tanggalLahir}</td>
                         </tr>
                       </tbody>
                     </table>
