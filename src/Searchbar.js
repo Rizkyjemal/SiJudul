@@ -1,8 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getProfileDosen } from "./models/apiCall";
+import moment from "moment";
 
 export default function Searchbar() {
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const jsonString = localStorage.getItem("auth");
+    const authObject = JSON.parse(jsonString);
+
+    const fetchData = async () => {
+      const res = await getProfileDosen({ id: authObject.data.id });
+      setProfile(res);
+    };
+    fetchData();
+  }, []);
 
   function handleLogout() {
     localStorage.removeItem("token");
@@ -19,103 +33,34 @@ export default function Searchbar() {
         >
           <i className="fa fa-bars"></i>
         </button>
-        {/* <form className="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control bg-light border-0 small"
-              placeholder="Search for..."
-              aria-label="Search"
-              aria-describedby="basic-addon2"
-            />
-            <div className="input-group-append">
-              <button className="btn bg-gradient-primary" type="button">
-                <i className="fas fa-search fa-sm"></i>
-              </button>
-            </div>
-          </div>
-        </form> */}
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item dropdown no-arrow d-sm-none">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              id="searchDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i className="fas fa-search fa-fw"></i>
-            </a>
-            <div
-              className="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-              aria-labelledby="searchDropdown"
-            >
-              <form className="form-inline mr-auto w-100 navbar-search">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control bg-light border-0 small"
-                    placeholder="Search for..."
-                    aria-label="Search"
-                    aria-describedby="basic-addon2"
-                  />
-                  <div className="input-group-append">
-                    <button className="btn btn-primary" type="button">
-                      <i className="fas fa-search fa-sm"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </li>
-          {/* <li className="nav-item dropdown no-arrow mx-1">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              id="alertsDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i className="fas fa-bell fa-fw"></i>
-              <span className="badge badge-danger badge-counter">3+</span>
-            </a>
-            <div
-              className="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-              aria-labelledby="alertsDropdown"
-            >
-              <h6 className="dropdown-header">Alerts Center</h6>
-              <a
-                className="dropdown-item text-center small text-gray-500"
-                href="#"
-              >
-                Show All Alerts
-              </a>
-            </div>
-          </li> */}
 
-          <div className="topbar-divider d-none d-sm-block"></div>
+        <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown no-arrow">
-            <a
-              className="nav-link dropdown-toggle"
-              href="#"
-              id="userDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <span className="mr-2 d-none d-lg-inline text-gray-600 small">
-                Rizky Jemal
-              </span>
-              <img
-                className="img-profile rounded-circle"
-                src={`${process.env.PUBLIC_URL}/assets/images/profile.png`}
-              />
-            </a>
+            {profile && (
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="userDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                style={{ display: "flex", alignItems: "center" }}
+              >
+                <span
+                  className="mr-2 d-none d-lg-inline text-gray-600 small"
+                  style={{ fontWeight: "bold" }}
+                >
+                  {profile.name}
+                </span>
+                <img
+                  className="img-profile rounded-circle"
+                  src={profile.image}
+                  alt="Profile"
+                  style={{ width: "40px", height: "40px" }}
+                />
+              </a>
+            )}
             <div
               className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
@@ -124,7 +69,6 @@ export default function Searchbar() {
                 <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                 Profile
               </a>
-
               <div className="dropdown-divider"></div>
               <a
                 className="dropdown-item"

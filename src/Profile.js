@@ -7,7 +7,7 @@ export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [tanggalLahir, setTanggalLahir] = useState();
-  const moment = require('moment');
+  const moment = require("moment");
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -16,8 +16,8 @@ export default function Profile() {
     setIsAdmin(roles.includes("admin"));
     const fetchData = async () => {
       const res = await getProfileDosen({ id: authObject.data.id });
-      console.log(moment(res.tanggal_lahir).toDate().toDateString())
-      setTanggalLahir(moment(res.tanggal_lahir).toDate().toDateString())
+      console.log(moment(res.tanggal_lahir).toDate().toDateString());
+      setTanggalLahir(moment(res.tanggal_lahir).toDate().toDateString());
       setProfile(res);
     };
     fetchData();
@@ -34,7 +34,7 @@ export default function Profile() {
               {!isAdmin ? (
                 <>
                   <div className="card-profile">
-                    <img src="assets/images/logo.png" alt="Profile Image" />
+                    <img src={profile.image} alt="Profile Image" />
                     <h2>{profile.name}</h2>
                     <p>{profile.jabatan}</p>
                     <p>Universitas Pembangunan Nasional Veteran Jakarta</p>
