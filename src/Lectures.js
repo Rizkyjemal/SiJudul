@@ -103,7 +103,7 @@ export default function Lectures() {
                           <td>{item?.kapasitas}</td>
                           <td>{item?.mahasiswa_bimbingan_id?.length}</td>
                           <td>{item?.gelar}</td>
-                          <td>{item?.jenjangAkademik}</td>
+                          <td>{item?.jenjang_akademik}</td>
                           <td>{moment(item?.tanggal_lahir).toDate().toDateString()}</td>
                         </tr>
                       ))}

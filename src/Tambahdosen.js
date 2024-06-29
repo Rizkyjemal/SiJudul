@@ -12,6 +12,9 @@ export default function Tambahdosen() {
     prodi: "Sarjana Informatika",
     kapasitas: "",
     kepakaran: "IT Security Specialist",
+    gelar : "",
+    jenjang_akademik: "",
+    no_telp: "",
     jabatan: "Dosen",
     password: "",
   });
@@ -170,7 +173,7 @@ export default function Tambahdosen() {
                             type="text"
                             onChange={handleChange}
                             value={formData.jenjang_akademik}
-                            name="jenjang akademik"
+                            name="jenjang_akademik"
                             className="form-control"
                             id="Street"
                             placeholder="..."

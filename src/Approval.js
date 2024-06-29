@@ -38,19 +38,18 @@ export default function Approval() {
     setIsAdmin(roles.includes("admin"));
     setIsKaprodi(roles.includes("kaprodi"));
 
-    const fetchProposal = async () => {
-      const res = await getPengajuanById({ id: id });
-      setProposal(res.result);
-      setSelectedDospem1(res.result.dospem1_id);
-      setSelectedDospem2(res.result.dospem2_id);
-      console.log(res.result);
+    const fetchProposalAndDosenList = async () => {
+      const proposalRes = await getPengajuanById({ id: id });
+      setProposal(proposalRes.result);
+      setSelectedDospem1(proposalRes.result.dospem1_id);
+      setSelectedDospem2(proposalRes.result.dospem2_id);
+      console.log(proposalRes?.dospem1_id)
+      const dospem = await getAllDosen();
+      const filteredDosen = dospem?.result?.filter(dosen => dosen?.kepakaran == proposalRes?.peminatan || dosen?.id == proposalRes?.result?.dospem1_id || dosen?.id == proposalRes?.result?.dospem2_id)
+      console.log(filteredDosen);
+      setDosenList(filteredDosen);
     };
-    const fetchDosenList = async () => {
-      const res = await getAllDosen();
-      setDosenList(res.result);
-    };
-    fetchProposal();
-    fetchDosenList();
+    fetchProposalAndDosenList();
   }, [id]);
 
   const closeModal = () => {
