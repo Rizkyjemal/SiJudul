@@ -1,5 +1,6 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import Footer from "./Footer";
 import { getAllPengajuan } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -108,13 +109,7 @@ export default function ApprovalKaprodi() {
           </div>
         </div>
 
-        <footer className="sticky-footer bg-white">
-          <div className="container my-auto">
-            <div className="copyright text-center my-auto">
-              <span>Copyright &copy; SiJudul - UPN Veteran Jakarta 2024</span>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
       <style jsx>{`
         .clickable-row {

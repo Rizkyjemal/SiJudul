@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
+import Footer from "./Footer";
 import { FaElementor, FaCalendarCheck } from "react-icons/fa";
 import { MdOutlinePlace } from "react-icons/md";
 import { useEffect, useState } from "react";
@@ -43,9 +44,14 @@ export default function Approval() {
       setProposal(proposalRes.result);
       setSelectedDospem1(proposalRes.result.dospem1_id);
       setSelectedDospem2(proposalRes.result.dospem2_id);
-      console.log(proposalRes?.dospem1_id)
+      console.log(proposalRes?.dospem1_id);
       const dospem = await getAllDosen();
-      const filteredDosen = dospem?.result?.filter(dosen => dosen?.kepakaran == proposalRes?.peminatan || dosen?.id == proposalRes?.result?.dospem1_id || dosen?.id == proposalRes?.result?.dospem2_id)
+      const filteredDosen = dospem?.result?.filter(
+        (dosen) =>
+          dosen?.kepakaran == proposalRes?.peminatan ||
+          dosen?.id == proposalRes?.result?.dospem1_id ||
+          dosen?.id == proposalRes?.result?.dospem2_id
+      );
       console.log(filteredDosen);
       setDosenList(filteredDosen);
     };
@@ -325,13 +331,7 @@ export default function Approval() {
           </div>
         </div>
 
-        <footer className="sticky-footer bg-white">
-          <div className="container my-auto">
-            <div className="copyright text-center my-auto">
-              <span>Copyright &copy; SiJudul - UPN Veteran Jakarta 2024</span>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
 
       {isModalVisible && (

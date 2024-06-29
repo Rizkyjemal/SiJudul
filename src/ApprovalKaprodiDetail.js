@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
+import Footer from "./Footer";
 import { FaElementor, FaCalendarCheck } from "react-icons/fa";
 import { MdOutlinePlace } from "react-icons/md";
 import { useEffect, useState } from "react";
@@ -259,13 +260,7 @@ export default function ApprovalKaprodiDetail() {
           </div>
         </div>
 
-        <footer className="sticky-footer bg-white">
-          <div className="container my-auto">
-            <div className="copyright text-center my-auto">
-              <span>Copyright &copy; SiJudul - UPN Veteran Jakarta 2024</span>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
 
       {isModalVisible && (

@@ -14,7 +14,6 @@ import Detailstudent from "./Detailstudent";
 import Login from "./Login";
 import Proposal from "./Proposal";
 import Approval from "./Approval";
-import Penambahan from "./Penambahan";
 import Edit from "./Edit";
 import Profile from "./Profile";
 import Editprofile from "./Editprofile";
@@ -35,7 +34,6 @@ root.render(
           <Route path="/detailstudent/:id" element={<Detailstudent />} />
           <Route path="/proposal" element={<Proposal />} />
           <Route path="/approval/:id" element={<Approval />} />
-          <Route path="/penambahan" element={<Penambahan />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/editprofile" element={<Editprofile />} />

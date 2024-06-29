@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
+import Footer from "./Footer";
 import {
   getAllPengajuan,
   getAllPengajuanByDospemId,
@@ -183,13 +184,7 @@ function App() {
             </div>
           </div>
 
-          <footer className="sticky-footer bg-white">
-            <div className="container my-auto">
-              <div className="copyright text-center my-auto">
-                <span>Copyright &copy; SiJudul - UPN Veteran Jakarta 2024</span>
-              </div>
-            </div>
-          </footer>
+          <Footer />
         </div>
       </div>
     </div>
