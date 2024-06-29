@@ -6,7 +6,7 @@ const PrivateRoute = ({ roles }) => {
   const userAuth = localStorage.getItem("auth"); 
   const authObject = JSON.parse(userAuth);
  
-  const role = authObject.roles;
+  // const role = authObject.roles;
 
 
   if (!token) {
