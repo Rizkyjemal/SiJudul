@@ -1,6 +1,7 @@
 import { PiStudentBold } from "react-icons/pi";
 import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
+import { GrStatusGood } from "react-icons/gr";
 import { useEffect, useState } from "react";
 import { getAllStudents } from "./models/apiCall";
 export default function Sidebar() {
@@ -68,7 +69,7 @@ export default function Sidebar() {
         {isKaprodi ? (
           <li className="nav-item active">
             <a className="nav-link collapsed" href="/approval-kaprodi">
-              <GiTeacher className="mx-2" />
+              <GrStatusGood className="mx-2" />
               Approval Kaprodi
             </a>
           </li>
