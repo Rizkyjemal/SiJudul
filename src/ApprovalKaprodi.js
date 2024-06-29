@@ -68,6 +68,8 @@ export default function ApprovalKaprodi() {
                         <th>Nama Mahasiswa</th>
                         <th>NIM</th>
                         <th>Judul Proposal</th>
+                        <th>Dosen Pembimbing 1</th>
+                        <th>Dosen Pembimbing 2</th>
                         <th>Status Pengajuan</th>
                       </tr>
                     </thead>
@@ -81,6 +83,8 @@ export default function ApprovalKaprodi() {
                           <td>{item?.mahasiswa.name}</td>
                           <td>{item?.mahasiswa.nim}</td>
                           <td>{item?.judul}</td>
+                          <td>{item.dospem1.name}</td>
+                          <td>{item.dospem2.name}</td>
                           <td
                             className={
                               item.status_acc_kaprodi === "Pending"

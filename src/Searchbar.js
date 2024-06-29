@@ -6,10 +6,13 @@ import moment from "moment";
 export default function Searchbar() {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
+    const roles = authObject.roles;
+    setIsAdmin(roles.includes("admin"));
 
     const fetchData = async () => {
       const res = await getProfileDosen({ id: authObject.data.id });
@@ -36,31 +39,31 @@ export default function Searchbar() {
 
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown no-arrow">
-            {profile && (
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="userDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                style={{ display: "flex", alignItems: "center" }}
+            <a
+              className="nav-link dropdown-toggle"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              <span
+                className="mr-2 d-none d-lg-inline text-gray-600 small"
+                style={{ fontWeight: "bold" }}
               >
-                <span
-                  className="mr-2 d-none d-lg-inline text-gray-600 small"
-                  style={{ fontWeight: "bold" }}
-                >
-                  {profile.name}
-                </span>
+                {isAdmin ? "ADMIN" : profile ? profile.name : ""}
+              </span>
+              {!isAdmin && profile && (
                 <img
                   className="img-profile rounded-circle"
                   src={profile.image}
                   alt="Profile"
                   style={{ width: "40px", height: "40px" }}
                 />
-              </a>
-            )}
+              )}
+            </a>
             <div
               className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
               aria-labelledby="userDropdown"
