@@ -19,6 +19,11 @@ export default function Edit() {
     programStudi: "",
     kapasitasBimbingan: "",
     kepakaran: "",
+    jabatan: "",
+    gelar: "",
+    jenjang_akademik: "",
+    tanggal_lahir: "",
+    no_telp: "",
     image: "",
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,7 +40,6 @@ export default function Edit() {
     const fetchData = async () => {
       const id = window.location.pathname.split("/").pop();
       const data = await getProfileDosen({ id });
-      // console.log(data,"dattt")
       setDosenData({
         fullName: data.name,
         nidn: data.nidn,
@@ -43,6 +47,11 @@ export default function Edit() {
         programStudi: data.prodi,
         kapasitasBimbingan: data.kapasitas,
         kepakaran: data.kepakaran,
+        jabatan: data.jabatan,
+        gelar: data.gelar,
+        jenjang_akademik: data.jenjang_akademik,
+        tanggal_lahir: data.tanggal_lahir,
+        no_telp: data.no_telp,
         image: data.image,
       });
     };
@@ -68,6 +77,11 @@ export default function Edit() {
       nidn: dosenData.nidn,
       prodi: dosenData.programStudi,
       kapasitas: parseInt(dosenData.kapasitasBimbingan),
+      jabatan: dosenData.jabatan,
+      gelar: dosenData.gelar,
+      jenjang_akademik: dosenData.jenjang_akademik,
+      tanggal_lahir: dosenData.tanggal_lahir,
+      no_telp: dosenData.no_telp,
     });
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
@@ -107,7 +121,7 @@ export default function Edit() {
                     <div className="account-settings">
                       <div className="user-profile">
                         <div className="user-avatar centered">
-                          <img src={dosenData.image} alt="Maxwell Admin" />
+                          <img src={dosenData.image} alt="Dosen Avatar" />
                         </div>
                         <br />
                         <h5 className="user-name text-center">
@@ -218,6 +232,85 @@ export default function Edit() {
                               value={dosenData.kepakaran}
                               onChange={handleChange}
                               placeholder="Enter Kepakaran"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className="row gutters">
+                      {isAdmin && (
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="jabatan">Posisi/Jabatan</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="jabatan"
+                              value={dosenData.jabatan}
+                              onChange={handleChange}
+                              placeholder="Enter Posisi/Jabatan"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {isAdmin && (
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="gelar">Gelar</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="gelar"
+                              value={dosenData.gelar}
+                              onChange={handleChange}
+                              placeholder="Enter Gelar"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {isAdmin && (
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="jenjang_akademik">
+                              Jenjang Akademik
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="jenjang_akademik"
+                              value={dosenData.jenjang_akademik}
+                              onChange={handleChange}
+                              placeholder="Enter Jenjang Akademik"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {isAdmin && (
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="tanggal_lahir"
+                              value={dosenData.tanggal_lahir}
+                              onChange={handleChange}
+                              placeholder="YYYY-MM-DD"
+                            />
+                          </div>
+                        </div>
+                      )}
+                      {isAdmin && (
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="no_telp">Nomor Telepon</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="no_telp"
+                              value={dosenData.no_telp}
+                              onChange={handleChange}
+                              placeholder="Enter Nomor Telepon"
                             />
                           </div>
                         </div>

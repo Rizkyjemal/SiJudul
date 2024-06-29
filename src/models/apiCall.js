@@ -1,14 +1,19 @@
 import axios from "axios";
 
+// Base URL for the API
 const BASE_URL = "https://projectskripsi-fvwdncsc.b4a.run";
 //const BASE_URL = "http://localhost:8000";
+
+// Token for authentication
 const TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNob3JkYW4zNDVAZ21haWwuY29tIiwidXNlcl9pZCI6MSwiZXhwIjoxNzE5MzgzMDg0LCJSb2xlcyI6WyJhZG1pbiIsImRvc2VuIiwibWFoYXNpc3dhIl19.-4_y-tLH8E1609q_ADI1C5fX4brH68gWgrAuuuEmLCk";
 
+// Axios instance without headers
 export const request = axios.create({
   baseURL: BASE_URL,
 });
 
+// Axios instance with authorization and JSON content type headers
 export const requestWithHeaders = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -17,6 +22,7 @@ export const requestWithHeaders = axios.create({
   },
 });
 
+// Axios instance with authorization and multipart/form-data content type headers
 export const requestWithHeadersAndFiles = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -25,6 +31,7 @@ export const requestWithHeadersAndFiles = axios.create({
   },
 });
 
+// Function to login as an admin
 export const loginAdmin = async (email, password) => {
   try {
     const res = await request.post("/auth/admin/login", {
@@ -41,6 +48,7 @@ export const loginAdmin = async (email, password) => {
   }
 };
 
+// Function to login as a dosen
 export const loginDosen = async (nidn, password) => {
   try {
     const res = await request.post("/auth/dosen/login", {
@@ -57,6 +65,7 @@ export const loginDosen = async (nidn, password) => {
   }
 };
 
+// Function to get all dosen
 export const getAllDosen = async () => {
   try {
     const res = await requestWithHeaders.get("/dosen/");
@@ -67,50 +76,40 @@ export const getAllDosen = async () => {
   }
 };
 
-// const dosen = {
-//   "name": "testdosen2",
-//   "nidn": "1233212312",
-//   "email": "testdosen2@gmail.com",
-//   "password": "123456",
-//   "jabatan": "dosen",
-//   "kepakaran": "Software Engineer",
-//   "prodi": "Informatika",
-//   "kapasitas": 10
-// }
-
+// Function to create a new dosen
 export const createDosen = async (dosenData) => {
   try {
     console.log(dosenData);
     const res = await requestWithHeadersAndFiles.post("/dosen/", dosenData);
     console.log(res.data);
     return res.data;
-    // return
   } catch (error) {
     console.log(error);
     return error?.message;
   }
 };
 
+// Function to get all pengajuan (proposals)
 export const getAllPengajuan = async () => {
   try {
     const res = await requestWithHeaders.get("/pengajuan/");
-    // console.log(res.data)
     return res.data;
   } catch (error) {
     return error?.message;
   }
 };
 
+// Function to get pengajuan (proposals) by dospem ID
 export const getAllPengajuanByDospemId = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(`/pengajuan/dospem/${id}`);
-    // console.log(id,"iiiiiiiiiii")
     return res.data;
   } catch (error) {
     return error?.message;
   }
 };
 
+// Function to get all students under a specific dosen
 export const getAllStudentsBimbingan = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(
@@ -123,14 +122,15 @@ export const getAllStudentsBimbingan = async ({ id }) => {
   }
 };
 
+// Function to update a dosen
 export const updateDosen = async ({ id }) => {
   try {
     const res = await requestWithHeadersAndFiles;
   } catch (error) {}
 };
 
+// Function to get the profile of a specific dosen  by ID
 export const getProfileDosen = async ({ id }) => {
-  // console.log("aaaa",id);
   try {
     const res = await requestWithHeaders.get(`/dosen/${id}`);
     console.log(res?.data?.dosen);
@@ -141,16 +141,17 @@ export const getProfileDosen = async ({ id }) => {
   }
 };
 
+// Function to get a specific pengajuan (proposal) by mahasiswa (student) ID
 export const getPengajuanByIdMahasiswa = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(`pengajuan/mahasiswa/${id}`);
-    // console.log(res,"dari api")
     return res.data;
   } catch (error) {
     return error?.message;
   }
 };
 
+// Function to get a specific pengajuan (proposal) by its ID
 export const getPengajuanById = async ({ id }) => {
   try {
     const res = await requestWithHeaders.get(`pengajuan/${id}`);
@@ -161,6 +162,7 @@ export const getPengajuanById = async ({ id }) => {
   }
 };
 
+// Function to update a pengajuan (proposal) with status and rejection note
 export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   try {
     const body = {
@@ -175,6 +177,7 @@ export const updatePengajuan = async ({ id, statusAcc, rejectedNote }) => {
   }
 };
 
+// Function to update a pengajuan (proposal) by kaprodi with dospem IDs
 export const updatePengajuanKaprodi = async ({
   id,
   statusAcc,
@@ -189,23 +192,15 @@ export const updatePengajuanKaprodi = async ({
       dospem1_id: dospem1Id,
       dospem2_id: dospem2Id,
     });
-
-    // Hanya tambahkan dospem1_id dan dospem2_id jika mereka diberikan
-    // if (dospem1Id !== undefined) {
-    //   body.dospem1_id = dospem1Id;
-    // }
-    // if (dospem2Id !== undefined) {
-    //   body.dospem2_id = dospem2Id;
-    // }
     return res.data;
   } catch (error) {
     return error?.message;
   }
 };
 
+// Function to update mahasiswa (student) bimbingan (supervision) data by dosen
 export const updateMahasiswaBimbinganDosen = async (updatedData, id) => {
   try {
-    // console.log({...updatedData})
     const res = await requestWithHeaders.put(`/pengajuan/${id}`, {
       ...updatedData,
     });
@@ -216,6 +211,7 @@ export const updateMahasiswaBimbinganDosen = async (updatedData, id) => {
   }
 };
 
+// Function to check similarity of judul (title) in a pengajuan (proposal)
 export const checkSimilarity = async ({ judul, id }) => {
   try {
     const res = await requestWithHeaders.post(
@@ -230,16 +226,17 @@ export const checkSimilarity = async ({ judul, id }) => {
   }
 };
 
+// Function to get all students
 export const getAllStudents = async () => {
   try {
     const res = await request.get(`/mahasiswa/`);
-    // console.log(res.data)
     return res.data;
   } catch (error) {
     return error?.message;
   }
 };
 
+// Function to edit profile of a dosen
 export const editProfile = async ({
   id,
   name,
@@ -258,13 +255,13 @@ export const editProfile = async ({
       kepakaran,
       kapasitas,
     });
-    // console.log(res.data)
     return res.data;
   } catch (error) {
     return error?.message;
   }
 };
 
+// Function to delete a dosen
 export const deleteDosen = async (id) => {
   try {
     const res = await requestWithHeaders.delete(`/dosen/${id}`);
@@ -274,6 +271,7 @@ export const deleteDosen = async (id) => {
   }
 };
 
+// Function to delete a student
 export const deleteStudent = async (id) => {
   try {
     const res = await requestWithHeaders.delete(`/mahasiswa/${id}`);
@@ -283,6 +281,7 @@ export const deleteStudent = async (id) => {
   }
 };
 
+// Function to delete a pengajuan (proposal)
 export const deleteProposal = async (id) => {
   try {
     const res = await requestWithHeaders.delete(`/pengajuan/${id}`);
@@ -291,3 +290,9 @@ export const deleteProposal = async (id) => {
     return { result: false, message: error?.message }; // Ensure a failure response
   }
 };
+
+// Kode ini mendefinisikan serangkaian fungsi untuk berinteraksi dengan API.
+// Fungsi-fungsi tersebut menangani berbagai tugas seperti memasukkan user, mengambil data,
+// create dan update, dan delete. Setiap fungsi menggunakan Axios untuk
+// membuat permintaan HTTP dan menangani kesalahan dengan tepat. Komentar tersebut menjelaskan
+// tujuan setiap fungsi dan konfigurasi instance Axios.

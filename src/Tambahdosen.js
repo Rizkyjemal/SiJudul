@@ -12,10 +12,13 @@ export default function Tambahdosen() {
     prodi: "Sarjana Informatika",
     kapasitas: "",
     kepakaran: "IT Security Specialist",
-    gelar : "",
+    gelar: "",
     jenjang_akademik: "",
     no_telp: "",
     jabatan: "Dosen",
+    jenjang_akademik: "",
+    gelar: "",
+    tanggal_lahir: "",
     password: "",
   });
 
@@ -138,14 +141,14 @@ export default function Tambahdosen() {
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="jabatan">Tanggal Lahir</label>
+                          <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
                           <input
                             type="text"
                             onChange={handleChange}
                             value={formData.tanggal_lahir}
-                            name="kapasitas"
+                            name="tanggal_lahir"
                             className="form-control"
-                            id="Street"
+                            id="tanggal_lahir"
                             placeholder="YYYY-MM-DD"
                           />
                         </div>
@@ -154,28 +157,30 @@ export default function Tambahdosen() {
                     <div className="row gutters">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Gelar</label>
+                          <label htmlFor="gelar">Gelar</label>
                           <input
                             type="text"
                             onChange={handleChange}
                             value={formData.gelar}
                             name="gelar"
                             className="form-control"
-                            id="Street"
+                            id="gelar"
                             placeholder="..."
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Jenjang Akademik</label>
+                          <label htmlFor="jenjang_akademik">
+                            Jenjang Akademik
+                          </label>
                           <input
                             type="text"
                             onChange={handleChange}
                             value={formData.jenjang_akademik}
                             name="jenjang_akademik"
                             className="form-control"
-                            id="Street"
+                            id="jenjang_akademik"
                             placeholder="..."
                           />
                         </div>
@@ -199,14 +204,14 @@ export default function Tambahdosen() {
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Kapasitas Bimbingan</label>
+                          <label htmlFor="kapasitas">Kapasitas Bimbingan</label>
                           <input
                             type="number"
                             onChange={handleChange}
                             value={formData.kapasitas}
                             name="kapasitas"
                             className="form-control"
-                            id="Street"
+                            id="kapasitas"
                             placeholder="..."
                           />
                         </div>
@@ -257,27 +262,27 @@ export default function Tambahdosen() {
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Nomor Telepon</label>
+                          <label htmlFor="no_telp">Nomor Telepon</label>
                           <input
                             onChange={handleChange}
                             value={formData.no_telp}
                             name="no_telp"
                             className="form-control"
-                            id="Street"
+                            id="no_telp"
                             placeholder="..."
                           />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="Street">Password</label>
+                          <label htmlFor="password">Password</label>
                           <input
                             type="password"
                             name="password"
                             onChange={handleChange}
                             value={formData.password}
                             className="form-control"
-                            id="Street"
+                            id="password"
                             placeholder="GsdXvcSHdah3"
                           />
                         </div>

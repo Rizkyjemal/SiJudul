@@ -43,13 +43,16 @@ root.render(
         </Route>
         <Route
           path="/lectures"
-          element={<PrivateRoute roles={['admin','kaprodi']} />}
+          element={<PrivateRoute roles={["admin", "kaprodi"]} />}
         >
           <Route path="" element={<Lectures />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/approval-kaprodi" element={<ApprovalKaprodi />} />
-        <Route path="/approval-kaprodi-detail/:id" element={<ApprovalKaprodiDetail />} />
+        <Route
+          path="/approval-kaprodi-detail/:id"
+          element={<ApprovalKaprodiDetail />}
+        />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
