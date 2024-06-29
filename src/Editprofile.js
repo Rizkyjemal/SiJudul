@@ -60,9 +60,11 @@ export default function EditProfile() {
       name: profile.name,
       nidn: profile.nidn,
       prodi: profile.prodi,
+      kapasitas: parseInt(profile.kapasitasBimbingan),
       tanggal_lahir: profile.tanggal_lahir,
       gelar: profile.gelar,
       jenjang_akademik: profile.jenjang_akademik,
+      no_telp: profile.no_telp,
     });
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
@@ -179,6 +181,23 @@ export default function EditProfile() {
                             </select>
                           </div>
                         </div>
+
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="kapasitasBimbingan">
+                              Kapasitas Bimbingan
+                            </label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              id="kapasitasBimbingan"
+                              value={profile.kapasitasBimbingan}
+                              onChange={handleInputChange}
+                              placeholder="Enter Kapasitas Bimbingan"
+                            />
+                          </div>
+                        </div>
+
                         <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                           <div className="form-group">
                             <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
@@ -239,6 +258,19 @@ export default function EditProfile() {
                                 Software Engineer
                               </option>
                             </select>
+                          </div>
+                        </div>
+                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                          <div className="form-group">
+                            <label htmlFor="no_telp">Nomor Telepon</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="no_telp"
+                              value={profile.no_telp}
+                              onChange={handleInputChange}
+                              placeholder="Enter Nomor Telepon"
+                            />
                           </div>
                         </div>
                       </div>
