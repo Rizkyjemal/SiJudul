@@ -8,7 +8,7 @@ export default function Lectures() {
   const navigate = useNavigate();
   const [dosen, setDosen] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const moment = require("moment")
+  const moment = require("moment");
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -16,7 +16,7 @@ export default function Lectures() {
     const roles = authObject.roles;
 
     setIsAdmin(roles.includes("admin"));
-    console.log()
+    console.log();
 
     const fetchData = async () => {
       const res = await getAllDosen();
@@ -75,14 +75,15 @@ export default function Lectures() {
                         <th>Nama Dosen</th>
                         <th>Email</th>
                         <th>NIDN</th>
-                        <th>Posisi/Jabatan</th>
+                        <th>Posisi / Jabatan</th>
                         <th>Program Studi</th>
                         <th>Kepakaran</th>
                         <th>Kapasitas Bimbingan</th>
-                        <th>Total Mahasiswa Bimbingan</th>
+                        <th>Total Bimbingan</th>
                         <th>Gelar</th>
                         <th>Jenjang Akademik</th>
                         <th>Tanggal Lahir</th>
+                        <th>Nomor Telepon</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -104,7 +105,12 @@ export default function Lectures() {
                           <td>{item?.mahasiswa_bimbingan_id?.length}</td>
                           <td>{item?.gelar}</td>
                           <td>{item?.jenjang_akademik}</td>
-                          <td>{moment(item?.tanggal_lahir).toDate().toDateString()}</td>
+                          <td>
+                            {moment(item?.tanggal_lahir)
+                              .toDate()
+                              .toDateString()}
+                          </td>
+                          <td>{item?.no_telp}</td>
                         </tr>
                       ))}
                     </tbody>

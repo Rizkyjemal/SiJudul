@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import { editProfile, getProfileDosen } from "./models/apiCall";
@@ -16,6 +17,8 @@ export default function EditProfile() {
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [isUpdateSuccessful, setIsUpdateSuccessful] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -37,6 +40,9 @@ export default function EditProfile() {
 
   const closeModal = () => {
     setIsModalVisible(false);
+    if (isUpdateSuccessful) {
+      navigate("/profile");
+    }
   };
 
   const openModal = () => {
@@ -59,8 +65,10 @@ export default function EditProfile() {
     });
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
+      setIsUpdateSuccessful(true);
     } else {
       setModalMessage("Gagal Mengubah Profile! Silakan Coba Lagi");
+      setIsUpdateSuccessful(false);
     }
     openModal();
   };
@@ -84,12 +92,18 @@ export default function EditProfile() {
                       <div className="account-settings">
                         <div className="user-profile">
                           <div className="user-avatar centered">
-                            <img
-                              src="assets/images/logo.png"
-                              alt="Maxwell Admin"
-                            />
+                            <img src={profile.image} alt="Image" />
                           </div>
                           <br />
+                          <h5 className="user-name text-center">
+                            {profile.name}
+                          </h5>
+                          <h6 className="user-email text-center">
+                            {profile.nidn}
+                          </h6>
+                          <p className="text-center">
+                            Universitas Pembangunan Nasional Veteran Jakarta
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -152,9 +166,14 @@ export default function EditProfile() {
                               value={profile.prodi || ""}
                               onChange={handleInputChange}
                             >
-                              <option value="Informatika">Informatika</option>
-                              <option value="Sistem Informasi">
-                                Sistem Informasi
+                              <option value="Sarjana Informatika">
+                                Sarjana Informatika
+                              </option>
+                              <option value="Sarjana Sistem Informasi">
+                                Sarjana Sistem Informasi
+                              </option>
+                              <option value="Diploma Sistem Informasi">
+                                Diploma Sistem Informasi
                               </option>
                             </select>
                           </div>
