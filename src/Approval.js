@@ -20,6 +20,7 @@ export default function Approval() {
   const [plagiarismMessage, setPlagiarismMessage] = useState(null);
   const [proposal, setProposal] = useState();
   const [dosenList, setDosenList] = useState([]); // State to hold list of advisors
+  const [dosen2List, setDosen2List] = useState([]); // State to hold list of advisors
   const [selectedDospem1, setSelectedDospem1] = useState("");
   const [selectedDospem2, setSelectedDospem2] = useState("");
   const [loadingUpdate, setLoadingUpdate] = useState(false);
@@ -50,8 +51,15 @@ export default function Approval() {
           dosen?.id == proposalRes?.result?.dospem1_id ||
           dosen?.id == proposalRes?.result?.dospem2_id
       );
+      const filteredDosen2 = dospem?.result?.filter(
+        (dosen) =>
+          dosen?.jabatan != "Kaprodi" ||
+          dosen?.id == proposalRes?.result?.dospem1_id ||
+          dosen?.id == proposalRes?.result?.dospem2_id
+      );
       console.log(filteredDosen);
       setDosenList(filteredDosen);
+      setDosen2List(filteredDosen2);
     };
     fetchProposalAndDosenList();
   }, [id]);
@@ -231,7 +239,7 @@ export default function Approval() {
                               value={selectedDospem2}
                               onChange={handleDospem2Change}
                             >
-                              {dosenList.map((dosen) => (
+                              {dosen2List.map((dosen) => (
                                 <option key={dosen.id} value={dosen.id}>
                                   {dosen.name}
                                 </option>
