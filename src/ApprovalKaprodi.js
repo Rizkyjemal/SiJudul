@@ -24,7 +24,8 @@ export default function ApprovalKaprodi() {
 
       console.log(sortedData, "soooo");
       const approvedArray = sortedData.filter(
-        (item) => item.status_acc === "Approved"
+        (item) => item.status_acc === "Approved" || item.status_acc_kaprodi === "Rejected" || item.status_acc == "Rejected"
+        
       );
 
       setPengajuan(approvedArray);
