@@ -140,6 +140,19 @@ export default function Tambahdosen() {
                           />
                         </div>
                       </div>
+                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div className="form-group">
+                          <label htmlFor="no_telp">Nomor Telepon</label>
+                          <input
+                            onChange={handleChange}
+                            value={formData.no_telp}
+                            name="no_telp"
+                            className="form-control"
+                            id="no_telp"
+                            placeholder="..."
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div className="row gutters">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -245,19 +258,6 @@ export default function Tambahdosen() {
                               Software Engineer
                             </option>
                           </select>
-                        </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="no_telp">Nomor Telepon</label>
-                          <input
-                            onChange={handleChange}
-                            value={formData.no_telp}
-                            name="no_telp"
-                            className="form-control"
-                            id="no_telp"
-                            placeholder="..."
-                          />
                         </div>
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
