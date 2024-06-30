@@ -54,8 +54,7 @@ export default function EditProfile() {
   const handleSubmit = async () => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
-    const response = await editProfile({
-      id: authObject.data.id,
+    const response = await editProfile( authObject.data.id,{
       email: profile.email,
       kepakaran: profile.kepakaran,
       name: profile.name,
