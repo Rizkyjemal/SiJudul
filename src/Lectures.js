@@ -83,7 +83,6 @@ export default function Lectures() {
                         <th>Total Bimbingan</th>
                         <th>Gelar</th>
                         <th>Jenjang Akademik</th>
-                        <th>Tanggal Lahir</th>
                         <th>Nomor Telepon</th>
                       </tr>
                     </thead>
@@ -106,11 +105,6 @@ export default function Lectures() {
                           <td>{item?.mahasiswa_bimbingan_id?.length}</td>
                           <td>{item?.gelar}</td>
                           <td>{item?.jenjang_akademik}</td>
-                          <td>
-                            {moment(item?.tanggal_lahir)
-                              .toDate()
-                              .toDateString()}
-                          </td>
                           <td>{item?.no_telp}</td>
                         </tr>
                       ))}

@@ -20,7 +20,6 @@ export default function Tambahdosen() {
     jabatan: "Dosen",
     jenjang_akademik: "",
     gelar: "",
-    tanggal_lahir: "",
     password: "",
   });
 
@@ -138,20 +137,6 @@ export default function Tambahdosen() {
                             className="form-control"
                             id="phone"
                             placeholder="..."
-                          />
-                        </div>
-                      </div>
-                      <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
-                          <input
-                            type="text"
-                            onChange={handleChange}
-                            value={formData.tanggal_lahir}
-                            name="tanggal_lahir"
-                            className="form-control"
-                            id="tanggal_lahir"
-                            placeholder="YYYY-MM-DD"
                           />
                         </div>
                       </div>

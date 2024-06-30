@@ -9,7 +9,6 @@ import { getProfileDosen } from "./models/apiCall";
 export default function Profile() {
   const [profile, setProfile] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [tanggalLahir, setTanggalLahir] = useState();
   const moment = require("moment");
 
   useEffect(() => {
@@ -19,8 +18,6 @@ export default function Profile() {
     setIsAdmin(roles.includes("admin"));
     const fetchData = async () => {
       const res = await getProfileDosen({ id: authObject.data.id });
-      console.log(moment(res.tanggal_lahir).toDate().toDateString());
-      setTanggalLahir(moment(res.tanggal_lahir).toDate().toDateString());
       setProfile(res);
     };
     fetchData();
@@ -77,10 +74,6 @@ export default function Profile() {
                         <tr>
                           <td>Jenjang Akademik</td>
                           <td>{profile.jenjang_akademik}</td>
-                        </tr>
-                        <tr>
-                          <td>Tanggal Lahir</td>
-                          <td>{tanggalLahir}</td>
                         </tr>
                       </tbody>
                     </table>
