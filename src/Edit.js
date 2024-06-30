@@ -18,7 +18,6 @@ export default function Edit() {
     jabatan: "",
     gelar: "",
     jenjang_akademik: "",
-    tanggal_lahir: "",
     no_telp: "",
     image: "",
   });
@@ -47,7 +46,6 @@ export default function Edit() {
           jabatan: data.jabatan,
           gelar: data.gelar,
           jenjang_akademik: data.jenjang_akademik,
-          tanggal_lahir: data.tanggal_lahir,
           no_telp: data.no_telp,
           image: data.image,
         });
@@ -77,7 +75,6 @@ export default function Edit() {
       jabatan: dosenData.jabatan,
       gelar: dosenData.gelar,
       jenjang_akademik: dosenData.jenjang_akademik,
-      tanggal_lahir: dosenData.tanggal_lahir,
       no_telp: dosenData.no_telp,
     });
     if (response.result) {
@@ -182,7 +179,9 @@ export default function Edit() {
                           </div>
                           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="form-group">
-                              <label htmlFor="programStudi">Program Studi</label>
+                              <label htmlFor="programStudi">
+                                Program Studi
+                              </label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -234,7 +233,9 @@ export default function Edit() {
                           </div>
                           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="form-group">
-                              <label htmlFor="jenjang_akademik">Jenjang Akademik</label>
+                              <label htmlFor="jenjang_akademik">
+                                Jenjang Akademik
+                              </label>
                               <input
                                 type="text"
                                 className="form-control"
@@ -245,19 +246,7 @@ export default function Edit() {
                               />
                             </div>
                           </div>
-                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                            <div className="form-group">
-                              <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="tanggal_lahir"
-                                value={dosenData.tanggal_lahir}
-                                onChange={handleChange}
-                                placeholder="YYYY-MM-DD"
-                              />
-                            </div>
-                          </div>
+
                           <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="form-group">
                               <label htmlFor="no_telp">Nomor Telepon</label>
@@ -275,7 +264,9 @@ export default function Edit() {
                       )}
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="kapasitasBimbingan">Kapasitas Bimbingan</label>
+                          <label htmlFor="kapasitasBimbingan">
+                            Kapasitas Bimbingan
+                          </label>
                           <input
                             type="number"
                             className="form-control"

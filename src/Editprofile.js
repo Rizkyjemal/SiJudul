@@ -12,7 +12,6 @@ export default function EditProfile() {
     nidn: "",
     email: "",
     prodi: "",
-    tanggal_lahir: "",
     gelar: "",
     jenjang_akademik: "",
     kepakaran: "",
@@ -54,14 +53,13 @@ export default function EditProfile() {
   const handleSubmit = async () => {
     const jsonString = localStorage.getItem("auth");
     const authObject = JSON.parse(jsonString);
-    const response = await editProfile( authObject.data.id,{
+    const response = await editProfile(authObject.data.id, {
       email: profile.email,
       kepakaran: profile.kepakaran,
       name: profile.name,
       nidn: profile.nidn,
       prodi: profile.prodi,
       kapasitas: parseInt(profile.kapasitasBimbingan),
-      tanggal_lahir: profile.tanggal_lahir,
       gelar: profile.gelar,
       jenjang_akademik: profile.jenjang_akademik,
       no_telp: profile.no_telp,
@@ -194,20 +192,6 @@ export default function EditProfile() {
                               value={profile.kapasitasBimbingan}
                               onChange={handleInputChange}
                               placeholder="Enter Kapasitas Bimbingan"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
-                            <input
-                              type="date"
-                              className="form-control"
-                              id="tanggal_lahir"
-                              placeholder="YYYY-MM-DD"
-                              value={profile.tanggal_lahir || ""}
-                              onChange={handleInputChange}
                             />
                           </div>
                         </div>
