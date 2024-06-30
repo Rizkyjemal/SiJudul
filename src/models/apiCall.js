@@ -235,24 +235,9 @@ export const getAllStudents = async () => {
 };
 
 // Function to edit profile of a dosen
-export const editProfile = async ({
-  id,
-  name,
-  nidn,
-  email,
-  prodi,
-  kepakaran,
-  kapasitas,
-}) => {
+export const editProfile = async (id, updateDosen) => {
   try {
-    const res = await requestWithHeaders.put(`/dosen/${id}`, {
-      name,
-      nidn,
-      email,
-      prodi,
-      kepakaran,
-      kapasitas,
-    });
+    const res = await requestWithHeaders.put(`/dosen/${id}`, updateDosen);
     return res.data;
   } catch (error) {
     return error?.message;

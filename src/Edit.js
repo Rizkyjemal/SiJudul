@@ -8,11 +8,6 @@ import { useNavigate } from "react-router-dom";
 export default function Edit() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isKaprodi, setIsKaprodi] = useState(false);
-
-  const openModal = () => {
-    setIsModalVisible(true);
-  };
-
   const [dosenData, setDosenData] = useState({
     fullName: "",
     nidn: "",
@@ -33,31 +28,33 @@ export default function Edit() {
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
-    const authObject = JSON.parse(jsonString);
-    const roles = authObject.roles;
-    setIsKaprodi(roles.includes("kaprodi"));
-    setIsAdmin(roles.includes("admin"));
+    if (jsonString) {
+      const authObject = JSON.parse(jsonString);
+      const roles = authObject.roles;
+      setIsKaprodi(roles.includes("kaprodi"));
+      setIsAdmin(roles.includes("admin"));
 
-    const fetchData = async () => {
-      const id = window.location.pathname.split("/").pop();
-      const data = await getProfileDosen({ id });
-      setDosenData({
-        fullName: data.name,
-        nidn: data.nidn,
-        email: data.email,
-        programStudi: data.prodi,
-        kapasitasBimbingan: data.kapasitas,
-        kepakaran: data.kepakaran,
-        jabatan: data.jabatan,
-        gelar: data.gelar,
-        jenjang_akademik: data.jenjang_akademik,
-        tanggal_lahir: data.tanggal_lahir,
-        no_telp: data.no_telp,
-        image: data.image,
-      });
-    };
+      const fetchData = async () => {
+        const id = window.location.pathname.split("/").pop();
+        const data = await getProfileDosen({ id });
+        setDosenData({
+          fullName: data.name,
+          nidn: data.nidn,
+          email: data.email,
+          programStudi: data.prodi,
+          kapasitasBimbingan: data.kapasitas,
+          kepakaran: data.kepakaran,
+          jabatan: data.jabatan,
+          gelar: data.gelar,
+          jenjang_akademik: data.jenjang_akademik,
+          tanggal_lahir: data.tanggal_lahir,
+          no_telp: data.no_telp,
+          image: data.image,
+        });
+      };
 
-    fetchData();
+      fetchData();
+    }
   }, []);
 
   const handleChange = (e) => {
@@ -68,10 +65,9 @@ export default function Edit() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     const id = window.location.pathname.split("/").pop();
-    const response = await editProfile({
-      id: id,
+    const response = await editProfile(id, {
       email: dosenData.email,
       kepakaran: dosenData.kepakaran,
       name: dosenData.fullName,
@@ -89,7 +85,7 @@ export default function Edit() {
     } else {
       setModalMessage("Gagal Mengubah Profile! Silakan Coba Lagi");
     }
-    openModal();
+    setIsModalVisible(true);
   };
 
   const handleDelete = async () => {
@@ -144,74 +140,142 @@ export default function Edit() {
                         <h6 className="mb-2 text-primary">Personal Details</h6>
                       </div>
                       {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="fullName">Full Name</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="fullName"
-                              value={dosenData.fullName}
-                              onChange={handleChange}
-                              placeholder="Enter full name"
-                            />
+                        <>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="fullName">Full Name</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="fullName"
+                                value={dosenData.fullName}
+                                onChange={handleChange}
+                                placeholder="Enter full name"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      )}
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="nidn">NIDN</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="nidn"
-                              value={dosenData.nidn}
-                              onChange={handleChange}
-                              placeholder="Enter NIDN"
-                            />
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="nidn">NIDN</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="nidn"
+                                value={dosenData.nidn}
+                                onChange={handleChange}
+                                placeholder="Enter NIDN"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      )}
-
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                              type="email"
-                              className="form-control"
-                              id="email"
-                              value={dosenData.email}
-                              onChange={handleChange}
-                              placeholder="Enter email"
-                            />
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="email">Email</label>
+                              <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                value={dosenData.email}
+                                onChange={handleChange}
+                                placeholder="Enter email"
+                              />
+                            </div>
                           </div>
-                        </div>
-                      )}
-
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="programStudi">Program Studi</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="programStudi"
-                              value={dosenData.programStudi}
-                              onChange={handleChange}
-                              placeholder="Enter Program Studi"
-                            />
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="programStudi">Program Studi</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="programStudi"
+                                value={dosenData.programStudi}
+                                onChange={handleChange}
+                                placeholder="Enter Program Studi"
+                              />
+                            </div>
                           </div>
-                        </div>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="kepakaran">Kepakaran</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="kepakaran"
+                                value={dosenData.kepakaran}
+                                onChange={handleChange}
+                                placeholder="Enter Kepakaran"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="jabatan">Posisi/Jabatan</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="jabatan"
+                                value={dosenData.jabatan}
+                                onChange={handleChange}
+                                placeholder="Enter Posisi/Jabatan"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="gelar">Gelar</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="gelar"
+                                value={dosenData.gelar}
+                                onChange={handleChange}
+                                placeholder="Enter Gelar"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="jenjang_akademik">Jenjang Akademik</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="jenjang_akademik"
+                                value={dosenData.jenjang_akademik}
+                                onChange={handleChange}
+                                placeholder="Enter Jenjang Akademik"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="tanggal_lahir"
+                                value={dosenData.tanggal_lahir}
+                                onChange={handleChange}
+                                placeholder="YYYY-MM-DD"
+                              />
+                            </div>
+                          </div>
+                          <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div className="form-group">
+                              <label htmlFor="no_telp">Nomor Telepon</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                id="no_telp"
+                                value={dosenData.no_telp}
+                                onChange={handleChange}
+                                placeholder="Enter Nomor Telepon"
+                              />
+                            </div>
+                          </div>
+                        </>
                       )}
-                    </div>
-                    <div className="row gutters">
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="kapasitasBimbingan">
-                            Kapasitas Bimbingan
-                          </label>
+                          <label htmlFor="kapasitasBimbingan">Kapasitas Bimbingan</label>
                           <input
                             type="number"
                             className="form-control"
@@ -222,100 +286,6 @@ export default function Edit() {
                           />
                         </div>
                       </div>
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="kepakaran">Kepakaran</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="kepakaran"
-                              value={dosenData.kepakaran}
-                              onChange={handleChange}
-                              placeholder="Enter Kepakaran"
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="row gutters">
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="jabatan">Posisi/Jabatan</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="jabatan"
-                              value={dosenData.jabatan}
-                              onChange={handleChange}
-                              placeholder="Enter Posisi/Jabatan"
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="gelar">Gelar</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="gelar"
-                              value={dosenData.gelar}
-                              onChange={handleChange}
-                              placeholder="Enter Gelar"
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="jenjang_akademik">
-                              Jenjang Akademik
-                            </label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="jenjang_akademik"
-                              value={dosenData.jenjang_akademik}
-                              onChange={handleChange}
-                              placeholder="Enter Jenjang Akademik"
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="tanggal_lahir"
-                              value={dosenData.tanggal_lahir}
-                              onChange={handleChange}
-                              placeholder="YYYY-MM-DD"
-                            />
-                          </div>
-                        </div>
-                      )}
-                      {isAdmin && (
-                        <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                          <div className="form-group">
-                            <label htmlFor="no_telp">Nomor Telepon</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              id="no_telp"
-                              value={dosenData.no_telp}
-                              onChange={handleChange}
-                              placeholder="Enter Nomor Telepon"
-                            />
-                          </div>
-                        </div>
-                      )}
                     </div>
                     <div className="row gutters">
                       <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -333,8 +303,8 @@ export default function Edit() {
                           )}
                           <button
                             type="button"
-                            id="submit"
-                            name="submit"
+                            id="cancel"
+                            name="cancel"
                             className="btn btn-secondary"
                             onClick={() => navigate(-1)}
                           >
