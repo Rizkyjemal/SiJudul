@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
 import Footer from "./Footer";

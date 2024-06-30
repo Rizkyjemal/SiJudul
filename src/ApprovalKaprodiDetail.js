@@ -2,8 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import { FaElementor, FaCalendarCheck } from "react-icons/fa";
-import { MdOutlinePlace } from "react-icons/md";
 import { useEffect, useState } from "react";
 import {
   updatePengajuan,
@@ -14,9 +12,9 @@ import {
 
 export default function ApprovalKaprodiDetail() {
   const { id } = useParams();
-  const [statusAcc, setStatusAcc] = useState("");
+  const [, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
-  const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
+  // const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
   const [plagiarismMessage, setPlagiarismMessage] = useState(null);
   const [proposal, setProposal] = useState();
   const navigate = useNavigate();
@@ -39,6 +37,7 @@ export default function ApprovalKaprodiDetail() {
       // console.log(res);
     };
     fetchProposal();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isKaprodi]);
 
   // console.log(proposal,"kkaskak");

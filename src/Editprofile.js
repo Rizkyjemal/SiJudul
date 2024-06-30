@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Searchbar from "./Searchbar";

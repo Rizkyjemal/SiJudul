@@ -1,24 +1,22 @@
+/* eslint-disable eqeqeq */
 import { useNavigate, useParams } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
-import { FaElementor, FaCalendarCheck } from "react-icons/fa";
-import { MdOutlinePlace } from "react-icons/md";
 import { useEffect, useState } from "react";
 import {
   updatePengajuan,
   checkSimilarity,
   getPengajuanById,
-  updatePengajuanKaprodi,
   getAllDosen,
   updateMahasiswaBimbinganDosen, // Import function to fetch all advisors
 } from "./models/apiCall";
 
 export default function Approval() {
   const { id } = useParams();
-  const [statusAcc, setStatusAcc] = useState("");
+  const [, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
-  const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
+  // const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
   const [plagiarismMessage, setPlagiarismMessage] = useState(null);
   const [proposal, setProposal] = useState();
   const [dosenList, setDosenList] = useState([]); // State to hold list of advisors
@@ -30,7 +28,7 @@ export default function Approval() {
   const [modalMessage, setModalMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   let [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
-  let [isKaprodi, setIsKaprodi] = useState(false);
+  let [, setIsKaprodi] = useState(false);
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -83,7 +81,7 @@ export default function Approval() {
     setRejectedNote(event.target.value);
   };
 
-  const handleDospemUpdate = async (e) => {
+  const handleDospemUpdate = async () => {
     setLoadingUpdate(true);
     try {
       await updateMahasiswaBimbinganDosen(
@@ -127,26 +125,6 @@ export default function Approval() {
     }
   };
 
-  const updateProposalKaprodi = async (status, note) => {
-    try {
-      const response = await updatePengajuanKaprodi({
-        id,
-        statusAcc: status,
-        rejectedNote: note,
-      });
-      if (response.result) {
-        setLoginFailed(false);
-        setModalMessage("Berhasil Mengubah Status Pengajuan!");
-      } else {
-        setLoginFailed(true);
-        setModalMessage("Gagal Mengubah Status Pengajuan! Silakan Coba Lagi");
-      }
-      openModal();
-      console.log("Response from API:", response);
-    } catch (error) {
-      console.error("Error updating proposal:", error);
-    }
-  };
 
   const handlePlagiarismCheck = async () => {
     try {

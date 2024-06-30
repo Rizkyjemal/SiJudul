@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { login, loginAdmin, loginDosen } from "./models/apiCall";
+import {  loginAdmin, loginDosen } from "./models/apiCall";
 import { useNavigate } from "react-router-dom";
 import validator from "validator";
 

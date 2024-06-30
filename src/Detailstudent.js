@@ -1,7 +1,7 @@
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
 import Footer from "./Footer";
-import { getPengajuanById, getPengajuanByIdMahasiswa } from "./models/apiCall";
+import {  getPengajuanByIdMahasiswa } from "./models/apiCall";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

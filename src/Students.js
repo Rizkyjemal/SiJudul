@@ -1,8 +1,8 @@
-import { PiStudentBold } from "react-icons/pi";
-import { GiTeacher } from "react-icons/gi";
-import { HiOutlineDocumentCheck } from "react-icons/hi2";
-import { CgDetailsMore } from "react-icons/cg";
-import { SiCodementor } from "react-icons/si";
+// import { PiStudentBold } from "react-icons/pi";
+// import { GiTeacher } from "react-icons/gi";
+// import { HiOutlineDocumentCheck } from "react-icons/hi2";
+// import { CgDetailsMore } from "react-icons/cg";
+// import { SiCodementor } from "react-icons/si";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";

@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import Sidebar from "./Sidebar";
 import Searchbar from "./Searchbar";
 import Footer from "./Footer";

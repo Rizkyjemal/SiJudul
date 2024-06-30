@@ -3,7 +3,7 @@ import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
 import { GrStatusGood } from "react-icons/gr";
 import { useEffect, useState } from "react";
-import { getAllStudents } from "./models/apiCall";
+// import { getAllStudents } from "./models/apiCall";
 export default function Sidebar() {
   let [isAdmin, setIsAdmin] = useState(false);
   let [isKaprodi, setIsKaprodi] = useState(false);
