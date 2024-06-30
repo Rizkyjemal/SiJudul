@@ -158,8 +158,27 @@ export default function ApprovalKaprodiDetail() {
             {proposal ? (
               <div className="card shadow mb-4">
                 <div className="card-header py-3">
-                  <h6 className="m-0 font-weight-bold text-primary">
-                    {proposal.mahasiswa.name}
+                <h5 className="m-0 font-weight-bold text-primary mb-3">Data Mahasiswa</h5>
+                  <h6>
+                  Nama : {proposal.mahasiswa.name || "-"} 
+                  </h6>
+                  <h6 >
+                  NIM : {proposal.mahasiswa.nim || "-"}
+                  </h6>
+                  <h6 >
+                  Agama : {proposal.mahasiswa.agama || "-"}
+                  </h6>
+                  <h6 >
+                  Angkatan : {proposal.mahasiswa.angkatan || "-"}
+                  </h6>
+                  <h6 >
+                  Email : {proposal.mahasiswa.email || "-"}
+                  </h6>
+                  <h6 >
+                  Jenis Kelamin : {proposal.mahasiswa.jenis_kelamin || "-"}
+                  </h6>
+                  <h6 >
+                  No Telp : {proposal.mahasiswa.no_telp || "-"}
                   </h6>
                 </div>
                 <div className="card-body">

@@ -234,6 +234,15 @@ export const getAllStudents = async () => {
   }
 };
 
+export const getStudentById = async ({id}) => {
+  try {
+    const res = await request.get(`/mahasiswa/${id}`);
+    return res.data;
+  } catch (error) {
+    return error?.message;
+  }
+};
+
 // Function to edit profile of a dosen
 export const editProfile = async (id, updateDosen) => {
   try {

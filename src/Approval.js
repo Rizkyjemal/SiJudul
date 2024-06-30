@@ -9,7 +9,8 @@ import {
   checkSimilarity,
   getPengajuanById,
   getAllDosen,
-  updateMahasiswaBimbinganDosen, // Import function to fetch all advisors
+  updateMahasiswaBimbinganDosen,
+  getStudentById, // Import function to fetch all advisors
 } from "./models/apiCall";
 
 export default function Approval() {
@@ -30,6 +31,7 @@ export default function Approval() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   let [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
   let [, setIsKaprodi] = useState(false);
+  const [studentDetail,setStudentDetail] = useState();
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -61,7 +63,14 @@ export default function Approval() {
       setDosenList(filteredDosen);
       setDosen2List(filteredDosen2);
     };
+
+    // const fetchStudentById = async () => {
+    //   console.log("ssss",proposal)
+    //   const studentRes = await getStudentById({id:proposal.mahasiswa.id})
+    //   setStudentDetail(studentRes);
+    // }
     fetchProposalAndDosenList();
+    // fetchStudentById();
   }, [id]);
 
   const closeModal = () => {
@@ -180,8 +189,27 @@ export default function Approval() {
             {proposal ? (
               <div className="card shadow mb-4">
                 <div className="card-header py-3">
-                  <h6 className="m-0 font-weight-bold text-primary">
-                    {proposal.mahasiswa.name}
+                  <h5 className="m-0 font-weight-bold text-primary mb-3">Data Mahasiswa</h5>
+                  <h6>
+                  Nama : {proposal.mahasiswa.name || "-"} 
+                  </h6>
+                  <h6 >
+                  NIM : {proposal.mahasiswa.nim || "-"}
+                  </h6>
+                  <h6 >
+                  Agama : {proposal.mahasiswa.agama || "-"}
+                  </h6>
+                  <h6 >
+                  Angkatan : {proposal.mahasiswa.angkatan || "-"}
+                  </h6>
+                  <h6 >
+                  Email : {proposal.mahasiswa.email || "-"}
+                  </h6>
+                  <h6 >
+                  Jenis Kelamin : {proposal.mahasiswa.jenis_kelamin || "-"}
+                  </h6>
+                  <h6 >
+                  No Telp : {proposal.mahasiswa.no_telp || "-"}
                   </h6>
                 </div>
                 <div className="card-body">
