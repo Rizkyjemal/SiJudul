@@ -46,7 +46,7 @@ export default function Approval() {
       const dospem = await getAllDosen();
       const filteredDosen = dospem?.result?.filter(
         (dosen) =>
-          dosen?.kepakaran == proposalRes?.peminatan ||
+          dosen?.kepakaran == proposalRes?.result?.peminatan ||
           dosen?.id == proposalRes?.result?.dospem1_id ||
           dosen?.id == proposalRes?.result?.dospem2_id
       );
