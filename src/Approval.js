@@ -31,7 +31,7 @@ export default function Approval() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   let [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
   let [, setIsKaprodi] = useState(false);
-  const [studentDetail,setStudentDetail] = useState();
+  const [studentDetail, setStudentDetail] = useState();
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -142,22 +142,27 @@ export default function Approval() {
     }
   };
 
-
   const handlePlagiarismCheck = async () => {
     try {
+      // Pemanggilan fungsi checkSimilarity untuk memeriksa kesamaan judul proposal
       const response = await checkSimilarity({
-        judul: proposal.judul,
-        id: proposal.id,
+        judul: proposal.judul, // Mengirim judul proposal
+        id: proposal.id, // Mengirim ID proposal
       });
+
+      // Jika ada judul yang mirip ditemukan
       if (response?.similar) {
+        // Menyimpan pesan plagiarisme dengan detail judul yang mirip dan persentase kesamaannya
         setPlagiarismMessage(
-          `${response?.message} with "${
+          `${response?.message} dengan judul "${
             response?.similar
           }" (${response?.similarity.toFixed(2)}%)`
         );
       } else {
+        // Menyimpan pesan jika tidak ada judul yang mirip ditemukan
         setPlagiarismMessage(`${response?.message}`);
       }
+
       console.log("Plagiarism check result:", response);
     } catch (error) {
       console.error("Error checking plagiarism:", error);
@@ -189,28 +194,18 @@ export default function Approval() {
             {proposal ? (
               <div className="card shadow mb-4">
                 <div className="card-header py-3">
-                  <h5 className="m-0 font-weight-bold text-primary mb-3">Data Mahasiswa</h5>
+                  <h5 className="m-0 font-weight-bold text-primary mb-3">
+                    Data Mahasiswa
+                  </h5>
+                  <h6>Nama : {proposal.mahasiswa.name || "-"}</h6>
+                  <h6>NIM : {proposal.mahasiswa.nim || "-"}</h6>
+                  <h6>Agama : {proposal.mahasiswa.agama || "-"}</h6>
+                  <h6>Angkatan : {proposal.mahasiswa.angkatan || "-"}</h6>
+                  <h6>Email : {proposal.mahasiswa.email || "-"}</h6>
                   <h6>
-                  Nama : {proposal.mahasiswa.name || "-"} 
+                    Jenis Kelamin : {proposal.mahasiswa.jenis_kelamin || "-"}
                   </h6>
-                  <h6 >
-                  NIM : {proposal.mahasiswa.nim || "-"}
-                  </h6>
-                  <h6 >
-                  Agama : {proposal.mahasiswa.agama || "-"}
-                  </h6>
-                  <h6 >
-                  Angkatan : {proposal.mahasiswa.angkatan || "-"}
-                  </h6>
-                  <h6 >
-                  Email : {proposal.mahasiswa.email || "-"}
-                  </h6>
-                  <h6 >
-                  Jenis Kelamin : {proposal.mahasiswa.jenis_kelamin || "-"}
-                  </h6>
-                  <h6 >
-                  No Telp : {proposal.mahasiswa.no_telp || "-"}
-                  </h6>
+                  <h6>No Telp : {proposal.mahasiswa.no_telp || "-"}</h6>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -234,10 +229,6 @@ export default function Approval() {
                         <div className="info-item">
                           <strong>Tempat Penelitian:</strong>
                           <span>{proposal.tempat_penelitian}</span>
-                        </div>
-                        <div className="info-item">
-                          <strong>Angkatan:</strong>
-                          <span>{proposal.mahasiswa.angkatan}</span>
                         </div>
                         <div className="info-item">
                           <strong>Program Studi:</strong>

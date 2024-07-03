@@ -114,14 +114,14 @@ export default function Tambahdosen() {
                       </div>
                       <div className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                         <div className="form-group">
-                          <label htmlFor="eMail">NIDN</label>
+                          <label htmlFor="nidn">NIDN</label>
                           <input
                             type="text"
                             onChange={handleChange}
                             value={formData.nidn}
                             name="nidn"
                             className="form-control"
-                            id="eMail"
+                            id="nidn"
                             placeholder="..."
                           />
                         </div>
