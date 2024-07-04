@@ -21,7 +21,10 @@ export default function Lectures() {
 
     const fetchData = async () => {
       const res = await getAllDosen();
-      setDosen(res.result);
+      const sortedData = res.result.sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      setDosen(sortedData);
     };
     fetchData();
   }, [isAdmin]);
