@@ -118,7 +118,9 @@ function App() {
             <div className="dashboard">
               <div className="tables-section">
                 <div className="table-container">
-                  <h3 className="accepted-title">Accepted Proposals</h3>
+                  <a href="/acceptedproposal">
+                    <h3 className="accepted-title">Accepted Proposals</h3>
+                  </a>
                   <table className="accepted">
                     <thead>
                       <tr>
@@ -139,28 +141,9 @@ function App() {
                   </table>
                 </div>
                 <div className="table-container">
-                  <h3 className="rejected-title">Rejected Proposals</h3>
-                  <table className="rejected">
-                    <thead>
-                      <tr>
-                        <th>Nama Mahasiswa</th>
-                        <th>Judul Proposal</th>
-                        <th>NIM</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rejectedProposals.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.mahasiswa.name}</td>
-                          <td>{item.judul}</td>
-                          <td>{item.mahasiswa.nim}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="table-container">
-                  <h3 className="pending-title">Pending Proposals</h3>
+                  <a href="/pendingproposal">
+                    <h3 className="pending-title">Pending Proposals</h3>
+                  </a>
                   <table className="pending">
                     <thead>
                       <tr>
@@ -171,6 +154,29 @@ function App() {
                     </thead>
                     <tbody>
                       {pendingProposals.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.mahasiswa.name}</td>
+                          <td>{item.judul}</td>
+                          <td>{item.mahasiswa.nim}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="table-container">
+                  <a href="/rejectedproposal">
+                    <h3 className="rejected-title">Rejected Proposals</h3>
+                  </a>
+                  <table className="rejected">
+                    <thead>
+                      <tr>
+                        <th>Nama Mahasiswa</th>
+                        <th>Judul Proposal</th>
+                        <th>NIM</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rejectedProposals.map((item, index) => (
                         <tr key={index}>
                           <td>{item.mahasiswa.name}</td>
                           <td>{item.judul}</td>

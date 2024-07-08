@@ -22,6 +22,9 @@ import PrivateRoute from "./PrivateRoute";
 import App from "./App";
 import ApprovalKaprodi from "./ApprovalKaprodi";
 import ApprovalKaprodiDetail from "./ApprovalKaprodiDetail";
+import Acceptedproposal from "./Acceptedproposal";
+import Rejectedproposal from "./Rejectedproposal";
+import Pendingproposal from "./Pendingproposal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -33,6 +36,9 @@ root.render(
           <Route path="/students" element={<Students />} />
           <Route path="/detailstudent/:id" element={<Detailstudent />} />
           <Route path="/proposal" element={<Proposal />} />
+          <Route path="/acceptedproposal" element={<Acceptedproposal />} />
+          <Route path="/rejectedproposal" element={<Rejectedproposal />} />
+          <Route path="/pendingproposal" element={<Pendingproposal />} />
           <Route path="/approval/:id" element={<Approval />} />
           <Route path="/edit/:id" element={<Edit />} />
           <Route path="/profile" element={<Profile />} />
