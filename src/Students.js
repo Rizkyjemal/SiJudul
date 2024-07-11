@@ -1,8 +1,3 @@
-// import { PiStudentBold } from "react-icons/pi";
-// import { GiTeacher } from "react-icons/gi";
-// import { HiOutlineDocumentCheck } from "react-icons/hi2";
-// import { CgDetailsMore } from "react-icons/cg";
-// import { SiCodementor } from "react-icons/si";
 import Searchbar from "./Searchbar";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
@@ -22,6 +17,8 @@ export default function Students() {
   const [isKaprodi, setIsKaprodi] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -40,17 +37,23 @@ export default function Students() {
 
     const userId = authObject.data.id;
 
-    if (isAdmin) {
-      const res = await getAllStudents();
-      setAllMahasiswa(res.result);
-    } else if (isKaprodi) {
-      const res = await getAllStudentsBimbingan({ id: userId });
-      const resAll = await getAllStudents();
-      setMahasiswa(res.mahasiswa_list);
-      setAllMahasiswa(resAll.result);
-    } else {
-      const res = await getAllStudentsBimbingan({ id: userId });
-      setMahasiswa(res.mahasiswa_list);
+    try {
+      if (isAdmin) {
+        const res = await getAllStudents();
+        setAllMahasiswa(res.result);
+      } else if (isKaprodi) {
+        const res = await getAllStudentsBimbingan({ id: userId });
+        const resAll = await getAllStudents();
+        setMahasiswa(res.mahasiswa_list);
+        setAllMahasiswa(resAll.result);
+      } else {
+        const res = await getAllStudentsBimbingan({ id: userId });
+        setMahasiswa(res.mahasiswa_list);
+      }
+    } catch (error) {
+      console.error("Error fetching students data:", error);
+    } finally {
+      setIsPageLoading(false);
     }
   };
 
@@ -59,7 +62,9 @@ export default function Students() {
   };
 
   const handleDeleteClick = async (id) => {
+    setIsDeleting(true);
     const response = await deleteStudent(id);
+    setIsDeleting(false);
     if (response.result) {
       setModalMessage("Berhasil Menghapus Data Mahasiswa!");
     } else {
@@ -75,139 +80,175 @@ export default function Students() {
 
   return (
     <div id="wrapper">
-      <Sidebar />
-      <div id="content-wrapper" className="d-flex flex-column">
-        <div id="content">
-          <Searchbar />
-          <div className="container-fluid">
-            {(!isAdmin || isKaprodi) && (
-              <>
-                <h1 className="h3 mb-2 text-gray-800">
-                  Daftar Mahasiswa Bimbingan
-                </h1>
-                <p className="mb-4">Berikut list daftar mahasiswa bimbingan:</p>
-                <div className="card shadow mb-4">
-                  <div className="card-body">
-                    <div className="table-responsive">
-                      <table
-                        className="table table-bordered"
-                        id="dataTable"
-                        width="100%"
-                        cellSpacing="0"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nama Mahasiswa</th>
-                            <th>NIM</th>
-                            <th>Program Studi</th>
-                            <th>Angkatan</th>
-                            <th>Email</th>
-                            {isAdmin && <th>Action</th>}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {mahasiswa?.map((item, index) => (
-                            <tr key={index} className="clickable-row">
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.name}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.nim}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.prodi}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.angkatan}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.email}
-                              </td>
-                              {isAdmin && (
-                                <td>
-                                  <button
-                                    className="delete-button"
-                                    onClick={() => handleDeleteClick(item?.id)}
-                                  >
-                                    Delete Mahasiswa
-                                  </button>
-                                </td>
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+      {isPageLoading || isDeleting ? (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalLoadingLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalLoadingLabel">
+                  Loading
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
                   </div>
                 </div>
-              </>
-            )}
-            {(isAdmin || isKaprodi) && (
-              <>
-                <h1 className="h3 mb-2 text-gray-800">
-                  Daftar Semua Mahasiswa
-                </h1>
-                <p className="mb-4">Berikut list daftar semua mahasiswa:</p>
-                <div className="card shadow mb-4">
-                  <div className="card-body">
-                    <div className="table-responsive">
-                      <table
-                        className="table table-bordered"
-                        id="dataTable"
-                        width="100%"
-                        cellSpacing="0"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nama Mahasiswa</th>
-                            <th>NIM</th>
-                            <th>Program Studi</th>
-                            <th>Angkatan</th>
-                            <th>Email</th>
-                            {isAdmin && <th>Action</th>}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {allMahasiswa?.map((item, index) => (
-                            <tr key={index} className="clickable-row">
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.name}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.nim}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.prodi}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.angkatan}
-                              </td>
-                              <td onClick={() => handleRowClick(item?.id)}>
-                                {item.email}
-                              </td>
-                              {isAdmin && (
-                                <td>
-                                  <button
-                                    className="delete-button"
-                                    onClick={() => handleDeleteClick(item?.id)}
-                                  >
-                                    Delete Mahasiswa
-                                  </button>
-                                </td>
-                              )}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
+              </div>
+            </div>
           </div>
         </div>
-        <Footer />
-      </div>
+      ) : (
+        <>
+          <Sidebar />
+          <div id="content-wrapper" className="d-flex flex-column">
+            <div id="content">
+              <Searchbar />
+              <div className="container-fluid">
+                {(!isAdmin || isKaprodi) && (
+                  <>
+                    <h1 className="h3 mb-2 text-gray-800">
+                      Daftar Mahasiswa Bimbingan
+                    </h1>
+                    <p className="mb-4">
+                      Berikut list daftar mahasiswa bimbingan:
+                    </p>
+                    <div className="card shadow mb-4">
+                      <div className="card-body">
+                        <div className="table-responsive">
+                          <table
+                            className="table table-bordered"
+                            id="dataTable"
+                            width="100%"
+                            cellSpacing="0"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nama Mahasiswa</th>
+                                <th>NIM</th>
+                                <th>Program Studi</th>
+                                <th>Angkatan</th>
+                                <th>Email</th>
+                                {isAdmin && <th>Action</th>}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {mahasiswa?.map((item, index) => (
+                                <tr key={index} className="clickable-row">
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.name}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.nim}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.prodi}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.angkatan}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.email}
+                                  </td>
+                                  {isAdmin && (
+                                    <td>
+                                      <button
+                                        className="delete-button"
+                                        onClick={() =>
+                                          handleDeleteClick(item?.id)
+                                        }
+                                      >
+                                        Delete Mahasiswa
+                                      </button>
+                                    </td>
+                                  )}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+                {(isAdmin || isKaprodi) && (
+                  <>
+                    <h1 className="h3 mb-2 text-gray-800">
+                      Daftar Semua Mahasiswa
+                    </h1>
+                    <p className="mb-4">Berikut list daftar semua mahasiswa:</p>
+                    <div className="card shadow mb-4">
+                      <div className="card-body">
+                        <div className="table-responsive">
+                          <table
+                            className="table table-bordered"
+                            id="dataTable"
+                            width="100%"
+                            cellSpacing="0"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Nama Mahasiswa</th>
+                                <th>NIM</th>
+                                <th>Program Studi</th>
+                                <th>Angkatan</th>
+                                <th>Email</th>
+                                {isAdmin && <th>Action</th>}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {allMahasiswa?.map((item, index) => (
+                                <tr key={index} className="clickable-row">
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.name}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.nim}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.prodi}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.angkatan}
+                                  </td>
+                                  <td onClick={() => handleRowClick(item?.id)}>
+                                    {item.email}
+                                  </td>
+                                  {isAdmin && (
+                                    <td>
+                                      <button
+                                        className="delete-button"
+                                        onClick={() =>
+                                          handleDeleteClick(item?.id)
+                                        }
+                                      >
+                                        Delete Mahasiswa
+                                      </button>
+                                    </td>
+                                  )}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+            <Footer />
+          </div>
+        </>
+      )}
       {isModalVisible && (
         <div
           className="modal fade show"

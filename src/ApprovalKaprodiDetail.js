@@ -14,14 +14,15 @@ export default function ApprovalKaprodiDetail() {
   const { id } = useParams();
   const [, setStatusAcc] = useState("");
   const [rejectedNote, setRejectedNote] = useState("");
-  // const [plagiarismResult, setPlagiarismResult] = useState(null); // State for plagiarism check result
   const [plagiarismMessage, setPlagiarismMessage] = useState(null);
   const [proposal, setProposal] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isCheckingPlagiarism, setIsCheckingPlagiarism] = useState(false);
   const navigate = useNavigate();
   const [loginFailed, setLoginFailed] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  let [isKaprodi, setIsKaprodi] = useState(false);
+  const [isKaprodi, setIsKaprodi] = useState(false);
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -30,17 +31,13 @@ export default function ApprovalKaprodiDetail() {
     setIsKaprodi(roles.includes("kaprodi"));
 
     const fetchProposal = async () => {
-      console.log("idddd", id);
       const res = await getPengajuanById({ id: id });
-      // console.log(res.result, "oidd");
       setProposal(res.result);
-      // console.log(res);
+      setIsLoading(false);
     };
     fetchProposal();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isKaprodi]);
-
-  // console.log(proposal,"kkaskak");
 
   const closeModal = () => {
     setIsModalVisible(false);
@@ -56,7 +53,6 @@ export default function ApprovalKaprodiDetail() {
   const handleAccept = () => {
     setStatusAcc("Approved");
     if (isKaprodi) {
-      console.log("kappp");
       updateProposalKaprodi("Approved", rejectedNote);
     } else {
       updateProposal("Approved", rejectedNote);
@@ -91,7 +87,6 @@ export default function ApprovalKaprodiDetail() {
         setModalMessage("Gagal Mengubah Status Pengajuan! Silakan Coba Lagi");
       }
       openModal();
-      console.log("Response from API:", response);
     } catch (error) {
       console.error("Error updating proposal:", error);
     }
@@ -112,20 +107,18 @@ export default function ApprovalKaprodiDetail() {
         setModalMessage("Gagal Mengubah Status Pengajuan! Silakan Coba Lagi");
       }
       openModal();
-      console.log("Response from API:", response);
     } catch (error) {
       console.error("Error updating proposal:", error);
     }
   };
 
   const handlePlagiarismCheck = async () => {
+    setIsCheckingPlagiarism(true);
     try {
       const response = await checkSimilarity({
         judul: proposal.judul,
         id: proposal.id,
       });
-      // setPlagiarismResult(response);
-      console.log(response);
       if (response?.similar) {
         setPlagiarismMessage(
           `${response?.message} with "${
@@ -135,10 +128,10 @@ export default function ApprovalKaprodiDetail() {
       } else {
         setPlagiarismMessage(`${response?.message}`);
       }
-      console.log("Plagiarism check result:", response);
     } catch (error) {
       console.error("Error checking plagiarism:", error);
     }
+    setIsCheckingPlagiarism(false);
   };
 
   return (
@@ -158,28 +151,18 @@ export default function ApprovalKaprodiDetail() {
             {proposal ? (
               <div className="card shadow mb-4">
                 <div className="card-header py-3">
-                <h5 className="m-0 font-weight-bold text-primary mb-3">Data Mahasiswa</h5>
+                  <h5 className="m-0 font-weight-bold text-primary mb-3">
+                    Data Mahasiswa
+                  </h5>
+                  <h6>Nama : {proposal.mahasiswa.name || "-"}</h6>
+                  <h6>NIM : {proposal.mahasiswa.nim || "-"}</h6>
+                  <h6>Agama : {proposal.mahasiswa.agama || "-"}</h6>
+                  <h6>Angkatan : {proposal.mahasiswa.angkatan || "-"}</h6>
+                  <h6>Email : {proposal.mahasiswa.email || "-"}</h6>
                   <h6>
-                  Nama : {proposal.mahasiswa.name || "-"} 
+                    Jenis Kelamin : {proposal.mahasiswa.jenis_kelamin || "-"}
                   </h6>
-                  <h6 >
-                  NIM : {proposal.mahasiswa.nim || "-"}
-                  </h6>
-                  <h6 >
-                  Agama : {proposal.mahasiswa.agama || "-"}
-                  </h6>
-                  <h6 >
-                  Angkatan : {proposal.mahasiswa.angkatan || "-"}
-                  </h6>
-                  <h6 >
-                  Email : {proposal.mahasiswa.email || "-"}
-                  </h6>
-                  <h6 >
-                  Jenis Kelamin : {proposal.mahasiswa.jenis_kelamin || "-"}
-                  </h6>
-                  <h6 >
-                  No Telp : {proposal.mahasiswa.no_telp || "-"}
-                  </h6>
+                  <h6>No Telp : {proposal.mahasiswa.no_telp || "-"}</h6>
                 </div>
                 <div className="card-body">
                   <div className="table-responsive">
@@ -314,6 +297,35 @@ export default function ApprovalKaprodiDetail() {
           </div>
         </div>
       )}
+
+      {(isLoading || isCheckingPlagiarism) && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalLoadingLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalLoadingLabel">
+                  Loading
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"

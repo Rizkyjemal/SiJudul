@@ -24,6 +24,7 @@ export default function Tambahdosen() {
   });
 
   console.log(formData);
+  const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const navigate = useNavigate();
@@ -50,11 +51,13 @@ export default function Tambahdosen() {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     const form = new FormData();
     for (const key in formData) {
       form.append(key, formData[key]);
     }
     const response = await createDosen(form);
+    setIsLoading(false);
     if (response.result) {
       openModal("Berhasil Menambahkan Data Dosen!");
     } else {
@@ -338,6 +341,33 @@ export default function Tambahdosen() {
                 >
                   Ok
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isLoading && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalLoadingLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalLoadingLabel">
+                  Loading
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

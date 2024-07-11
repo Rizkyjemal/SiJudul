@@ -32,6 +32,8 @@ export default function Approval() {
   let [isAdmin, setIsAdmin] = useState(false); // State to check if user is admin
   let [, setIsKaprodi] = useState(false);
   const [studentDetail, setStudentDetail] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPlagiarismLoading, setIsPlagiarismLoading] = useState(false);
 
   useEffect(() => {
     const jsonString = localStorage.getItem("auth");
@@ -41,11 +43,11 @@ export default function Approval() {
     setIsKaprodi(roles.includes("kaprodi"));
 
     const fetchProposalAndDosenList = async () => {
+      setIsLoading(true);
       const proposalRes = await getPengajuanById({ id: id });
       setProposal(proposalRes.result);
       setSelectedDospem1(proposalRes.result.dospem1_id);
       setSelectedDospem2(proposalRes.result.dospem2_id);
-      console.log(proposalRes?.dospem1_id);
       const dospem = await getAllDosen();
       const filteredDosen = dospem?.result?.filter(
         (dosen) =>
@@ -59,18 +61,12 @@ export default function Approval() {
           dosen?.id == proposalRes?.result?.dospem1_id ||
           dosen?.id == proposalRes?.result?.dospem2_id
       );
-      console.log(filteredDosen);
       setDosenList(filteredDosen);
       setDosen2List(filteredDosen2);
+      setIsLoading(false);
     };
 
-    // const fetchStudentById = async () => {
-    //   console.log("ssss",proposal)
-    //   const studentRes = await getStudentById({id:proposal.mahasiswa.id})
-    //   setStudentDetail(studentRes);
-    // }
     fetchProposalAndDosenList();
-    // fetchStudentById();
   }, [id]);
 
   const closeModal = () => {
@@ -84,14 +80,18 @@ export default function Approval() {
     setIsModalVisible(true);
   };
 
-  const handleAccept = () => {
+  const handleAccept = async () => {
+    setIsLoading(true);
     setStatusAcc("Approved");
-    updateProposal("Approved", rejectedNote);
+    await updateProposal("Approved", rejectedNote);
+    setIsLoading(false);
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
+    setIsLoading(true);
     setStatusAcc("Rejected");
-    updateProposal("Rejected", rejectedNote);
+    await updateProposal("Rejected", rejectedNote);
+    setIsLoading(false);
   };
 
   const handleNoteChange = (event) => {
@@ -143,23 +143,20 @@ export default function Approval() {
   };
 
   const handlePlagiarismCheck = async () => {
+    setIsPlagiarismLoading(true);
     try {
-      // Pemanggilan fungsi checkSimilarity untuk memeriksa kesamaan judul proposal
       const response = await checkSimilarity({
-        judul: proposal.judul, // Mengirim judul proposal
-        id: proposal.id, // Mengirim ID proposal
+        judul: proposal.judul,
+        id: proposal.id,
       });
 
-      // Jika ada judul yang mirip ditemukan
       if (response?.similar) {
-        // Menyimpan pesan plagiarisme dengan detail judul yang mirip dan persentase kesamaannya
         setPlagiarismMessage(
           `${response?.message} dengan judul "${
             response?.similar
           }" (${response?.similarity.toFixed(2)}%)`
         );
       } else {
-        // Menyimpan pesan jika tidak ada judul yang mirip ditemukan
         setPlagiarismMessage(`${response?.message}`);
       }
 
@@ -167,6 +164,7 @@ export default function Approval() {
     } catch (error) {
       console.error("Error checking plagiarism:", error);
     }
+    setIsPlagiarismLoading(false);
   };
 
   const handleDospem1Change = (event) => {
@@ -389,6 +387,61 @@ export default function Approval() {
           </div>
         </div>
       )}
+      {(isLoading || loadingUpdate) && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalLoadingLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalLoadingLabel">
+                  Loading
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {isPlagiarismLoading && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalLoadingLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalLoadingLabel">
+                  Loading
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"

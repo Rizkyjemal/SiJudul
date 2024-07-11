@@ -21,6 +21,8 @@ export default function Edit() {
     no_telp: "",
     image: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ export default function Edit() {
           nidn: data.nidn,
           email: data.email,
           programStudi: data.prodi,
-          kapasitasBimbingan: data.kapasitas,
+          kapasitas: data.kapasitas,
           kepakaran: data.kepakaran,
           jabatan: data.jabatan,
           gelar: data.gelar,
@@ -49,6 +51,7 @@ export default function Edit() {
           no_telp: data.no_telp,
           image: data.image,
         });
+        setIsPageLoading(false); // Set loading to false after data is fetched
       };
 
       fetchData();
@@ -64,6 +67,7 @@ export default function Edit() {
   };
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     const id = window.location.pathname.split("/").pop();
     const response = await editProfile(id, {
       email: dosenData.email,
@@ -77,6 +81,7 @@ export default function Edit() {
       jenjang_akademik: dosenData.jenjang_akademik,
       no_telp: dosenData.no_telp,
     });
+    setIsLoading(false);
     if (response.result) {
       setModalMessage("Berhasil Mengubah Profile!");
     } else {
@@ -86,8 +91,10 @@ export default function Edit() {
   };
 
   const handleDelete = async () => {
+    setIsLoading(true);
     const id = window.location.pathname.split("/").pop();
     const response = await deleteDosen(id);
+    setIsLoading(false);
     if (response.result) {
       setModalMessage("Berhasil Menghapus Data Dosen!");
     } else {
@@ -349,6 +356,33 @@ export default function Edit() {
                 >
                   Ok
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {(isLoading || isPageLoading) && (
+        <div
+          className="modal fade show"
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="modalLoadingLabel"
+          style={{ display: "block", backgroundColor: "rgba(0,0,0,0.5)" }}
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="modalLoadingLabel">
+                  Loading
+                </h5>
+              </div>
+              <div className="modal-body">
+                <div className="text-center">
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
